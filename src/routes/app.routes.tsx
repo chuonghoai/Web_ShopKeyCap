@@ -2,7 +2,7 @@ import { useRoutes } from "react-router-dom";
 
 import { clientRoutes } from "../apps/client/routes/client.routes";
 import { adminRoutes } from "../apps/admin/routes/admin.routes";
-import LoginPage from "../apps/pages/auth/authPage/authPage";
+import LoginPage from "../apps/auth/page/layout/authPage";
 
 // MOCK DEMO page
 const NotFoundPage = () => {

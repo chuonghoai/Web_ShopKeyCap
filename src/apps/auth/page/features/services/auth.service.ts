@@ -1,0 +1,39 @@
+import { tokenService } from "../../../../../core/auth/token.service";
+import { userStorageService } from "../../../../../core/auth/userStorage.service";
+import type { AuthRepo } from "../repo/auth.repo";
+import { AuthApiRepo } from "../repo/authApi.repo";
+import { AuthMockRepo } from "../repo/authMock.repo";
+
+export class AuthService {
+    private readonly authRepo: AuthRepo;
+    constructor(authRepo?: AuthRepo) {
+        this.authRepo = authRepo || new AuthApiRepo();
+    }
+
+    /**
+     * Login by email/password
+     */
+    async login(email: string, password: string) {
+        const result = await this.authRepo.login(email, password);
+        if (result.success) {
+            tokenService.saveAccessToken(result.data.accessToken);
+            userStorageService.saveUser(result.data.user);
+        }
+        return result;
+    }
+
+    /**
+     * Login by google
+     */
+    async loginByGoogle(idToken: string) {
+        const result = await this.authRepo.loginByGoogle(idToken);
+        if (result.success) {
+            tokenService.saveAccessToken(result.data.accessToken);
+            userStorageService.saveUser(result.data.user);
+        }
+        return result;
+    }
+}
+
+const useMock = true;
+export const authService = new AuthService(useMock ? new AuthMockRepo() : undefined);
