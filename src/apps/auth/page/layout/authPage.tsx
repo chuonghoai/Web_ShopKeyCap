@@ -53,7 +53,7 @@ const AuthPage: React.FC = () => {
         <div className="absolute top-5 right-6 sm:right-10 z-20">
           <button
             onClick={() => navigate("/")}
-            className="flex items-center gap-1.5 text-[14px] font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-800 transition-colors px-3.5 py-2 rounded-xl shadow-sm border border-blue-100">
+            className="flex items-center gap-1.5 text-[14px] cursor-pointer font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-800 transition-colors px-3.5 py-2 rounded-xl shadow-sm border border-blue-100">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
