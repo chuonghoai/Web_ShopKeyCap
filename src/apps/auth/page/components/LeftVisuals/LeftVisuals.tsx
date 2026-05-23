@@ -1,9 +1,9 @@
 import React from 'react';
 
-import keyboardImg from './assets/keyboard.png';
-import triangleImg from './assets/triangle.png';
-import triangleHollowImg from './assets/triangle_hollow.png';
-import logoImg from '../../../../assets/logo.png';
+import keyboardImg from '../assets/keyboard.png';
+import triangleImg from '../assets/triangle.png';
+import triangleHollowImg from '../assets/triangle_hollow.png';
+import logoImg from '../../../../../assets/logo.png';
 
 export const LeftVisuals: React.FC = () => {
     return (

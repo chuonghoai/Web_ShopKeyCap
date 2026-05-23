@@ -1,5 +1,5 @@
 import React from 'react';
-import { LeftVisuals } from '../components/LeftVisuals';
+import { LeftVisuals } from '../components/LeftVisuals/LeftVisuals';
 import { LoginForm } from '../components/LoginForm/loginForm';
 import { useAuthPageController } from './authPage.controller';
 import { useNavigate } from 'react-router-dom';
