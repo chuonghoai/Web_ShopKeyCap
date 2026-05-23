@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLoginController } from './login.controller';
+import { Eye, EyeOff } from 'lucide-react';
 
 interface LoginFormProps {
     onNavigate: (view: 'login' | 'register' | 'forgot') => void;
@@ -41,15 +42,28 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onNavigate }) => {
                     <label htmlFor="password" className="block text-[13px] font-medium text-[#334155] mb-1.5">
                         Mật khẩu
                     </label>
-                    <input
-                        type="password"
-                        id="password"
-                        placeholder="Nhập mật khẩu"
-                        className="w-full px-3.5 py-2.5 rounded-lg border border-[#cbd5e1] text-[#0f172a] focus:outline-none focus:border-[#2563eb] focus:ring-1 focus:ring-[#2563eb] transition-colors placeholder:text-slate-400 text-[14px]"
-                        value={controller.password}
-                        onChange={(e) => controller.setPassword(e.target.value)}
-                        required
-                    />
+                    <div className="relative">
+                        <input
+                            type={controller.showPassword ? "text" : "password"}
+                            id="password"
+                            placeholder="Nhập mật khẩu"
+                            className="w-full px-3.5 py-2.5 rounded-lg border border-[#cbd5e1] text-[#0f172a] focus:outline-none focus:border-[#2563eb] focus:ring-1 focus:ring-[#2563eb] transition-colors placeholder:text-slate-400 text-[14px] pr-10 [&:is(input[type=password])::-ms-reveal]:hidden [&:is(input[type=password])::-ms-clear]:hidden [&:is(input[type=password])::-webkit-contacts-auto-fill-button]:hidden"
+                            value={controller.password}
+                            onChange={(e) => controller.setPassword(e.target.value)}
+                            required
+                        />
+                        <button
+                            type="button"
+                            onClick={controller.toggleShowPassword}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600 transition-colors"
+                        >
+                            {controller.showPassword ? (
+                                <EyeOff size={18} />
+                            ) : (
+                                <Eye size={18} />
+                            )}
+                        </button>
+                    </div>
                 </div>
 
                 <div className="flex items-center justify-between pt-0.5">
