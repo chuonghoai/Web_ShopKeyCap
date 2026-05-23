@@ -3,13 +3,7 @@ import { LeftVisuals } from '../components/LeftVisuals/LeftVisuals';
 import { LoginForm } from '../components/LoginForm/loginForm';
 import { useAuthPageController } from './authPage.controller';
 import { useNavigate } from 'react-router-dom';
-
-const RegisterForm = ({ onNavigate }: { onNavigate: any }) => (
-  <div className="text-center p-8 bg-white rounded-xl shadow-lg w-full max-w-md relative z-10">
-    <h2 className="text-2xl font-bold mb-4">Đăng Ký Tài Khoản</h2>
-    <button onClick={() => onNavigate('login')} className="text-blue-600 underline">Quay lại Đăng nhập</button>
-  </div>
-);
+import { RegisterForm } from '../components/RegisterForm/registerForm';
 
 const ForgotPasswordForm = ({ onNavigate }: { onNavigate: any }) => (
   <div className="text-center p-8 bg-white rounded-xl shadow-lg w-full max-w-md relative z-10">
@@ -18,7 +12,7 @@ const ForgotPasswordForm = ({ onNavigate }: { onNavigate: any }) => (
   </div>
 );
 
-const LoginPage: React.FC = () => {
+const AuthPage: React.FC = () => {
   const controller = useAuthPageController();
   const navigate = useNavigate();
 
@@ -59,7 +53,7 @@ const LoginPage: React.FC = () => {
         <div className="absolute top-5 right-6 sm:right-10 z-20">
           <button
             onClick={() => navigate("/")}
-            className="flex items-center gap-1.5 text-[14px] font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-800 transition-colors px-3.5 py-2 rounded-xl shadow-sm border border-blue-100">
+            className="flex items-center gap-1.5 text-[14px] cursor-pointer font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-800 transition-colors px-3.5 py-2 rounded-xl shadow-sm border border-blue-100">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
@@ -77,7 +71,7 @@ const LoginPage: React.FC = () => {
         >
           {controller.currentView === 'login' && <LoginForm onNavigate={controller.setCurrentView} />}
           {controller.currentView === 'register' && <RegisterForm onNavigate={controller.setCurrentView} />}
-          {controller.currentView === 'forgot' && <ForgotPasswordForm onNavigate={controller.setCurrentView} />}
+          {controller.currentView === 'forgot-password' && <ForgotPasswordForm onNavigate={controller.setCurrentView} />}
         </div>
 
         {/* Info component */}
@@ -135,4 +129,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default AuthPage;

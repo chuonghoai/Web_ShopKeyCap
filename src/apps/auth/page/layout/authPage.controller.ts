@@ -1,8 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-export type ViewState = 'login' | 'register' | 'forgot';
+export type ViewState = 'login' | 'register' | 'forgot-password';
 
 export const useAuthPageController = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [currentView, setCurrentView] = useState<ViewState>('login');
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
@@ -10,6 +14,29 @@ export const useAuthPageController = () => {
 
   const rightPaneRef = useRef<HTMLDivElement>(null);
   const formContainerRef = useRef<HTMLDivElement>(null);
+
+  /**
+   * Set commponent view base to URL
+   */
+  useEffect(() => {
+    const path = location.pathname;
+
+    if (path.endsWith('/register')) {
+      setCurrentView('register');
+    } else if (path.endsWith('/forgot-password')) {
+      setCurrentView('forgot-password');
+    } else {
+      setCurrentView('login');
+    }
+  }, [location.pathname]);
+
+  /**
+   * Navigate view and change URL
+   */
+  const handleNavigateView = (view: ViewState) => {
+    setCurrentView(view);
+    navigate(`/${view}`);
+  };
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!rightPaneRef.current) return;
@@ -40,7 +67,7 @@ export const useAuthPageController = () => {
 
   return {
     currentView,
-    setCurrentView,
+    setCurrentView: handleNavigateView,
     mousePos,
     isHovering,
     setIsHovering,

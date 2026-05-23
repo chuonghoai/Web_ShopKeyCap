@@ -1,6 +1,8 @@
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import { ApiException } from "../../../../../core/exceptions/api.exception";
 import type { LoginResponse } from "../dto/login.dto";
+import type { OtpPurpose } from "../dto/otp.dto";
+import type { RegisterRequest } from "../dto/register.dto";
 import type { AuthRepo } from "./auth.repo";
 
 export class AuthMockRepo implements AuthRepo {
@@ -43,6 +45,33 @@ export class AuthMockRepo implements AuthRepo {
                     role: "CLIENT",
                 },
             },
+        }
+        return response;
+    }
+
+    async sendOtp(email: string, purpose: OtpPurpose): Promise<ApiResponse<null>> {
+        let response: ApiResponse<null> = {
+            success: true,
+            message: `Mã OTP đã được gửi đến ${email}, vui lòng kiểm tra`,
+            data: null,
+        }
+        return response;
+    }
+
+    async register(request: RegisterRequest): Promise<ApiResponse<LoginResponse>> {
+        let response: ApiResponse<LoginResponse> = {
+            success: true,
+            message: 'Đăng ký tài khoản thành công',
+            data: {
+                accessToken: 'mock_access_token_123',
+                user: {
+                    id: '1',
+                    email: request.email,
+                    fullName: 'manggia',
+                    avatar: 'https://img.icons8.com/color/480/avatar.png',
+                    role: 'CLIENT',
+                }
+            }
         }
         return response;
     }

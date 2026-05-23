@@ -5,7 +5,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { useToast } from '../../../../../components/toast/toast';
 
 interface LoginFormProps {
-    onNavigate: (view: 'login' | 'register' | 'forgot') => void;
+    onNavigate: (view: 'login' | 'register' | 'forgot-password') => void;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onNavigate }) => {
@@ -58,7 +58,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onNavigate }) => {
                         <button
                             type="button"
                             onClick={controller.toggleShowPassword}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600 transition-colors"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-slate-400 hover:text-blue-600 transition-colors"
                         >
                             {controller.showPassword ? (
                                 <EyeOff size={18} />
@@ -79,8 +79,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onNavigate }) => {
                     </label>
                     <button
                         type="button"
-                        onClick={() => onNavigate('forgot')}
-                        className="text-[13px] text-blue-600 hover:text-blue-800 font-medium transition-colors"
+                        onClick={() => onNavigate('forgot-password')}
+                        className="text-[13px] text-blue-600 hover:text-blue-800 font-medium transition-colors cursor-pointer"
                     >
                         Quên mật khẩu?
                     </button>
@@ -88,7 +88,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onNavigate }) => {
 
                 <button
                     type="submit"
-                    className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#2563eb] hover:bg-[#1d4ed8] text-white rounded-lg font-semibold text-[14px] transition-colors mt-1 shadow-md shadow-blue-500/30"
+                    className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#2563eb] hover:bg-[#1d4ed8] text-white rounded-lg font-semibold text-[14px] transition-colors mt-1 shadow-md shadow-blue-500/30 cursor-pointer"
                 >
                     Đăng Nhập
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -122,7 +122,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onNavigate }) => {
                 Không có tài khoản?{' '}
                 <button
                     onClick={() => onNavigate('register')}
-                    className="text-blue-600 font-semibold hover:underline transition-colors"
+                    className="text-blue-600 font-semibold hover:underline transition-colors cursor-pointer"
                 >
                     Tạo tài khoản
                 </button>
