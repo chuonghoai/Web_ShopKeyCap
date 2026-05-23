@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { useDocumentTitle } from "../../../../../core/hooks/useDocumentTitle";
 import { useToast } from "../../../../../components/toast/toast";
-import { authService } from "../../features/services/auth.service";
-import { OtpPurpose } from "../../features/dto/otp.dto";
+import { authService } from "../../../features/services/auth.service";
+import { OtpPurpose } from "../../../features/dto/otp.dto";
 
 export const useForgotPasswordController = (onNavigate: (view: any, email?: string) => void) => {
     useDocumentTitle('Quên mật khẩu - Cyber Key');

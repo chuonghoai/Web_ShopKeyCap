@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDocumentTitle } from '../../../../../core/hooks/useDocumentTitle';
-import { authService } from '../../features/services/auth.service';
+import { authService } from '../../../features/services/auth.service';
 import { useToast } from '../../../../../components/toast/toast';
 import { useNavigate } from 'react-router-dom';
 import { type CredentialResponse } from '@react-oauth/google';

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useToast } from '../../../../../components/toast/toast';
-import { authService } from '../../features/services/auth.service';
-import { OtpPurpose } from '../../features/dto/otp.dto';
+import { authService } from '../../../features/services/auth.service';
+import { OtpPurpose } from '../../../features/dto/otp.dto';
 
 export const useResetPasswordController = (email: string, onNavigate: (view: any) => void) => {
     const [otp, setOtp] = useState('');

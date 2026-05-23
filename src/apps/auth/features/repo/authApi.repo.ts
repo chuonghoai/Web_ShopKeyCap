@@ -1,5 +1,5 @@
-import { apiClient } from "../../../../../core/api/apiClient";
-import type { ApiResponse } from "../../../../../core/api/apiResponse";
+import { apiClient } from "../../../../core/api/apiClient";
+import type { ApiResponse } from "../../../../core/api/apiResponse";
 import type { LoginResponse } from "../dto/login.dto";
 import type { OtpPurpose } from "../dto/otp.dto";
 import type { RegisterRequest } from "../dto/register.dto";

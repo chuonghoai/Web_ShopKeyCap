@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useToast } from '../../../../../components/toast/toast';
-import { authService } from '../../features/services/auth.service';
-import { OtpPurpose } from '../../features/dto/otp.dto';
+import { authService } from '../../../features/services/auth.service';
+import { OtpPurpose } from '../../../features/dto/otp.dto';
 import { useNavigate } from 'react-router-dom';
 
 export const useRegisterController = () => {

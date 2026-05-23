@@ -1,4 +1,4 @@
-import type { User } from "../../../../client/features/profile/models/user.model";
+import type { User } from "../../../client/features/profile/models/user.model";
 
 export interface LoginRequest {
     email: string;
