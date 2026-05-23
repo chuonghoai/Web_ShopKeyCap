@@ -4,13 +4,8 @@ import { LoginForm } from '../components/LoginForm/loginForm';
 import { useAuthPageController } from './authPage.controller';
 import { useNavigate } from 'react-router-dom';
 import { RegisterForm } from '../components/RegisterForm/registerForm';
-
-const ForgotPasswordForm = ({ onNavigate }: { onNavigate: any }) => (
-  <div className="text-center p-8 bg-white rounded-xl shadow-lg w-full max-w-md relative z-10">
-    <h2 className="text-2xl font-bold mb-4">Quên Mật Khẩu</h2>
-    <button onClick={() => onNavigate('login')} className="text-blue-600 underline">Quay lại Đăng nhập</button>
-  </div>
-);
+import { ForgotPasswordForm } from '../components/ForgotPasswordForm/forgotPassword';
+import { ResetPasswordForm } from '../components/ResetPasswordForm/resetPasswordForm';
 
 const AuthPage: React.FC = () => {
   const controller = useAuthPageController();
@@ -72,6 +67,9 @@ const AuthPage: React.FC = () => {
           {controller.currentView === 'login' && <LoginForm onNavigate={controller.setCurrentView} />}
           {controller.currentView === 'register' && <RegisterForm onNavigate={controller.setCurrentView} />}
           {controller.currentView === 'forgot-password' && <ForgotPasswordForm onNavigate={controller.setCurrentView} />}
+          {controller.currentView === 'reset-password' && (
+            <ResetPasswordForm email={controller.resetEmail} onNavigate={controller.setCurrentView} />
+          )}
         </div>
 
         {/* Info component */}

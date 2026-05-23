@@ -4,6 +4,7 @@ import { userStorageService } from "../../../../../core/auth/userStorage.service
 import type { LoginResponse } from "../dto/login.dto";
 import { OtpPurpose } from "../dto/otp.dto";
 import type { RegisterRequest } from "../dto/register.dto";
+import type { ResetPasswordRequest } from "../dto/resetPassword.dto";
 import type { AuthRepo } from "../repo/auth.repo";
 import { AuthApiRepo } from "../repo/authApi.repo";
 import { AuthMockRepo } from "../repo/authMock.repo";
@@ -41,8 +42,7 @@ export class AuthService {
     /**
      * Request OTP with purpose
      */
-    async sendOtp(email: string): Promise<ApiResponse<null>> {
-        const purpose = OtpPurpose.REGISTER;
+    async sendOtp(email: string, purpose: OtpPurpose): Promise<ApiResponse<null>> {
         const result = await this.authRepo.sendOtp(email, purpose);
         return result;
     }
@@ -58,7 +58,15 @@ export class AuthService {
         }
         return result;
     }
+
+    /**
+     * Reset password
+     */
+    async resetPassword(request: ResetPasswordRequest): Promise<ApiResponse<null>> {
+        const result = await this.authRepo.resetPassword(request);
+        return result;
+    }
 }
 
-const useMock = true;
+const useMock = false;
 export const authService = new AuthService(useMock ? new AuthMockRepo() : undefined);

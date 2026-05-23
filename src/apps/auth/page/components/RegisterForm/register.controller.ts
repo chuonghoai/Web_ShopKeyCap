@@ -36,7 +36,7 @@ export const useRegisterController = () => {
         if (!email) { toast("Vui lòng nhập email", "warning"); return; }
         setIsSendingOtp(true);
         try {
-            const response = await authService.sendOtp(email);
+            const response = await authService.sendOtp(email, OtpPurpose.REGISTER);
             if (response.success) {
                 toast(response.message || "OTP đã được gửi", "success");
                 setTimer(30);

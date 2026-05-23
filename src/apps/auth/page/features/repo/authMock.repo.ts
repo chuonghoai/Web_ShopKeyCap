@@ -1,8 +1,9 @@
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import { ApiException } from "../../../../../core/exceptions/api.exception";
 import type { LoginResponse } from "../dto/login.dto";
-import type { OtpPurpose } from "../dto/otp.dto";
+import { OtpPurpose } from "../dto/otp.dto";
 import type { RegisterRequest } from "../dto/register.dto";
+import type { ResetPasswordRequest } from "../dto/resetPassword.dto";
 import type { AuthRepo } from "./auth.repo";
 
 export class AuthMockRepo implements AuthRepo {
@@ -54,6 +55,12 @@ export class AuthMockRepo implements AuthRepo {
             success: true,
             message: `Mã OTP đã được gửi đến ${email}, vui lòng kiểm tra`,
             data: null,
+        };
+        if (purpose === OtpPurpose.REGISTER) {
+            return response;
+        } else if (purpose === OtpPurpose.FORGOT_PASSWORD) {
+            // Bad request exception
+            // throw new ApiException("Email không tồn tại!", 400);
         }
         return response;
     }
@@ -73,6 +80,18 @@ export class AuthMockRepo implements AuthRepo {
                 }
             }
         }
+        return response;
+    }
+
+    async resetPassword(request: ResetPasswordRequest): Promise<ApiResponse<null>> {
+        let response: ApiResponse<null> = {
+            success: true,
+            message: 'Đặt lại mật khẩu thành công',
+            data: null,
+        }
+        // if (true) {
+        //     throw new ApiException("Mật khẩu không khớp!", 400);
+        // }
         return response;
     }
 }

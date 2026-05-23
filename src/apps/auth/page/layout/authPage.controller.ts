@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export type ViewState = 'login' | 'register' | 'forgot-password';
+export type ViewState = 'login' | 'register' | 'forgot-password' | 'reset-password';
 
 export const useAuthPageController = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const [currentView, setCurrentView] = useState<ViewState>('login');
+  const [resetEmail, setResetEmail] = useState('');
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isFormActive, setIsFormActive] = useState(false);
@@ -25,6 +26,8 @@ export const useAuthPageController = () => {
       setCurrentView('register');
     } else if (path.endsWith('/forgot-password')) {
       setCurrentView('forgot-password');
+    } else if (path.endsWith('/reset-password')) {
+      setCurrentView('reset-password');
     } else {
       setCurrentView('login');
     }
@@ -33,8 +36,9 @@ export const useAuthPageController = () => {
   /**
    * Navigate view and change URL
    */
-  const handleNavigateView = (view: ViewState) => {
+  const handleNavigateView = (view: ViewState, email?: string) => {
     setCurrentView(view);
+    if (email) setResetEmail(email);
     navigate(`/${view}`);
   };
 
@@ -68,6 +72,7 @@ export const useAuthPageController = () => {
   return {
     currentView,
     setCurrentView: handleNavigateView,
+    resetEmail,
     mousePos,
     isHovering,
     setIsHovering,
