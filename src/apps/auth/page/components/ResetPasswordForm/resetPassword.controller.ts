@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { useToast } from '../../../../../components/toast/toast';
 import { authService } from '../../../features/services/auth.service';
 import { OtpPurpose } from '../../../features/dto/otp.dto';
+import { useDocumentTitle } from '../../../../../core/hooks/useDocumentTitle';
 
 export const useResetPasswordController = (email: string, onNavigate: (view: any) => void) => {
+    useDocumentTitle("Đặt lại mật khẩu");
     const [otp, setOtp] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');

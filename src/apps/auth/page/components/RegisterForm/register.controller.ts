@@ -3,8 +3,10 @@ import { useToast } from '../../../../../components/toast/toast';
 import { authService } from '../../../features/services/auth.service';
 import { OtpPurpose } from '../../../features/dto/otp.dto';
 import { useNavigate } from 'react-router-dom';
+import { useDocumentTitle } from '../../../../../core/hooks/useDocumentTitle';
 
 export const useRegisterController = () => {
+    useDocumentTitle("Đăng ký - Cyber Key");
     const { toast } = useToast();
     const navigate = useNavigate();
 
