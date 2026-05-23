@@ -45,19 +45,25 @@ export const useLoginController = () => {
         }
     };
 
+    /**
+     * Submit login with google request
+     */
     const handleGoogleLoginSuccess = async (credentialResponse: CredentialResponse) => {
         if (credentialResponse.credential) {
             try {
                 setIsLoading(true);
-                // Gửi idToken lên backend để verify
                 const result = await authService.loginByGoogle(credentialResponse.credential);
 
-                if (result) {
+                if (result.success) {
                     toast("Đăng nhập thành công!", 'success');
                     navigate("/");
                 }
             } catch (error: any) {
-                toast("Đăng nhập Google thất bại.", 'error');
+                const apiErrMsg = error.response?.data?.message
+                    || error.response?.data?.message
+                    || error.message
+                    || "Đăng nhập google thất bại";
+                toast(apiErrMsg, 'error');
             } finally {
                 setIsLoading(false);
             }
@@ -78,6 +84,7 @@ export const useLoginController = () => {
         setPassword,
         showPassword,
         toggleShowPassword,
+
         handleSubmit,
         handleGoogleLoginSuccess,
     };
