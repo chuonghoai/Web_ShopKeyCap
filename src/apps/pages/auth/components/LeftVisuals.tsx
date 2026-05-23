@@ -6,9 +6,8 @@ import triangleHollowImg from './assets/triangle_hollow.png';
 
 export const LeftVisuals: React.FC = () => {
     return (
-        <div className="hidden lg:flex flex-1 relative bg-[#fbfcfd] overflow-hidden">
+        <div className="hidden lg:flex flex-1 relative bg-gradient-to-br from-[#f8fafc] to-[#e2e8f0] overflow-hidden">
 
-            {/* Animation */}
             <style>
                 {`
                 @keyframes float-keyboard {
@@ -27,6 +26,7 @@ export const LeftVisuals: React.FC = () => {
                     0%, 100% { transform: translateY(0) rotate(-12deg); }
                     50% { transform: translateY(-15px) rotate(-12deg); } 
                 }
+
                 .animate-keyboard { animation: float-keyboard 6s ease-in-out infinite; }
                 .animate-triangle { animation: float-triangle 7s ease-in-out infinite; }
                 .animate-triangle-hollow { animation: float-triangle-hollow 8s ease-in-out infinite; }
@@ -34,20 +34,22 @@ export const LeftVisuals: React.FC = () => {
                 `}
             </style>
 
-            {/* Title */}
+            <div className="absolute top-[15%] left-[10%] w-[350px] h-[350px] bg-blue-400/20 rounded-full blur-[100px] z-0 pointer-events-none"></div>
+            <div className="absolute bottom-[5%] right-[10%] w-[400px] h-[400px] bg-indigo-500/15 rounded-full blur-[120px] z-0 pointer-events-none"></div>
+
             <div className="absolute top-[8%] w-full text-center z-20 pointer-events-none">
-                <h1 className="text-[42px] font-bold text-[#1e293b] tracking-tight">Cyber Keys</h1>
-                <p className="text-[#64748b] text-[18px] mt-2 font-medium">Tactile Excellence, Reimagined</p>
+                <h1 className="text-[46px] font-extrabold text-[#0f172a] tracking-tight">Cyber Keys</h1>
+                <p className="text-[#475569] text-[18px] mt-3 font-medium">Tactile Excellence, Reimagined</p>
             </div>
 
             {/* Keyboard */}
             <img
                 src={keyboardImg}
                 alt="Mechanical Keyboard"
-                className="absolute -bottom-0 -left-0 w-[90%] max-w-none z-10 drop-shadow-[0_25px_35px_rgba(0,0,0,0.2)] object-contain animate-keyboard pointer-events-none"
+                className="absolute -bottom-3 -left-0 w-[90%] max-w-none z-10 object-contain animate-keyboard pointer-events-none mix-blend-multiply"
             />
 
-            {/* Line straight */}
+            {/* Line straigth */}
             <div className="absolute left-[11%] bottom-[58%] w-32 h-[4px] bg-[#2563eb] transform -rotate-20 rounded-full z-0 opacity-60 animate-line pointer-events-none"></div>
             <div className="absolute left-[30%] bottom-[65.8%] w-10 h-[4px] bg-[#2563eb] transform -rotate-20 rounded-full z-0 opacity-60 animate-line pointer-events-none"></div>
             <div className="absolute left-[55%] bottom-[9%] w-32 h-[4px] bg-[#2563eb] transform -rotate-20 rounded-full z-0 opacity-60 animate-line pointer-events-none"></div>
@@ -56,12 +58,12 @@ export const LeftVisuals: React.FC = () => {
             <img
                 src={triangleImg}
                 alt="Triangle"
-                className="absolute right-[18%] top-[29%] w-14 z-10 transform -rotate-87 animate-triangle pointer-events-none"
+                className="absolute right-[18%] top-[29%] w-14 z-10 transform -rotate-87 animate-triangle pointer-events-none mix-blend-multiply"
             />
             <img
                 src={triangleHollowImg}
                 alt="Hollow Triangle"
-                className="absolute right-[20%] bottom-[13%] w-14 z-10 transform -rotate-75 animate-triangle-hollow pointer-events-none"
+                className="absolute right-[20%] bottom-[13%] w-14 z-10 transform -rotate-75 animate-triangle-hollow pointer-events-none mix-blend-multiply"
             />
         </div>
     );
