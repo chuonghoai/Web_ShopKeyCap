@@ -9,9 +9,20 @@ export class AuthApiRepo implements AuthRepo {
      * @body email, password 
      * @returns LoginResponse
      */
-    login(email: string, password: string): Promise<ApiResponse<LoginResponse>> {
+    async login(email: string, password: string): Promise<ApiResponse<LoginResponse>> {
         return apiClient.post<ApiResponse<LoginResponse>>("/login", {
             email, password
+        })
+    }
+
+    /**
+     * POST /login/google
+     * @body idToken của google
+     * @returns LoginResponse
+     */
+    async loginByGoogle(idToken: string): Promise<ApiResponse<LoginResponse>> {
+        return apiClient.post<ApiResponse<LoginResponse>>("/login/google", {
+            idToken
         })
     }
 }

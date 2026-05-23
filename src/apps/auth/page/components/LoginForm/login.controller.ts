@@ -3,6 +3,7 @@ import { useDocumentTitle } from '../../../../../core/hooks/useDocumentTitle';
 import { authService } from '../../features/services/auth.service';
 import { useToast } from '../../../../../components/toast/toast';
 import { useNavigate } from 'react-router-dom';
+import { type CredentialResponse } from '@react-oauth/google';
 
 export const useLoginController = () => {
     useDocumentTitle('Đăng nhập - Cyber Key');
@@ -44,6 +45,25 @@ export const useLoginController = () => {
         }
     };
 
+    const handleGoogleLoginSuccess = async (credentialResponse: CredentialResponse) => {
+        if (credentialResponse.credential) {
+            try {
+                setIsLoading(true);
+                // Gửi idToken lên backend để verify
+                const result = await authService.loginByGoogle(credentialResponse.credential);
+
+                if (result) {
+                    toast("Đăng nhập thành công!", 'success');
+                    navigate("/");
+                }
+            } catch (error: any) {
+                toast("Đăng nhập Google thất bại.", 'error');
+            } finally {
+                setIsLoading(false);
+            }
+        }
+    };
+
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     }
@@ -58,7 +78,7 @@ export const useLoginController = () => {
         setPassword,
         showPassword,
         toggleShowPassword,
-
         handleSubmit,
+        handleGoogleLoginSuccess,
     };
 };

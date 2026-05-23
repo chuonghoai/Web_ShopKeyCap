@@ -28,4 +28,22 @@ export class AuthMockRepo implements AuthRepo {
 
         return response;
     }
+
+    async loginByGoogle(idToken: string): Promise<ApiResponse<LoginResponse>> {
+        let response: ApiResponse<LoginResponse> = {
+            success: true,
+            message: "Login success",
+            data: {
+                accessToken: "mock_access_token",
+                user: {
+                    id: "69293c536a4af647a4438347",
+                    email: "manggia@gmail.com",
+                    fullName: "manggia",
+                    avatar: "https://img.icons8.com/color/480/avatar.png",
+                    role: "CLIENT",
+                },
+            },
+        }
+        return response;
+    }
 }

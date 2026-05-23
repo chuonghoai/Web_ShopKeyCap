@@ -21,6 +21,18 @@ export class AuthService {
         }
         return result;
     }
+
+    /**
+     * Login by google
+     */
+    async loginByGoogle(idToken: string) {
+        const result = await this.authRepo.loginByGoogle(idToken);
+        if (result.success) {
+            tokenService.saveAccessToken(result.data.accessToken);
+            userStorageService.saveUser(result.data.user);
+        }
+        return result;
+    }
 }
 
 const useMock = true;
