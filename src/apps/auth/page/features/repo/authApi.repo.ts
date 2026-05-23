@@ -1,6 +1,7 @@
 import { apiClient } from "../../../../../core/api/apiClient";
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import type { LoginResponse } from "../dto/login.dto";
+import type { OtpPurpose } from "../dto/otp.dto";
 import type { AuthRepo } from "./auth.repo";
 
 export class AuthApiRepo implements AuthRepo {
@@ -31,6 +32,23 @@ export class AuthApiRepo implements AuthRepo {
     async loginByGoogle(idToken: string): Promise<ApiResponse<LoginResponse>> {
         return apiClient.post<ApiResponse<LoginResponse>>("/login/google", {
             idToken
+        })
+    }
+
+    /**
+     * POST /otps/request
+     * @body email, purpose 
+     * @returns null
+     * 
+     * Mô tả:
+     *  - Otp được gửi đến email
+     *  - purpose là mục đích sử dụng otp, khi verify OTP phải check đúng 
+     *      mục đích sử dụng của otp (đăng ký, quên mật khẩu)
+     */
+    async sendOtp(email: string, purpose: OtpPurpose): Promise<ApiResponse<null>> {
+        return apiClient.post<ApiResponse<null>>("/otps/request", {
+            email,
+            purpose
         })
     }
 }

@@ -1,6 +1,7 @@
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import { ApiException } from "../../../../../core/exceptions/api.exception";
 import type { LoginResponse } from "../dto/login.dto";
+import type { OtpPurpose } from "../dto/otp.dto";
 import type { AuthRepo } from "./auth.repo";
 
 export class AuthMockRepo implements AuthRepo {
@@ -43,6 +44,15 @@ export class AuthMockRepo implements AuthRepo {
                     role: "CLIENT",
                 },
             },
+        }
+        return response;
+    }
+
+    async sendOtp(email: string, purpose: OtpPurpose): Promise<ApiResponse<null>> {
+        let response: ApiResponse<null> = {
+            success: true,
+            message: `Mã OTP đã được gửi đến ${email}, vui lòng kiểm tra`,
+            data: null,
         }
         return response;
     }
