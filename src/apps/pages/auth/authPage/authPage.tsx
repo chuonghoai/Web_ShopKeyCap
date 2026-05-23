@@ -2,6 +2,8 @@ import React from 'react';
 import { LeftVisuals } from '../components/LeftVisuals';
 import { LoginForm } from '../components/LoginForm/loginForm';
 import { useAuthPageController } from './authPage.controller';
+import { useNavigate } from 'react-router-dom';
+
 const RegisterForm = ({ onNavigate }: { onNavigate: any }) => (
   <div className="text-center p-8 bg-white rounded-xl shadow-lg w-full max-w-md relative z-10">
     <h2 className="text-2xl font-bold mb-4">Đăng Ký Tài Khoản</h2>
@@ -18,6 +20,7 @@ const ForgotPasswordForm = ({ onNavigate }: { onNavigate: any }) => (
 
 const LoginPage: React.FC = () => {
   const controller = useAuthPageController();
+  const navigate = useNavigate();
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-[#f1f5f9] font-sans">
@@ -54,7 +57,9 @@ const LoginPage: React.FC = () => {
 
         {/* Button back to home */}
         <div className="absolute top-5 right-6 sm:right-10 z-20">
-          <button className="flex items-center gap-1.5 text-[14px] font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-800 transition-colors px-3.5 py-2 rounded-xl shadow-sm border border-blue-100">
+          <button
+            onClick={() => navigate("/")}
+            className="flex items-center gap-1.5 text-[14px] font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-800 transition-colors px-3.5 py-2 rounded-xl shadow-sm border border-blue-100">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>

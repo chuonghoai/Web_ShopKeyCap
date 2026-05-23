@@ -6,7 +6,7 @@ export const useLoginController = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Login attempt:', { email, password });
+        alert('Login attempt');
     };
 
     return {
