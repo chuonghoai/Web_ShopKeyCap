@@ -103,31 +103,19 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onNavigate }) => {
                 <div className="flex-1 h-px bg-slate-200"></div>
             </div>
 
-            <div className="flex flex-col gap-2.5">
-                <div className="mt-6">
-                    <div className="flex items-center justify-center">
-                        <GoogleLogin
-                            onSuccess={controller.handleGoogleLoginSuccess}
-                            onError={() => {
-                                toast("Đăng nhập Google thất bại", 'error');
-                            }}
-                            useOneTap
-                            theme="filled_blue"
-                            shape="rectangular"
-                            width="360"
-                        />
-                    </div>
+            <div className="flex flex-col gap-1">
+                <div className="flex items-center justify-center">
+                    <GoogleLogin
+                        onSuccess={controller.handleGoogleLoginSuccess}
+                        onError={() => {
+                            toast("Đăng nhập Google thất bại", 'error');
+                        }}
+                        useOneTap
+                        theme="filled_blue"
+                        shape="rectangular"
+                        width="320"
+                    />
                 </div>
-
-                <button
-                    type="button"
-                    className="w-full flex items-center justify-center gap-2 py-2 border border-[#e2e8f0] rounded-lg hover:bg-gray-50 transition-colors text-[13px] font-medium text-[#334155]"
-                >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="black" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.19 2.24-.86 3.44-.88 1.5-.06 2.62.62 3.35 1.54-2.82 1.6-2.31 5.48.51 6.55-.65 1.64-1.51 3.22-2.38 4.96zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.33 2.37-1.89 4.31-3.74 4.25z" />
-                    </svg>
-                    Đăng nhập với Apple
-                </button>
             </div>
 
             <div className="mt-5 text-center text-[13px] text-slate-500">
