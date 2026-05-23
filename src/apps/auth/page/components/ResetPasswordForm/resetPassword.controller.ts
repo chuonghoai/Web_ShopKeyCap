@@ -1,6 +1,7 @@
-// src/apps/auth/page/components/ResetPasswordForm/resetPassword.controller.ts
 import { useState } from 'react';
 import { useToast } from '../../../../../components/toast/toast';
+import { authService } from '../../features/services/auth.service';
+import { OtpPurpose } from '../../features/dto/otp.dto';
 
 export const useResetPasswordController = (email: string, onNavigate: (view: any) => void) => {
     const [otp, setOtp] = useState('');
@@ -24,12 +25,25 @@ export const useResetPasswordController = (email: string, onNavigate: (view: any
 
         try {
             setIsLoading(true);
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-
-            toast('Đặt lại mật khẩu thành công! Vui lòng đăng nhập lại.', 'success');
-            onNavigate('login');
+            const result = await authService.resetPassword({
+                email,
+                otp,
+                otpPurpose: OtpPurpose.FORGOT_PASSWORD,
+                newPassword,
+                confirmPassword
+            });
+            if (result.success) {
+                toast(result.message || "Đặt lại mật khẩu thành công", "success");
+                onNavigate('login');
+            } else {
+                toast(result.message || "Đặt lại mật khẩu thất bại", "error");
+            }
         } catch (error: any) {
-            toast('Có lỗi xảy ra trong quá trình đặt lại mật khẩu', 'error');
+            const apiErrMsg = error.response?.data?.message
+                || error.response?.data?.message
+                || error.message
+                || "Yêu cầu thất bại";
+            toast(apiErrMsg, "error");
         } finally {
             setIsLoading(false);
         }
@@ -37,10 +51,13 @@ export const useResetPasswordController = (email: string, onNavigate: (view: any
 
     return {
         otp, setOtp,
+
         newPassword, setNewPassword,
         confirmPassword, setConfirmPassword,
+
         showPassword,
         togglePassword: () => setShowPassword(!showPassword),
+
         isLoading,
         handleSubmit
     };

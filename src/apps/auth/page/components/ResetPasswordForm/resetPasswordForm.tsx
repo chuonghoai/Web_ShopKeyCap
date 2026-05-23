@@ -1,4 +1,3 @@
-// src/apps/auth/page/components/ResetPasswordForm/resetPasswordForm.tsx
 import React from 'react';
 import { useResetPasswordController } from './resetPassword.controller';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
