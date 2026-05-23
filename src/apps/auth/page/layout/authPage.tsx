@@ -12,7 +12,7 @@ const ForgotPasswordForm = ({ onNavigate }: { onNavigate: any }) => (
   </div>
 );
 
-const LoginPage: React.FC = () => {
+const AuthPage: React.FC = () => {
   const controller = useAuthPageController();
   const navigate = useNavigate();
 
@@ -71,7 +71,7 @@ const LoginPage: React.FC = () => {
         >
           {controller.currentView === 'login' && <LoginForm onNavigate={controller.setCurrentView} />}
           {controller.currentView === 'register' && <RegisterForm onNavigate={controller.setCurrentView} />}
-          {controller.currentView === 'forgot' && <ForgotPasswordForm onNavigate={controller.setCurrentView} />}
+          {controller.currentView === 'forgot-password' && <ForgotPasswordForm onNavigate={controller.setCurrentView} />}
         </div>
 
         {/* Info component */}
@@ -129,4 +129,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default AuthPage;

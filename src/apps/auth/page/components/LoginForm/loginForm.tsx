@@ -5,7 +5,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { useToast } from '../../../../../components/toast/toast';
 
 interface LoginFormProps {
-    onNavigate: (view: 'login' | 'register' | 'forgot') => void;
+    onNavigate: (view: 'login' | 'register' | 'forgot-password') => void;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onNavigate }) => {
@@ -79,7 +79,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onNavigate }) => {
                     </label>
                     <button
                         type="button"
-                        onClick={() => onNavigate('forgot')}
+                        onClick={() => onNavigate('forgot-password')}
                         className="text-[13px] text-blue-600 hover:text-blue-800 font-medium transition-colors"
                     >
                         Quên mật khẩu?

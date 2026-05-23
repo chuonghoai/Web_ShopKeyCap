@@ -2,7 +2,7 @@ import { useRoutes } from "react-router-dom";
 
 import { clientRoutes } from "../apps/client/routes/client.routes";
 import { adminRoutes } from "../apps/admin/routes/admin.routes";
-import LoginPage from "../apps/auth/page/layout/authPage";
+import AuthPage from "../apps/auth/page/layout/authPage";
 
 // MOCK DEMO page
 const NotFoundPage = () => {
@@ -11,18 +11,15 @@ const NotFoundPage = () => {
 
 export const AppRoutes = () => {
     const routes = useRoutes([
-        {
-            path: "/login",
-            element: <LoginPage />,
-        },
+        { path: "/login", element: <AuthPage /> },
+        { path: "/register", element: <AuthPage /> },
+        { path: "/forgot-password", element: <AuthPage /> },
+
 
         ...clientRoutes,
         ...adminRoutes,
 
-        {
-            path: "*",
-            element: <NotFoundPage />,
-        }
+        { path: "*", element: <NotFoundPage /> }
     ]);
 
     return routes;
