@@ -3,13 +3,7 @@ import { LeftVisuals } from '../components/LeftVisuals/LeftVisuals';
 import { LoginForm } from '../components/LoginForm/loginForm';
 import { useAuthPageController } from './authPage.controller';
 import { useNavigate } from 'react-router-dom';
-
-const RegisterForm = ({ onNavigate }: { onNavigate: any }) => (
-  <div className="text-center p-8 bg-white rounded-xl shadow-lg w-full max-w-md relative z-10">
-    <h2 className="text-2xl font-bold mb-4">Đăng Ký Tài Khoản</h2>
-    <button onClick={() => onNavigate('login')} className="text-blue-600 underline">Quay lại Đăng nhập</button>
-  </div>
-);
+import { RegisterForm } from '../components/RegisterForm/registerForm';
 
 const ForgotPasswordForm = ({ onNavigate }: { onNavigate: any }) => (
   <div className="text-center p-8 bg-white rounded-xl shadow-lg w-full max-w-md relative z-10">
