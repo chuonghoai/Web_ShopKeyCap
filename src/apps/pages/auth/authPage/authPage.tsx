@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { LeftVisuals } from '../components/LeftVisuals';
 import { LoginForm } from '../components/LoginForm/loginForm';
-
+import { useAuthPageController } from './authPage.controller';
 const RegisterForm = ({ onNavigate }: { onNavigate: any }) => (
   <div className="text-center p-8 bg-white rounded-xl shadow-lg w-full max-w-md relative z-10">
     <h2 className="text-2xl font-bold mb-4">Đăng Ký Tài Khoản</h2>
@@ -16,10 +16,8 @@ const ForgotPasswordForm = ({ onNavigate }: { onNavigate: any }) => (
   </div>
 );
 
-type ViewState = 'login' | 'register' | 'forgot';
-
 const LoginPage: React.FC = () => {
-  const [currentView, setCurrentView] = useState<ViewState>('login');
+  const controller = useAuthPageController();
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-[#f1f5f9] font-sans">
@@ -28,13 +26,29 @@ const LoginPage: React.FC = () => {
       <LeftVisuals />
 
       {/* Right side */}
-      <div className="flex-1 relative flex flex-col items-center justify-center h-full p-4 sm:p-6 bg-[#fafafb] overflow-hidden">
+      <div
+        ref={controller.rightPaneRef}
+        onMouseMove={controller.handleMouseMove}
+        onMouseEnter={() => controller.setIsHovering(true)}
+        onMouseLeave={() => controller.setIsHovering(false)}
+        className="flex-1 relative flex flex-col items-center justify-center h-full p-4 sm:p-6 bg-[#fafafb] overflow-hidden"
+      >
 
-        {/* Background grid */}
+        {/* Background */}
         <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none"
           style={{
             backgroundImage: 'linear-gradient(to right, #0f172a 1px, transparent 1px), linear-gradient(to bottom, #0f172a 1px, transparent 1px)',
             backgroundSize: '32px 32px'
+          }}>
+        </div>
+
+        <div className="absolute inset-0 z-0 pointer-events-none"
+          style={{
+            opacity: 0.15,
+            backgroundImage: 'linear-gradient(to right, #030405ff 1px, transparent 1px), linear-gradient(to bottom, #0f172a 1px, transparent 1px)',
+            backgroundSize: '32px 32px',
+            WebkitMaskImage: `radial-gradient(circle ${controller.isHovering ? '250px' : '450px'} at ${controller.isHovering ? `${controller.mousePos.x}px ${controller.mousePos.y}px` : '50% 50%'}, black, transparent)`,
+            maskImage: `radial-gradient(circle ${controller.isHovering ? '250px' : '450px'} at ${controller.isHovering ? `${controller.mousePos.x}px ${controller.mousePos.y}px` : '50% 50%'}, black, transparent)`,
           }}>
         </div>
 
@@ -48,16 +62,21 @@ const LoginPage: React.FC = () => {
           </button>
         </div>
 
-        {/* Form Input */}
-        <div className="relative z-10 w-full flex justify-center mt-4">
-          {currentView === 'login' && <LoginForm onNavigate={setCurrentView} />}
-          {currentView === 'register' && <RegisterForm onNavigate={setCurrentView} />}
-          {currentView === 'forgot' && <ForgotPasswordForm onNavigate={setCurrentView} />}
+        {/* Form input */}
+        <div
+          ref={controller.formContainerRef}
+          onMouseDown={() => controller.setIsFormActive(true)}
+          className={`relative w-full flex justify-center mt-4 transition-all duration-500 ease-out origin-center
+            ${controller.isFormActive ? 'scale-[1.02] drop-shadow-[0_25px_35px_rgba(37,99,235,0.15)] z-50' : 'scale-100 z-10'}
+          `}
+        >
+          {controller.currentView === 'login' && <LoginForm onNavigate={controller.setCurrentView} />}
+          {controller.currentView === 'register' && <RegisterForm onNavigate={controller.setCurrentView} />}
+          {controller.currentView === 'forgot' && <ForgotPasswordForm onNavigate={controller.setCurrentView} />}
         </div>
 
         {/* Info component */}
         <div className="relative z-10 w-full max-w-[480px] mt-6 flex justify-between gap-2 px-2">
-
           <div className="flex flex-col items-center text-center gap-1.5">
             <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -97,9 +116,9 @@ const LoginPage: React.FC = () => {
               <p className="text-[11px] text-slate-500 mt-0.5 max-w-[120px]">Chúng tôi hỗ trợ bạn bất kỳ lúc nào.</p>
             </div>
           </div>
-
         </div>
 
+        {/* Footer */}
         <div className="absolute bottom-3 text-center w-full z-10">
           <p className="text-[11px] text-slate-400 font-medium">
             © 2026 Cyber Keys. All rights reserved.

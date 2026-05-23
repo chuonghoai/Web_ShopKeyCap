@@ -1,17 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useLoginController } from './login.controller';
 
 interface LoginFormProps {
     onNavigate: (view: 'login' | 'register' | 'forgot') => void;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onNavigate }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log('Login attempt:', { email, password });
-    };
+    const controller = useLoginController();
 
     return (
         <div className="w-full max-w-[400px] bg-white p-6 sm:p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
@@ -26,7 +21,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onNavigate }) => {
             </div>
 
             {/* Form input login */}
-            <form onSubmit={handleSubmit} className="space-y-2">
+            <form onSubmit={controller.handleSubmit} className="space-y-2">
                 <div>
                     <label htmlFor="email" className="block text-[13px] font-medium text-[#334155] mb-1.5">
                         Địa chỉ Email
@@ -36,8 +31,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onNavigate }) => {
                         id="email"
                         placeholder="Nhập email của bạn"
                         className="w-full px-3.5 py-2.5 rounded-lg border border-[#cbd5e1] text-[#0f172a] focus:outline-none focus:border-[#2563eb] focus:ring-1 focus:ring-[#2563eb] transition-colors placeholder:text-slate-400 text-[14px]"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={controller.email}
+                        onChange={(e) => controller.setEmail(e.target.value)}
                         required
                     />
                 </div>
@@ -51,8 +46,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onNavigate }) => {
                         id="password"
                         placeholder="Nhập mật khẩu"
                         className="w-full px-3.5 py-2.5 rounded-lg border border-[#cbd5e1] text-[#0f172a] focus:outline-none focus:border-[#2563eb] focus:ring-1 focus:ring-[#2563eb] transition-colors placeholder:text-slate-400 text-[14px]"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={controller.password}
+                        onChange={(e) => controller.setPassword(e.target.value)}
                         required
                     />
                 </div>
