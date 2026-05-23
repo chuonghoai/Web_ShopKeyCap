@@ -14,6 +14,7 @@ export const AppRoutes = () => {
         { path: "/login", element: <AuthPage /> },
         { path: "/register", element: <AuthPage /> },
         { path: "/forgot-password", element: <AuthPage /> },
+        { path: "/reset-password", element: <AuthPage /> },
 
 
         ...clientRoutes,

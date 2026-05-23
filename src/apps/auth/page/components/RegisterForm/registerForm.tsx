@@ -28,6 +28,7 @@ export const RegisterForm: React.FC<{ onNavigate: (v: 'login' | 'register') => v
                             value={controller.email}
                             placeholder='Nhập email của bạn'
                             onChange={e => controller.setEmail(e.target.value)}
+                            type='email'
                             required
                         />
                         <button

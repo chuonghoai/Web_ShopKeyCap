@@ -41,8 +41,7 @@ export class AuthService {
     /**
      * Request OTP with purpose
      */
-    async sendOtp(email: string): Promise<ApiResponse<null>> {
-        const purpose = OtpPurpose.REGISTER;
+    async sendOtp(email: string, purpose: OtpPurpose): Promise<ApiResponse<null>> {
         const result = await this.authRepo.sendOtp(email, purpose);
         return result;
     }
