@@ -5,7 +5,7 @@ import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { ToastProvider } from './components/toast/toast'
 import { GoogleOAuthProvider } from '@react-oauth/google'
-import { AuthProvider } from './core/auth/auth.context.tsx'
+import { AuthProvider } from './core/auth/auth.provider.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

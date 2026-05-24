@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { CartProvider } from "../features/cart/context/cart.context";
+import { CartProvider } from "../features/cart/context/cart.provider";
 
 function ClientLayout() {
     return (
