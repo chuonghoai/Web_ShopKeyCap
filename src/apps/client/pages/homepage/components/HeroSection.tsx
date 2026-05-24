@@ -27,9 +27,10 @@ function HeroSection() {
                     src="src/apps/client/pages/homepage/assets/keyboard.png"
                     alt="Featured Keyboard"
                     className="
-                        w-full 
+                        w-full
+                        scale-[1.15]
                         object-contain
-                        hover:scale-[1.03] transition-transform duration-700
+                        hover:scale-[1.28] transition-transform duration-700
                         drop-shadow-[0_25px_40px_rgba(0,0,0,0.35)]
                     "
                 />
