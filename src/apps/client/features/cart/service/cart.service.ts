@@ -1,4 +1,4 @@
-import type { UpdateCartRequest } from "../../dto/UpdateCartRequest.dto";
+import type { UpdateCartRequest } from "../dto/UpdateCartRequest.dto";
 import type { CartRepo } from "../repo/cart.repo";
 import { CartApiRepo } from "../repo/cartApi.repo";
 import { CartMockRepo } from "../repo/cartMock.repo";
