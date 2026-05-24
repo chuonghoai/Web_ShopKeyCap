@@ -12,7 +12,7 @@ export const ProductCard = ({ data }: { data: ProductData }) => {
     return (
         <div className="group relative flex flex-col bg-slate-900 rounded-2xl border border-slate-800 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/50 hover:shadow-[0_8px_30px_rgba(59,130,246,0.15)]">
 
-            {/* Badge (Nếu có) */}
+            {/* Badge */}
             {data.badge && (
                 <div className="absolute top-4 left-4 z-10 px-2.5 py-1 bg-blue-500/20 text-blue-400 text-[13px] font-semibold rounded-md border border-blue-500/30 backdrop-blur-sm">
                     {data.badge}

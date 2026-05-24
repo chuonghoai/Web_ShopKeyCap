@@ -6,13 +6,15 @@ import Footer from "../components/footer/Footer";
 function ClientLayout() {
     return (
         <CartProvider>
-            <Header />
+            <div className="min-h-screen w-full bg-[#f1f5f9] flex flex-col">
+                <Header />
 
-            <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-8 flex flex-col">
-                <Outlet />
-            </main>
+                <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-8 flex flex-col">
+                    <Outlet />
+                </main>
 
-            <Footer />
+                <Footer />
+            </div>
         </CartProvider>
     );
 }
