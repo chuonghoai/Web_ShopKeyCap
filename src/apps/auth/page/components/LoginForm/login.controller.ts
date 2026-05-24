@@ -36,7 +36,7 @@ export const useLoginController = () => {
             if (result.success) {
                 toast("Đăng nhập thành công", 'success');
                 setAuthContext(result.data.user);
-                navigate(getAdminRoute());
+                navigate(getAdminRoute(result.data.user.role));
             }
         } catch (error: any) {
             const apiErrMsg = error.response?.data?.message
@@ -61,7 +61,7 @@ export const useLoginController = () => {
                 if (result.success) {
                     toast("Đăng nhập thành công!", 'success');
                     setAuthContext(result.data.user);
-                    navigate(getAdminRoute());
+                    navigate(getAdminRoute(result.data.user.role));
                 }
             } catch (error: any) {
                 const apiErrMsg = error.response?.data?.message

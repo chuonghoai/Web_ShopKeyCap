@@ -83,7 +83,7 @@ export const useRegisterController = () => {
             if (response.success) {
                 toast(response.message || "Đăng ký thành công!", "success");
                 setAuthContext(response.data.user);
-                navigate(getAdminRoute());
+                navigate(getAdminRoute(response.data.user.role));
             }
         } catch (error: any) {
             const apiErrMsg = error.response?.data?.message
