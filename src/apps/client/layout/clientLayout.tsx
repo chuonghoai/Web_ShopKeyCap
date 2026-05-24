@@ -9,7 +9,7 @@ function ClientLayout() {
             <div className="min-h-screen w-full bg-[#f1f5f9] flex flex-col">
                 <Header />
 
-                <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-8 flex flex-col">
+                <main className="flex-1 w-full px-6 py-8 flex flex-col">
                     <Outlet />
                 </main>
 
