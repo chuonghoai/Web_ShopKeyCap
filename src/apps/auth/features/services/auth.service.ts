@@ -69,5 +69,5 @@ export class AuthService {
     }
 }
 
-const useMock = false;
+const useMock = true;
 export const authService = new AuthService(useMock ? new AuthMockRepo() : undefined);
