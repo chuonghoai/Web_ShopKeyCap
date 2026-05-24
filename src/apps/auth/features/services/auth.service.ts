@@ -67,6 +67,13 @@ export class AuthService {
         const result = await this.authRepo.resetPassword(request);
         return result;
     }
+
+    /**
+     * Logout
+     */
+    async logout(): Promise<ApiResponse<null>> {
+        return this.authRepo.logout();
+    }
 }
 
 const useMock = true;

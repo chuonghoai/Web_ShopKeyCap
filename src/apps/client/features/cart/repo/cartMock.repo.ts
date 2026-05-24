@@ -8,7 +8,7 @@ interface MockDb {
 }
 
 const mockDb: MockDb = {
-    cartCount: 13,
+    cartCount: 24,
 };
 
 const ok = <T>(data: T, message: string): ApiResponse<T> => ({
