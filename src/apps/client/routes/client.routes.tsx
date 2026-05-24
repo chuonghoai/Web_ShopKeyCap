@@ -1,6 +1,7 @@
-import type { RouteObject } from "react-router-dom";
+import { Outlet, type RouteObject } from "react-router-dom";
 import AuthGuard from "../../../core/auth/auth.guard";
 import { ROLE } from "../../../core/constants/role.constant";
+import ClientLayout from "../layout/clientLayout";
 
 const ProfilePage = () => {
     return <h1>Thông tin cá nhân (Cần đăng nhập)</h1>;
@@ -12,19 +13,35 @@ const HomePage = () => {
 
 export const clientRoutes: RouteObject[] = [
     {
-        path: "/",
-        element: (
-            <AuthGuard requireAuth={false}>
-                <HomePage />
-            </AuthGuard>
-        ),
-    },
-    {
-        path: "/profile",
-        element: (
-            <AuthGuard requireAuth={true} allowedRoles={[ROLE.CLIENT]}>
-                <ProfilePage />
-            </AuthGuard>
-        ),
+        element: <ClientLayout />,
+        children: [
+            /**
+             * Public route
+             */
+            {
+                element: (
+                    <AuthGuard requireAuth={false}>
+                        <Outlet />
+                    </AuthGuard>
+                ),
+                children: [
+                    { path: "/", element: <HomePage /> },
+                ]
+            },
+
+            /**
+             * Private route
+             */
+            {
+                element: (
+                    <AuthGuard requireAuth={true} allowedRoles={[ROLE.CLIENT]}>
+                        <Outlet />
+                    </AuthGuard>
+                ),
+                children: [
+                    { path: "/profile", element: <ProfilePage /> },
+                ]
+            }
+        ]
     }
 ];
