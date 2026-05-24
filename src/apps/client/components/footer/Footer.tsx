@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
     return (
-        <div className="w-full bg-slate-50 pt-10 pb-8">
+        <div className="w-full bg-linear-to-t from-slate-200/60 to-[#f1f5f9] pt-10 pb-8">
             <div className="max-w-350 mx-auto px-6 lg:px-10 flex flex-col gap-6">
                 <div className="relative w-full h-70 md:h-70 rounded-3xl bg-slate-900 overflow-hidden shadow-xl flex items-center">
                     <img
