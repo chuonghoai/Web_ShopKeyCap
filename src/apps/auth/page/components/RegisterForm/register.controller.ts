@@ -4,10 +4,14 @@ import { authService } from '../../../features/services/auth.service';
 import { OtpPurpose } from '../../../features/dto/otp.dto';
 import { useNavigate } from 'react-router-dom';
 import { useDocumentTitle } from '../../../../../core/hooks/useDocumentTitle';
+import { useAuth } from '../../../../../core/hooks/useAuth';
+import { getAdminRoute } from '../../../../../utils/getAdminRoute';
 
 export const useRegisterController = () => {
     useDocumentTitle("Đăng ký - Cyber Key");
+
     const { toast } = useToast();
+    const { login: setAuthContext } = useAuth();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
@@ -78,7 +82,8 @@ export const useRegisterController = () => {
 
             if (response.success) {
                 toast(response.message || "Đăng ký thành công!", "success");
-                navigate("/");
+                setAuthContext(response.data.user);
+                navigate(getAdminRoute());
             }
         } catch (error: any) {
             const apiErrMsg = error.response?.data?.message

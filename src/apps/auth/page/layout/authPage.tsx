@@ -73,7 +73,7 @@ const AuthPage: React.FC = () => {
         </div>
 
         {/* Info component */}
-        <div className="relative z-10 w-full max-w-[480px] mt-6 flex justify-between gap-2 px-2">
+        <div className="relative z-10 w-full max-w-120 mt-6 flex justify-between gap-2 px-2">
           <div className="flex flex-col items-center text-center gap-1.5">
             <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -83,7 +83,7 @@ const AuthPage: React.FC = () => {
             </div>
             <div>
               <h4 className="text-[12px] font-bold text-slate-800">Bảo mật dữ liệu</h4>
-              <p className="text-[11px] text-slate-500 mt-0.5 max-w-[80px]">Dữ liệu được bảo vệ an toàn.</p>
+              <p className="text-[11px] text-slate-500 mt-0.5 max-w-20">Dữ liệu được bảo vệ an toàn.</p>
             </div>
           </div>
 
@@ -98,7 +98,7 @@ const AuthPage: React.FC = () => {
             </div>
             <div>
               <h4 className="text-[12px] font-bold text-slate-800">Giao hàng nhanh</h4>
-              <p className="text-[11px] text-slate-500 mt-0.5 max-w-[120px]">Giao hàng tốc hành toàn quốc.</p>
+              <p className="text-[11px] text-slate-500 mt-0.5 max-w-30">Giao hàng tốc hành toàn quốc.</p>
             </div>
           </div>
 
@@ -110,7 +110,7 @@ const AuthPage: React.FC = () => {
             </div>
             <div>
               <h4 className="text-[12px] font-bold text-slate-800">Hỗ trợ 24/7</h4>
-              <p className="text-[11px] text-slate-500 mt-0.5 max-w-[120px]">Chúng tôi hỗ trợ bạn bất kỳ lúc nào.</p>
+              <p className="text-[11px] text-slate-500 mt-0.5 max-w-30">Chúng tôi hỗ trợ bạn bất kỳ lúc nào.</p>
             </div>
           </div>
         </div>

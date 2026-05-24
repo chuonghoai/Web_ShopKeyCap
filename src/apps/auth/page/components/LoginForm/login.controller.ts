@@ -4,11 +4,14 @@ import { authService } from '../../../features/services/auth.service';
 import { useToast } from '../../../../../components/toast/toast';
 import { useNavigate } from 'react-router-dom';
 import { type CredentialResponse } from '@react-oauth/google';
+import { useAuth } from '../../../../../core/hooks/useAuth';
+import { getAdminRoute } from '../../../../../utils/getAdminRoute';
 
 export const useLoginController = () => {
     useDocumentTitle('Đăng nhập - Cyber Key');
 
     const { toast } = useToast();
+    const { login: setAuthContext } = useAuth();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
@@ -32,7 +35,8 @@ export const useLoginController = () => {
 
             if (result.success) {
                 toast("Đăng nhập thành công", 'success');
-                navigate("/");
+                setAuthContext(result.data.user);
+                navigate(getAdminRoute());
             }
         } catch (error: any) {
             const apiErrMsg = error.response?.data?.message
@@ -56,7 +60,8 @@ export const useLoginController = () => {
 
                 if (result.success) {
                     toast("Đăng nhập thành công!", 'success');
-                    navigate("/");
+                    setAuthContext(result.data.user);
+                    navigate(getAdminRoute());
                 }
             } catch (error: any) {
                 const apiErrMsg = error.response?.data?.message

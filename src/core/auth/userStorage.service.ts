@@ -1,14 +1,15 @@
+import type { User } from "../../apps/client/features/profile/models/user.model";
 import { localStorageService } from "../localStorage/localStorage.service";
 
 const USER = "user";
 
 class UserStorageService {
-    saveUser(user: any): void {
+    saveUser(user: User): void {
         localStorageService.set(USER, user);
     }
 
-    getUser(): any | null {
-        return localStorageService.get<any>(USER);
+    getUser(): User | null {
+        return localStorageService.get<User>(USER);
     }
 
     removeUser(): void {

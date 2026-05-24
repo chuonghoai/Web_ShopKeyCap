@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
-import { userStorageService } from "./userStorage.service";
 import { ROLE } from "../constants/role.constant";
+import { useAuth } from "../hooks/useAuth";
 
 interface Props {
     children: React.ReactNode;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 function AuthGuard({ children, allowedRoles, requireAuth = true }: Props) {
-    const user = userStorageService.getUser();
+    const { user } = useAuth();
 
     if (requireAuth && !user) {
         return <Navigate to="/login" replace />;
