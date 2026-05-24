@@ -13,7 +13,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onNavigate }) => {
     const { toast } = useToast();
 
     return (
-        <div className="w-full max-w-[400px] bg-white p-6 sm:p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+        <div className="w-full max-w-100 bg-white p-6 sm:p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
 
             {/* Title */}
             <div className="text-center mb-5">

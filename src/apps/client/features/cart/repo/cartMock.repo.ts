@@ -1,5 +1,5 @@
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
-import type { UpdateCartRequest } from "../../dto/UpdateCartRequest.dto";
+import type { UpdateCartRequest } from "../dto/UpdateCartRequest.dto";
 import type { CartSummaryModel } from "../model/summary.model";
 import type { CartRepo } from "./cart.repo";
 
@@ -8,7 +8,7 @@ interface MockDb {
 }
 
 const mockDb: MockDb = {
-    cartCount: 13,
+    cartCount: 24,
 };
 
 const ok = <T>(data: T, message: string): ApiResponse<T> => ({

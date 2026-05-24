@@ -4,6 +4,7 @@ import { User } from "../../apps/client/features/profile/models/user.model";
 import { tokenService } from "./token.service";
 import { AuthContext } from "./auth.context";
 import { cartSummaryStorageService } from "../../apps/client/features/cart/CartLocalStorage/CartSummaryStorage.service";
+import { authService } from "../../apps/auth/features/services/auth.service";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
@@ -21,6 +22,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const logout = () => {
+        authService.logout();
         setUser(null);
         userStorageService.clear();
         cartSummaryStorageService.clear();

@@ -94,4 +94,12 @@ export class AuthApiRepo implements AuthRepo {
             request
         )
     }
+
+    /**
+     * POST /logout
+     * @returns null
+     */
+    async logout(): Promise<ApiResponse<null>> {
+        return apiClient.post<ApiResponse<null>>("/logout");
+    }
 }

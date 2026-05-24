@@ -2,15 +2,9 @@ import { useState, useEffect, type ReactNode } from "react";
 import { CartContext } from "./cart.context";
 import { useAuth } from "../../../../../core/hooks/useAuth";
 import { ROLE } from "../../../../../core/constants/role.constant";
-import type { CartSummaryModel } from "../model/summary.model";
 import { cartSummaryStorageService } from "../CartLocalStorage/CartSummaryStorage.service";
 import { useToast } from "../../../../../components/toast/toast";
-
-const mockFetchCartSummaryAPI = async (): Promise<CartSummaryModel> => {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve({ cartCount: 5 }), 500);
-    });
-};
+import { cartService } from "../service/cart.service";
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
     const { user } = useAuth();
@@ -19,10 +13,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
     const fetchCartSummary = async () => {
         try {
-            const data = await mockFetchCartSummaryAPI();
+            const response = await cartService.getCartSummary();
 
-            setCartCount(data.cartCount);
-            cartSummaryStorageService.save(data.cartCount);
+            setCartCount(response.data.cartCount);
+            cartSummaryStorageService.save(response.data.cartCount);
         } catch (error) {
             toast("Lỗi khi lấy thông tin giỏ hàng:", "error");
         }

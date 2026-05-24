@@ -99,4 +99,13 @@ export class AuthMockRepo implements AuthRepo {
         // }
         return response;
     }
+
+    async logout(): Promise<ApiResponse<null>> {
+        let response: ApiResponse<null> = {
+            success: true,
+            message: 'Đăng xuất thành công',
+            data: null
+        }
+        return response;
+    }
 }

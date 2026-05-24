@@ -13,4 +13,6 @@ export interface AuthRepo {
     register(request: RegisterRequest): Promise<ApiResponse<LoginResponse>>;
 
     resetPassword(request: ResetPasswordRequest): Promise<ApiResponse<null>>;
+
+    logout(): Promise<ApiResponse<null>>;
 }

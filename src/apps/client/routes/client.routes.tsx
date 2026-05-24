@@ -2,13 +2,10 @@ import { Outlet, type RouteObject } from "react-router-dom";
 import AuthGuard from "../../../core/auth/auth.guard";
 import { ROLE } from "../../../core/constants/role.constant";
 import ClientLayout from "../layout/clientLayout";
+import { HomePage } from "../pages/homepage/homepage";
 
 const ProfilePage = () => {
     return <h1>Thông tin cá nhân (Cần đăng nhập)</h1>;
-};
-
-const HomePage = () => {
-    return <h1>Client Home (Công khai)</h1>;
 };
 
 export const clientRoutes: RouteObject[] = [

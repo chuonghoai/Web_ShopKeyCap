@@ -1,6 +1,6 @@
 import { apiClient } from "../../../../../core/api/apiClient";
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
-import type { UpdateCartRequest } from "../../dto/UpdateCartRequest.dto";
+import type { UpdateCartRequest } from "../dto/UpdateCartRequest.dto";
 import type { CartSummaryModel } from "../model/summary.model";
 import type { CartRepo } from "./cart.repo";
 
@@ -24,7 +24,7 @@ export class CartApiRepo implements CartRepo {
      *  - Thêm sản phẩm vào giỏ hàng
      *  - Nếu sản phẩm đã tồn tại, cộng dồn số lượng (ko tạo mới)
      */
-    addToCart(request: UpdateCartRequest): Promise<ApiResponse<null>> {
+    async addToCart(request: UpdateCartRequest): Promise<ApiResponse<null>> {
         return apiClient.post<ApiResponse<null>>("/cart/items", request);
     }
 }
