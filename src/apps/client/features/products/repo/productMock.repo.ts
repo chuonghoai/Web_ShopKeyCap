@@ -9,7 +9,7 @@ export class ProductMockRepo implements ProductRepo {
     private mockProducts: ProductItem[] = [
         {
             id: "1",
-            name: "Bàn phím cơ custom Akko 3068B Plus",
+            name: "Bàn phím cơ custom Akko 3068B Plus Bàn phím cơ custom Akko 3068B PlusBàn phím cơ custom Akko 3068B PlusBàn phím cơ custom Akko 3068B Plus",
             imageUrl: "https://product.hstatic.net/200000889805/product/ooth-5-0-wireless-2-4ghz-hotswap-foam-tieu-am-akko-cs-jelly-pink-5pkuf_5b9c81513a474a26b6fc8b26f99ffe61_master.jpg",
             typeName: "Bàn phím",
             price: 1200000,
