@@ -27,7 +27,7 @@ export class ProductApiRepo implements ProductRepo {
     }
 
     /**
-     * POST /products/newest
+     * GET /products/newest
      * @param limit 
      * @returns ProductItem[]
      * 
@@ -40,7 +40,7 @@ export class ProductApiRepo implements ProductRepo {
     }
 
     /**
-     * POST /products/popular
+     * GET /products/popular
      * @param limit 
      * @returns ProductItem[]
      * 
@@ -53,7 +53,7 @@ export class ProductApiRepo implements ProductRepo {
     }
 
     /**
-     * POST /products/hot-brand
+     * GET /products/hot-brand
      * @param limit 
      * @returns ProductItem[]
      * 
@@ -66,7 +66,7 @@ export class ProductApiRepo implements ProductRepo {
     }
 
     /**
-     * POST /products/recommended
+     * GET /products/recommended
      * @param request: RecommendedProductRequest
      * @returns ProductItem[]
      * 
