@@ -1,4 +1,3 @@
-// homepage/components/Section.tsx
 import type { ProductItem } from '../../../features/products/model/product.model';
 import ProductCard from './ProductCard';
 
@@ -31,7 +30,7 @@ export const Section = ({ sectionName, items, onViewAll, id }: SectionProps) => 
             <div className="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory scroll-smooth scrollbar-none [&::-webkit-scrollbar]:hidden">
                 {items.map((product) => (
                     <div key={product.id} className="snap-start shrink-0 w-65 sm:w-70">
-                        <ProductCard data={product} />
+                        <ProductCard data={product} isNew={sectionName === "Hàng Mới Cập Bến"} />
                     </div>
                 ))}
             </div>
