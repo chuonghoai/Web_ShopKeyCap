@@ -14,7 +14,7 @@ export class ProductMockRepo implements ProductRepo {
             price: 1500000,
             originalPrice: 1500000,
             percentDiscount: 0,
-            isFavorite: false,
+            isFavorite: true,
             slug: "ban-phim-co-custom-akko-3068b-plus",
         },
         {
@@ -34,7 +34,7 @@ export class ProductMockRepo implements ProductRepo {
             price: 200000,
             originalPrice: 200000,
             percentDiscount: 0,
-            isFavorite: false,
+            isFavorite: true,
             slug: "combo-lot-chuot-kem-ke-tay-mezy-mouse",
         },
         {

@@ -1,9 +1,7 @@
-// homepage/components/ProductCard.tsx
 import { Link } from 'react-router-dom';
 import type { ProductItem } from '../../../features/products/model/product.model';
 
 export const ProductCard = ({ data }: { data: ProductItem }) => {
-    // Hàm format giá tiền VNĐ
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
     };
@@ -11,7 +9,7 @@ export const ProductCard = ({ data }: { data: ProductItem }) => {
     return (
         <div className="group relative flex flex-col bg-slate-900 rounded-2xl border border-slate-800 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/50 hover:shadow-[0_8px_30px_rgba(59,130,246,0.15)]">
 
-            {/* Badge: Ưu tiên hiển thị % giảm giá nếu có */}
+            {/* Badge*/}
             {data.percentDiscount > 0 && (
                 <div className="absolute top-4 left-4 z-10 px-2.5 py-1 bg-red-500/20 text-red-400 text-[13px] font-semibold rounded-md border border-red-500/30 backdrop-blur-sm">
                     -{data.percentDiscount}%
@@ -19,7 +17,7 @@ export const ProductCard = ({ data }: { data: ProductItem }) => {
             )}
 
             {/* Image Box */}
-            <Link to={`/product/${data.slug}`} className="block w-full h-48 bg-slate-950/50 rounded-xl overflow-hidden mb-4 relative flex items-center justify-center">
+            <Link to={`/product/${data.slug}`} className="block w-full h-48 bg-slate-950/50 rounded-xl overflow-hidden mb-4 relative items-center justify-center">
                 <img
                     src={data.imageUrl}
                     alt={data.name}
@@ -39,9 +37,8 @@ export const ProductCard = ({ data }: { data: ProductItem }) => {
                     <span className="text-[18px] font-bold text-white">
                         {formatPrice(data.price)}
                     </span>
-                    {/* Hiển thị giá gốc nếu có giảm giá */}
                     {(data.originalPrice > data.price) && (
-                        <span className="text-[14px] font-medium text-slate-500 line-through mb-[2px]">
+                        <span className="text-[14px] font-medium text-slate-500 line-through mb-0.5">
                             {formatPrice(data.originalPrice)}
                         </span>
                     )}

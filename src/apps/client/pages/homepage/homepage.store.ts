@@ -1,4 +1,3 @@
-// homepage.store.ts
 import { useEffect, useState } from "react";
 import type { ProductSectionData } from "../../features/products/model/productSection.model";
 import { productService } from "../../features/products/services/product.service";
@@ -33,15 +32,13 @@ export const useHomepageStore = () => {
         }
     };
 
-    // Tự động gọi API khi khởi tạo store
     useEffect(() => {
         fetchAllProducts();
     }, []);
 
-    // Chỉ trả ra dữ liệu (Data) và các hàm tương tác với dữ liệu (nếu có)
     return {
         isLoading,
         sections,
-        refreshData: fetchAllProducts, // Cung cấp thêm hàm nếu Controller muốn gọi lại API
+        refreshData: fetchAllProducts,
     };
 };
