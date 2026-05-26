@@ -7,12 +7,21 @@ import type { ProductRepo } from "./product.repo";
 export class ProductApiRepo implements ProductRepo {
     /**
      * GET /products
-     * @param ListProductRequest
+     * @query ListProductRequest (query gửi đi được làm phẳng, 
+     *      không có cấu trúc lồng nhau như filterState trong ListProductRequest)
      * @returns ProductItem[] có phân trang (pagination) trong ApiResponse
      */
     async getProducts(request: ListProductRequest): Promise<ApiResponse<ProductItem[]>> {
+        const { page, pageSize, filter } = request;
+
+        const queryParams = {
+            page,
+            pageSize,
+            ...filter
+        };
+
         return apiClient.get<ApiResponse<ProductItem[]>>("/products", {
-            params: request
+            params: queryParams
         });
     }
 }

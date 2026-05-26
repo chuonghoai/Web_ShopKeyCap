@@ -7,11 +7,6 @@ export interface ProductItem {
     imageUrl: string;
 
     /**
-     * Sản phẩm thuộc những danh mục nào
-     */
-    categoryName: string[];
-
-    /**
      * price: Giá hiện tại
      * originalPrice: Giá gốc
      * percentDiscount: Phần trăm giảm giá, có thể bằng 0 nếu không giảm giá
