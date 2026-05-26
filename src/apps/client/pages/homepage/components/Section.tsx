@@ -20,7 +20,7 @@ export const Section = ({ sectionName, items, onViewAll, id }: SectionProps) => 
         <section id={id} className="mt-16 first-of-type:mt-8 scroll-mt-32 w-full">
 
             {/* Header Section */}
-            <div className="flex items-center justify-between mb-6">
+            <div className="relative z-10 flex items-center justify-between mb-6">
                 <h2 className="text-[26px] font-bold text-slate-900 flex items-center gap-3">
                     <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span>
                     {sectionName}
@@ -50,21 +50,21 @@ export const Section = ({ sectionName, items, onViewAll, id }: SectionProps) => 
                 </div>
             </div>
 
-            <div
+             <div
                 ref={controller.trackRef}
-                className="flex overflow-x-hidden gap-4 lg:gap-6 pb-4 pt-14 -mt-10 w-full relative pr-2"
+                className="flex overflow-x-hidden gap-4 lg:gap-6 pb-4 pt-18 -mt-17 w-full relative z-20 pr-2 pointer-events-none"
             >
                 {items.map((product) => (
                     <div
                         key={product.id}
-                        className="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-72px)/4)] xl:w-[calc((100%-96px)/5)]"
+                        className="shrink-0 w-full sm:w-[calc((100%-24px)/2)] lg:w-[calc((100%-72px)/4)] xl:w-[calc((100%-96px)/5)] pointer-events-auto"
                     >
                         <ProductCard data={product} isNew={sectionName === "Hàng Mới Cập Bến"} />
                     </div>
                 ))}
             </div>
 
-            <div className="mt-2 flex justify-center">
+            <div className="mt-2 flex justify-center relative z-10">
                 <button
                     onClick={onViewAll}
                     className="

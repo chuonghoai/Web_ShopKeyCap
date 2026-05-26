@@ -1,3 +1,4 @@
+// homepage/components/ProductCard.tsx
 import { Heart, ShoppingCart } from "lucide-react";
 import type { ProductItem } from "../../../features/products/model/product.model";
 import { useProductCardController } from "../cpnController/productCard.controller";
@@ -17,15 +18,18 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
         >
             {/* tooltip */}
             <div className="
-                absolute -top-12 left-1/2 -translate-x-1/2 z-60
-                whitespace-nowrap rounded-lg bg-slate-900 px-3 py-2 text-[13px] font-medium text-white shadow-lg
+                absolute bottom-full mb-3 left-1/2 -translate-x-1/2 z-9999
+                w-max max-w-55 rounded-lg bg-slate-900 px-3 py-2 text-[13px] font-medium text-white shadow-lg
                 opacity-0 invisible translate-y-2
                 transition-all duration-200
                 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
                 group-has-[button:hover]:opacity-0 group-has-[button:hover]:invisible
-                pointer-events-none
+                pointer-events-none text-center
             ">
-                {data.name}
+                <span className="line-clamp-2 whitespace-normal leading-snug">
+                    {data.name}
+                </span>
+
                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-slate-900 rotate-45"></div>
             </div>
 
@@ -43,7 +47,7 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
                 group-hover:shadow-xl
             ">
                 {/* Image */}
-                <div className="relative overflow-hidden bg-black aspect-4/3 w-full shrink-0">
+                <div className="relative z-10 overflow-hidden bg-black aspect-4/3 w-full shrink-0">
                     <div className="absolute inset-0 bg-linear-to-b from-black/20 via-black/40 to-black/80 z-1" />
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-20 bg-orange-300/40 blur-3xl z-1" />
 
