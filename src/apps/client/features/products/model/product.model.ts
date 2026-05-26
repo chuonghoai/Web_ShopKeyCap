@@ -5,6 +5,7 @@ export interface ProductItem {
      * imageUrl: Ảnh đại diện chính của sản phẩm
      */
     imageUrl: string;
+    typeName: string;
 
     /**
      * price: Giá hiện tại
