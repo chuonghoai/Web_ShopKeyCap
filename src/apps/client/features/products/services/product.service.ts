@@ -4,6 +4,7 @@ import { CategorySlug } from "../../../../../models/type/categorySlug.type";
 import { ProductTypeSlug } from "../../../../../models/type/productSlug.type";
 import type { ListProductRequest } from "../dto/productRequest.dto";
 import type { ProductItem } from "../model/product.model";
+import { productSection, type ProductSectionData } from "../model/productSection.model";
 import type { ProductRepo } from "../repo/product.repo";
 import { ProductApiRepo } from "../repo/productApi.repo";
 import { ProductMockRepo } from "../repo/productMock.repo";
@@ -23,57 +24,70 @@ export class ProductService {
     /**
      * 1. Lấy sản phẩm mới cập bến
      */
-    async getNewestProducts(): Promise<ApiResponse<ProductItem[]>> {
-        return this.productRepo.getNewestProducts(LIMIT_DEFAULT);
+    async getNewestProducts(): Promise<ApiResponse<ProductSectionData>> {
+        const res = await this.productRepo.getNewestProducts(LIMIT_DEFAULT);
+        return productSection.mapToSection(res, "Hàng Mới Cập Bến", { limit: LIMIT_DEFAULT });
     }
 
     /**
      * 2. Lấy sản phẩm bán chạy/phổ biến
      */
-    async getPopularProducts(): Promise<ApiResponse<ProductItem[]>> {
-        return this.productRepo.getPopularProducts(LIMIT_DEFAULT);
+    async getPopularProducts(): Promise<ApiResponse<ProductSectionData>> {
+        const res = await this.productRepo.getPopularProducts(LIMIT_DEFAULT);
+        return productSection.mapToSection(res, "Sản Phẩm Bán Chạy", { limit: LIMIT_DEFAULT });
     }
 
     /**
-     * 3. Lấy sản phẩm thuộc categories gamming
+     * 3. Lấy sản phẩm thuộc categories gaming
      */
-    async getGamingProducts(): Promise<ApiResponse<ProductItem[]>> {
-        return this.productRepo.getRecommendedProducts({ categorySlug: CategorySlug.GAMING, limit: LIMIT_DEFAULT });
+    async getGamingProducts(): Promise<ApiResponse<ProductSectionData>> {
+        const filter = { categorySlug: CategorySlug.GAMING, limit: LIMIT_DEFAULT };
+        const res = await this.productRepo.getRecommendedProducts(filter);
+        return productSection.mapToSection(res, "Góc Gaming", filter);
     }
 
     /**
      * 4. Lấy sản phẩm thuộc categories văn phòng
      */
-    async getOfficeProducts(): Promise<ApiResponse<ProductItem[]>> {
-        return this.productRepo.getRecommendedProducts({ categorySlug: CategorySlug.VAN_PHONG, limit: LIMIT_DEFAULT });
+    async getOfficeProducts(): Promise<ApiResponse<ProductSectionData>> {
+        const filter = { categorySlug: CategorySlug.VAN_PHONG, limit: LIMIT_DEFAULT };
+        const res = await this.productRepo.getRecommendedProducts(filter);
+        return productSection.mapToSection(res, "Góc Văn Phòng", filter);
     }
 
     /**
      * 5. Lấy các sản phẩm của thương hiệu nổi bật
      */
-    async getProductsByHotBrand(): Promise<ApiResponse<ProductItem[]>> {
-        return this.productRepo.getProductsByHotBrand(LIMIT_DEFAULT);
+    async getProductsByHotBrand(): Promise<ApiResponse<ProductSectionData>> {
+        const res = await this.productRepo.getProductsByHotBrand(LIMIT_DEFAULT);
+        return productSection.mapToSection(res, "Thương Hiệu Nổi Bật", { limit: LIMIT_DEFAULT });
     }
 
     /**
      * 6. Lấy các sản phẩm không phải bàn phím (có thể là phụ kiện, keycap, switch...)
      */
-    async getProductExcludedKeyboard(): Promise<ApiResponse<ProductItem[]>> {
-        return this.productRepo.getRecommendedProducts({ excludeTypes: [ProductTypeSlug.KEYBOARD], limit: LIMIT_DEFAULT });
+    async getProductExcludedKeyboard(): Promise<ApiResponse<ProductSectionData>> {
+        const filter = { excludeTypes: [ProductTypeSlug.KEYBOARD], limit: LIMIT_DEFAULT };
+        const res = await this.productRepo.getRecommendedProducts(filter);
+        return productSection.mapToSection(res, "Phụ Kiện & Khác", filter);
     }
 
     /**
      * 7. Lấy sản phẩm có giá dưới 1 triệu
      */
-    async getCheapestProducts(): Promise<ApiResponse<ProductItem[]>> {
-        return this.productRepo.getRecommendedProducts({ priceMax: 1000000, limit: LIMIT_DEFAULT });
+    async getCheapestProducts(): Promise<ApiResponse<ProductSectionData>> {
+        const filter = { priceMax: 1000000, limit: LIMIT_DEFAULT };
+        const res = await this.productRepo.getRecommendedProducts(filter);
+        return productSection.mapToSection(res, "Giá Hạt Dẻ (Dưới 1 Triệu)", filter);
     }
 
     /**
      * 8. Lấy sản phẩm cao cấp (từ 10 triệu trở lên)
      */
-    async getExpensiveProducts(): Promise<ApiResponse<ProductItem[]>> {
-        return this.productRepo.getRecommendedProducts({ priceMin: 10000000, limit: LIMIT_DEFAULT });
+    async getExpensiveProducts(): Promise<ApiResponse<ProductSectionData>> {
+        const filter = { priceMin: 10000000, limit: LIMIT_DEFAULT };
+        const res = await this.productRepo.getRecommendedProducts(filter);
+        return productSection.mapToSection(res, "Hàng Cao Cấp", filter);
     }
 }
 
