@@ -1,7 +1,14 @@
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import type { ListProductRequest } from "../dto/productRequest.dto";
+import type { RecommendedProductRequest } from "../dto/recommendedProductRequest.dto";
 import type { ProductItem } from "../model/product.model";
 
 export interface ProductRepo {
     getProducts(request: ListProductRequest): Promise<ApiResponse<ProductItem[]>>;
+
+    getNewestProducts(limit: number): Promise<ApiResponse<ProductItem[]>>;
+    getPopularProducts(limit: number): Promise<ApiResponse<ProductItem[]>>;
+    getProductsByHotBrand(limit: number): Promise<ApiResponse<ProductItem[]>>;
+
+    getRecommendedProducts(request: RecommendedProductRequest): Promise<ApiResponse<ProductItem[]>>;
 }
