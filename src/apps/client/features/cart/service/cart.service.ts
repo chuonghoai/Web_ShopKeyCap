@@ -1,3 +1,4 @@
+import { USE_MOCK } from "../../../../../core/config/useMock.config";
 import type { UpdateCartRequest } from "../dto/UpdateCartRequest.dto";
 import type { CartRepo } from "../repo/cart.repo";
 import { CartApiRepo } from "../repo/cartApi.repo";
@@ -24,5 +25,4 @@ export class CartService {
     }
 }
 
-const useMock = true;
-export const cartService = new CartService(useMock ? new CartMockRepo() : undefined);
+export const cartService = new CartService(USE_MOCK ? new CartMockRepo() : new CartApiRepo());

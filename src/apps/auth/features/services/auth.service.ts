@@ -1,5 +1,6 @@
 
 import type { ApiResponse } from "../../../../core/api/apiResponse";
+import { USE_MOCK } from "../../../../core/config/useMock.config";
 import { tokenService } from "../../../../core/auth/token.service";
 import { userStorageService } from "../../../../core/auth/userStorage.service";
 import type { LoginResponse } from "../dto/login.dto";
@@ -76,5 +77,4 @@ export class AuthService {
     }
 }
 
-const useMock = true;
-export const authService = new AuthService(useMock ? new AuthMockRepo() : undefined);
+export const authService = new AuthService(USE_MOCK ? new AuthMockRepo() : new AuthApiRepo());
