@@ -20,8 +20,23 @@ export class CartService {
     /**
      * Add to cart
      */
-    async addToCart(request: UpdateCartRequest) {
-        return this.cartRepo.addToCart(request);
+    async addToCart(productId: number) {
+        const quantity = 1;
+        return this.cartRepo.addToCart(productId, quantity);
+    }
+
+    /**
+     * Update cart item trực tiếp (gọi API ngay lập tức)
+     */
+    async updateCartItem(request: UpdateCartRequest[]) {
+        return this.cartRepo.updateCartItem(request);
+    }
+
+    /**
+     * Delete item from cart
+     */
+    async deleteCartItem(productId: string) {
+        return this.cartRepo.deleteCartItem(productId);
     }
 }
 
