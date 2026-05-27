@@ -18,14 +18,14 @@ export class CartApiRepo implements CartRepo {
     /**
      * POST /cart/items
      * @body productId, quantity
-     * @returns null
+     * @returns newCartCount
      * 
      * Mô tả: 
      *  - Thêm sản phẩm vào giỏ hàng
      *  - Nếu sản phẩm đã tồn tại, cộng dồn số lượng (ko tạo mới)
      */
-    async addToCart(productId: number, quantity: number): Promise<ApiResponse<null>> {
-        return apiClient.post<ApiResponse<null>>("/cart/items", {
+    async addToCart(productId: number, quantity: number): Promise<ApiResponse<{ newCartCount: number }>> {
+        return apiClient.post<ApiResponse<{ newCartCount: number }>>("/cart/items", {
             productId, quantity
         });
     }
@@ -33,23 +33,23 @@ export class CartApiRepo implements CartRepo {
     /**
      * PATCH /cart/items
      * @body UpdateCartRequest[]
-     * @returns null
+     * @returns newCartCount
      * 
      * Mô tả: Cập nhật số lượng sản phẩm trong giỏ hàng
      */
-    updateCartItem(request: UpdateCartRequest[]): Promise<ApiResponse<null>> {
-        return apiClient.patch<ApiResponse<null>>("/cart/items", request);
+    updateCartItem(request: UpdateCartRequest[]): Promise<ApiResponse<{ newCartCount: number }>> {
+        return apiClient.patch<ApiResponse<{ newCartCount: number }>>("/cart/items", request);
     }
 
     /**
      * DELETE /cart/items/{productId}
      * @param productId
-     * @returns null
+     * @returns newCartCount
      * 
      * Mô tả: Xóa sản phẩm khỏi giỏ hàng
      */
-    deleteCartItem(productId: string): Promise<ApiResponse<null>> {
-        return apiClient.delete<ApiResponse<null>>("/cart/items", {
+    deleteCartItem(productId: string): Promise<ApiResponse<{ newCartCount: number }>> {
+        return apiClient.delete<ApiResponse<{ newCartCount: number }>>("/cart/items", {
             params: productId
         });
     }
