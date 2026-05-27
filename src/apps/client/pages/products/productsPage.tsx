@@ -1,3 +1,4 @@
+import { SORT_OPTIONS } from "../../features/products/model/filter.model";
 import HeroSection from "../homepage/components/HeroSection";
 import ProductCard from "../homepage/components/ProductCard";
 import { useProductsController } from "./products.controller";
@@ -131,12 +132,11 @@ export const ProductsPage = () => {
                                 onChange={controller.handleSortChange}
                                 className="h-9 px-2 bg-transparent text-[15px] font-semibold text-slate-700 focus:outline-none cursor-pointer"
                             >
-                                <option value="">Mặc định</option>
-                                <option value="A_Z">Tên: A - Z</option>
-                                <option value="Z_A">Tên: Z - A</option>
-                                <option value="NEWEST">Hàng mới nhất</option>
-                                <option value="PRICE_ASC">Giá: Tăng dần</option>
-                                <option value="PRICE_DESC">Giá: Giảm dần</option>
+                                {SORT_OPTIONS.map((option) => (
+                                    <option key={option.slug} value={option.slug}>
+                                        {option.name}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                     </div>

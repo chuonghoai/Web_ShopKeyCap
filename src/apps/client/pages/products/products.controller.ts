@@ -1,12 +1,14 @@
 import { useEffect, useState, type ChangeEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useProductsStore } from "./products.store";
-import type { FilterState, SortOption } from "../../features/products/dto/filterState.dto";
+import type { FilterState } from "../../features/products/dto/filterState.dto";
+import type { SortOption } from "../../features/products/model/filter.model";
+
 
 export const useProductsController = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const store = useProductsStore();
-    
+
     const [currentPage, setCurrentPage] = useState<number>(1);
 
     const currentSort = searchParams.get("sort") as SortOption | "";
@@ -50,7 +52,7 @@ export const useProductsController = () => {
 
     const updateFilter = (key: string, value: string | null | string[]) => {
         const newParams = new URLSearchParams(searchParams);
-        
+
         if (value === null || value === "" || (Array.isArray(value) && value.length === 0)) {
             newParams.delete(key);
         } else if (Array.isArray(value)) {
@@ -59,7 +61,7 @@ export const useProductsController = () => {
         } else {
             newParams.set(key, value);
         }
-        
+
         newParams.set("page", "1");
         setSearchParams(newParams);
     };

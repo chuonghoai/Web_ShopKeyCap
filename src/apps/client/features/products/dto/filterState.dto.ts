@@ -1,11 +1,5 @@
-const SortOption = {
-    A_Z: 'A_Z',
-    Z_A: 'Z_A',
-    NEWEST: 'NEWEST',
-    PRICE_ASC: 'PRICE_ASC',
-    PRICE_DESC: 'PRICE_DESC',
-} as const;
-export type SortOption = (typeof SortOption)[keyof typeof SortOption];
+import type { SortOption } from "../model/filter.model";
+
 
 export interface FilterState {
     keyword?: string;
@@ -31,7 +25,7 @@ export interface FilterState {
     inStock?: boolean;
 
     /**
-     * Thứ tự sắp xếp: tene a_z, z_a, sản phẩm mới nhất, giá tăng dần, giá giảm dần
+     * Thứ tự sắp xếp: Chỉ nhận vào giá trị slug đã định nghĩa ở SortOption
      */
     sort?: SortOption;
 
