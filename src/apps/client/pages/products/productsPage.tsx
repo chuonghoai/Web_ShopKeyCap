@@ -1,101 +1,125 @@
 import { SORT_OPTIONS } from "../../features/products/model/filter.model";
 import HeroSection from "../homepage/components/HeroSection";
 import ProductCard from "../homepage/components/ProductCard";
+import { PRICE_RANGES } from "./models/priceFilter.type";
 import { useProductsController } from "./products.controller";
 
 export const ProductsPage = () => {
     const controller = useProductsController();
 
     return (
-        <div className="w-full pb-20 pt-8">
+        <div className="w-full pb-20">
             {/* Banner Top */}
             <div className="mb-8">
                 <HeroSection />
             </div>
-            <div className="flex flex-col lg:flex-row gap-8 items-start">
+            <div className="flex flex-col lg:flex-row gap-6 items-start">
 
                 {/* Filter Sidebar */}
-                <div className="w-full lg:w-64 shrink-0 flex flex-col gap-6 sticky top-24">
-                    <div className="flex items-center gap-2 mb-2">
-                        <span className="material-icons-outlined text-slate-800 text-[24px]">filter_alt</span>
-                        <h2 className="text-[20px] font-bold text-slate-900 tracking-tight">Bộ Lọc</h2>
-                    </div>
-
-                    {/* In stock */}
-                    <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                        <h3 className="font-bold text-slate-800 mb-4 text-[15px] uppercase tracking-wide">Trạng Thái</h3>
-                        <label className="flex items-center gap-3 cursor-pointer group">
-                            <input
-                                type="checkbox"
-                                checked={controller.currentInStock}
-                                onChange={controller.handleInStockChange}
-                                className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-                            />
-                            <span className="text-[15px] font-medium text-slate-600 group-hover:text-blue-600 transition-colors">
-                                Hàng có sẵn
-                            </span>
-                        </label>
-                    </div>
-
-                    {/* Categories */}
-                    <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                        <h3 className="font-bold text-slate-800 mb-4 text-[15px] uppercase tracking-wide">Danh mục</h3>
-                        <div className="flex flex-col gap-3.5">
-                            {controller.filter.category.map(category => (
-                                <label key={category.slug} className="flex items-center gap-3 cursor-pointer group">
-                                    <input
-                                        type="radio"
-                                        name="categoryFilter"
-                                        checked={controller.currentCategory === category.slug}
-                                        onChange={() => controller.handleCategoryChange(category.slug)}
-                                        className="w-5 h-5 border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-                                    />
-                                    <span className="text-[15px] font-medium text-slate-600 group-hover:text-blue-600 transition-colors">
-                                        {category.name}
-                                    </span>
-                                </label>
-                            ))}
+                <div className="w-full lg:w-70 shrink-0 top-24 self-start">
+                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-4 min-h-[calc(100vh-7rem)] overflow-y-auto">
+                        <div className="flex items-center gap-2 border-b border-slate-100 pb-2">
+                            <span className="material-icons-outlined text-slate-800 text-[24px]">filter_alt</span>
+                            <h2 className="text-[20px] font-bold text-slate-900 tracking-tight">Bộ Lọc</h2>
                         </div>
-                    </div>
 
-                    {/* Products type */}
-                    <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                        <h3 className="font-bold text-slate-800 mb-4 text-[15px] uppercase tracking-wide">Loại sản phẩm</h3>
-                        <div className="flex flex-col gap-3.5">
-                            {controller.filter.type.map(type => (
-                                <label key={type.slug} className="flex items-center gap-3 cursor-pointer group">
-                                    <input
-                                        type="radio"
-                                        name="typeFilter"
-                                        checked={controller.currentType === type.slug}
-                                        onChange={() => controller.handleTypeChange(type.slug)}
-                                        className="w-5 h-5 border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-                                    />
-                                    <span className="text-[15px] font-medium text-slate-600 group-hover:text-blue-600 transition-colors">
-                                        {type.name}
-                                    </span>
-                                </label>
-                            ))}
+                        {/* In stock */}
+                        <div>
+                            <h3 className="font-bold text-slate-800 mb-4 text-[15px] uppercase tracking-wide">Trạng Thái</h3>
+                            <label className="flex items-center gap-3 cursor-pointer group w-fit">
+                                <input
+                                    type="checkbox"
+                                    checked={controller.currentInStock}
+                                    onChange={controller.handleInStockChange}
+                                    className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                                />
+                                <span className="text-[15px] font-medium text-slate-600 group-hover:text-blue-600 transition-colors">
+                                    Hàng có sẵn
+                                </span>
+                            </label>
                         </div>
-                    </div>
 
-                    {/* brands */}
-                    <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                        <h3 className="font-bold text-slate-800 mb-4 text-[15px] uppercase tracking-wide">Thương Hiệu</h3>
-                        <div className="flex flex-col gap-3.5">
-                            {controller.filter.brand.map(brand => (
-                                <label key={brand.slug} className="flex items-center gap-3 cursor-pointer group">
-                                    <input
-                                        type="checkbox"
-                                        checked={controller.currentBrands.includes(brand.slug)}
-                                        onChange={() => controller.handleBrandChange(brand.slug)}
-                                        className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-                                    />
-                                    <span className="text-[15px] font-medium text-slate-600 group-hover:text-blue-600 transition-colors">
-                                        {brand.name}
-                                    </span>
-                                </label>
-                            ))}
+                        {/* Mức giá */}
+                        <div>
+                            <h3 className="font-bold text-slate-800 mb-4 text-[15px] uppercase tracking-wide">Mức Giá</h3>
+                            <div className="flex flex-col gap-3.5">
+                                {PRICE_RANGES.map(range => (
+                                    <label key={range.value} className="flex items-center gap-3 cursor-pointer group w-fit">
+                                        <input
+                                            type="radio"
+                                            name="priceFilter"
+                                            checked={controller.currentPriceValue === range.value}
+                                            onChange={() => controller.handlePriceChange(range.min, range.max)}
+                                            className="w-5 h-5 border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                                        />
+                                        <span className="text-[15px] font-medium text-slate-600 group-hover:text-blue-600 transition-colors">
+                                            {range.label}
+                                        </span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Categories */}
+                        <div>
+                            <h3 className="font-bold text-slate-800 mb-4 text-[15px] uppercase tracking-wide">Danh mục</h3>
+                            <div className="flex flex-col gap-3.5">
+                                {controller.filter.category.map(category => (
+                                    <label key={category.slug} className="flex items-center gap-3 cursor-pointer group w-fit">
+                                        <input
+                                            type="radio"
+                                            name="categoryFilter"
+                                            checked={controller.currentCategory === category.slug}
+                                            onChange={() => controller.handleCategoryChange(category.slug)}
+                                            className="w-5 h-5 border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                                        />
+                                        <span className="text-[15px] font-medium text-slate-600 group-hover:text-blue-600 transition-colors">
+                                            {category.name}
+                                        </span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Products type */}
+                        <div>
+                            <h3 className="font-bold text-slate-800 mb-4 text-[15px] uppercase tracking-wide">Loại sản phẩm</h3>
+                            <div className="flex flex-col gap-3.5">
+                                {controller.filter.type.map(type => (
+                                    <label key={type.slug} className="flex items-center gap-3 cursor-pointer group w-fit">
+                                        <input
+                                            type="radio"
+                                            name="typeFilter"
+                                            checked={controller.currentType === type.slug}
+                                            onChange={() => controller.handleTypeChange(type.slug)}
+                                            className="w-5 h-5 border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                                        />
+                                        <span className="text-[15px] font-medium text-slate-600 group-hover:text-blue-600 transition-colors">
+                                            {type.name}
+                                        </span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* brands */}
+                        <div>
+                            <h3 className="font-bold text-slate-800 mb-4 text-[15px] uppercase tracking-wide">Thương Hiệu</h3>
+                            <div className="flex flex-col gap-3.5">
+                                {controller.filter.brand.map(brand => (
+                                    <label key={brand.slug} className="flex items-center gap-3 cursor-pointer group w-fit">
+                                        <input
+                                            type="checkbox"
+                                            checked={controller.currentBrands.includes(brand.slug)}
+                                            onChange={() => controller.handleBrandChange(brand.slug)}
+                                            className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                                        />
+                                        <span className="text-[15px] font-medium text-slate-600 group-hover:text-blue-600 transition-colors">
+                                            {brand.name}
+                                        </span>
+                                    </label>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -103,26 +127,34 @@ export const ProductsPage = () => {
                 {/* Main */}
                 <div className="flex-1 w-full min-w-0">
 
-                    {/* Header + Sort Option */}
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-                        <h1 className="text-[26px] md:text-[28px] font-bold text-slate-900 flex items-center gap-3">
-                            <span className="w-1.5 h-7 bg-blue-500 rounded-full inline-block"></span>
-                            Tất Cả Sản Phẩm
-                        </h1>
-
-                        <div className="flex items-center gap-3 bg-white p-1.5 pl-4 rounded-xl border border-slate-200 shadow-sm">
-                            <span className="text-[14px] text-slate-500 font-medium whitespace-nowrap">Sắp xếp:</span>
-                            <select
-                                value={controller.currentSort}
-                                onChange={controller.handleSortChange}
-                                className="h-9 px-2 bg-transparent text-[15px] font-semibold text-slate-700 focus:outline-none cursor-pointer"
-                            >
-                                {SORT_OPTIONS.map((option) => (
-                                    <option key={option.slug} value={option.slug}>
-                                        {option.name}
-                                    </option>
-                                ))}
-                            </select>
+                    {/* Sort Options */}
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 px-5 rounded-2xl  mb-6">
+                        <span className="text-[16px] text-slate-500 font-bold whitespace-nowrap hidden sm:block">
+                            Sắp xếp theo:
+                        </span>
+                        <div className="flex flex-wrap gap-2">
+                            {SORT_OPTIONS.map((option) => (
+                                <label
+                                    key={option.slug}
+                                    className={`
+                                        px-4 py-2 rounded-xl text-[14px] font-medium cursor-pointer transition-colors
+                                        ${controller.currentSort === option.slug
+                                            ? 'bg-blue-600 text-white shadow-md'
+                                            : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
+                                        }
+                                    `}
+                                >
+                                    <input
+                                        type="radio"
+                                        name="sort"
+                                        value={option.slug}
+                                        checked={controller.currentSort === option.slug}
+                                        onChange={controller.handleSortChange}
+                                        className="hidden"
+                                    />
+                                    {option.name}
+                                </label>
+                            ))}
                         </div>
                     </div>
 
@@ -135,7 +167,7 @@ export const ProductsPage = () => {
                     ) : (
                         <>
                             {controller.products.length > 0 ? (
-                                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-5">
                                     {controller.products.map((product) => (
                                         <div key={product.id}>
                                             <ProductCard data={product} isNew={false} />
@@ -149,6 +181,7 @@ export const ProductsPage = () => {
                                 </div>
                             )}
 
+                            {/* Pagination */}
                             {controller.totalPages > 1 && (
                                 <div className="mt-12 flex justify-center items-center gap-4">
                                     <button

@@ -55,7 +55,7 @@ export class ProductMockRepo implements ProductRepo {
     ];
 
     async getProducts(request: ListProductRequest): Promise<ApiResponse<ProductItem[]>> {
-        const mockProducts50 = Array.from({ length: 50 }, (_, index) => {
+        const mockProducts50 = Array.from({ length: request.pageSize }, (_, index) => {
             const originalItem = this.mockProducts[index % this.mockProducts.length];
             return {
                 ...originalItem,

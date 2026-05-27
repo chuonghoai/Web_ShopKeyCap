@@ -11,7 +11,7 @@ function HeroSection() {
 
     return (
         <section className="
-            relative -mx-6 -mt-8
+            relative -mx-6 -mt-22
             min-h-[60vh]
             flex flex-col items-center justify-center
             pt-32 pb-5

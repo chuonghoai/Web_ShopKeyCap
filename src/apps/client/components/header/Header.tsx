@@ -7,7 +7,7 @@ function Header() {
     const controller = useHeaderController();
 
     return (
-        <div className="fixed top-0 left-0 right-0 z-50 p-4">
+        <div className="top-0 left-0 right-0 z-50 p-4">
             <header className="max-w-250 mx-auto px-4 py-3 bg-white/80 backdrop-blur-md border border-white/60 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] flex items-center justify-between gap-6">
 
                 {/* Logo */}

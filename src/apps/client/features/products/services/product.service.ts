@@ -12,7 +12,7 @@ import { ProductApiRepo } from "../repo/productApi.repo";
 import { ProductMockRepo } from "../repo/productMock.repo";
 
 const LIMIT_DEFAULT = 10;
-const PAGE_SIZE = 50;
+const PAGE_SIZE = 20;
 
 export class ProductService {
     private readonly productRepo: ProductRepo;

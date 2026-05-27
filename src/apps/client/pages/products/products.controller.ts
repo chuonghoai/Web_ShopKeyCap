@@ -2,8 +2,7 @@ import { useEffect, useState, type ChangeEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useProductsStore } from "./products.store";
 import type { FilterState } from "../../features/products/dto/filterState.dto";
-import type { SortOption } from "../../features/products/model/filter.model";
-
+import { SORT_OPTIONS, type SortOption } from "../../features/products/model/filter.model";
 
 export const useProductsController = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -16,6 +15,9 @@ export const useProductsController = () => {
     const currentType = searchParams.get("typeSlug") || "";
     const currentBrands = searchParams.getAll("brandSlugs");
     const currentInStock = searchParams.get("inStock") === "true";
+    const currentPriceMin = searchParams.get("priceMin");
+    const currentPriceMax = searchParams.get("priceMax");
+    const currentPriceValue = `${currentPriceMin || ""}-${currentPriceMax || ""}`;
 
     useEffect(() => {
         const filterState: FilterState = {};
@@ -37,6 +39,9 @@ export const useProductsController = () => {
 
         const sort = searchParams.get("sort");
         if (sort) filterState.sort = sort as SortOption;
+        else {
+            updateFilter("sort", SORT_OPTIONS[0].slug);
+        }
 
         const priceMin = searchParams.get("priceMin");
         if (priceMin) filterState.priceMin = Number(priceMin);
@@ -67,18 +72,30 @@ export const useProductsController = () => {
         setSearchParams(newParams);
     };
 
-    const handleSortChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    /**
+     * Handle thay đổi tùy chọn sắp xếp
+     */
+    const handleSortChange = (e: ChangeEvent<HTMLInputElement>) => {
         updateFilter("sort", e.target.value);
     };
 
+    /**
+     * Handle thay đổi lọc category
+     */
     const handleCategoryChange = (categorySlug: string) => {
         updateFilter("categorySlug", currentCategory === categorySlug ? null : categorySlug);
     };
 
+    /**
+     * Handle thay đổi lọc type
+     */
     const handleTypeChange = (typeSlug: string) => {
         updateFilter("typeSlug", currentType === typeSlug ? null : typeSlug);
     };
 
+    /**
+     * Handle thay đổi lọc brand
+     */
     const handleBrandChange = (brandSlug: string) => {
         const newBrands = currentBrands.includes(brandSlug)
             ? currentBrands.filter(b => b !== brandSlug)
@@ -86,14 +103,49 @@ export const useProductsController = () => {
         updateFilter("brandSlugs", newBrands);
     };
 
+    /**
+     * Handle thay đổi lọc inStock
+     */
     const handleInStockChange = (e: ChangeEvent<HTMLInputElement>) => {
         updateFilter("inStock", e.target.checked ? "true" : null);
     };
 
+    /**
+     * Handle thay đổi lọc price
+     */
+    const handlePriceChange = (min: number | null, max: number | null) => {
+        const targetValue = `${min || ""}-${max || ""}`;
+        const newParams = new URLSearchParams(searchParams);
+
+        if (currentPriceValue === targetValue) {
+            newParams.delete("priceMin");
+            newParams.delete("priceMax");
+        } else {
+            if (min !== null) newParams.set("priceMin", String(min));
+            else newParams.delete("priceMin");
+
+            if (max !== null) newParams.set("priceMax", String(max));
+            else newParams.delete("priceMax");
+        }
+
+        newParams.set("page", "1");
+        setSearchParams(newParams);
+    };
+
+    /**
+     * Handle thay đổi page
+     */
     const handlePageChange = (newPage: number) => {
         searchParams.set("page", String(newPage));
         setSearchParams(searchParams);
     };
+
+    /**
+     * Handle reset bộ lọc
+     */
+    const handleResetFilter = () => {
+        setSearchParams({});
+    }
 
     return {
         products: store.products,
@@ -108,6 +160,7 @@ export const useProductsController = () => {
         currentType,
         currentBrands,
         currentInStock,
+        currentPriceValue,
 
         // Handlers
         handlePageChange,
@@ -115,6 +168,8 @@ export const useProductsController = () => {
         handleCategoryChange,
         handleTypeChange,
         handleBrandChange,
-        handleInStockChange
+        handleInStockChange,
+        handlePriceChange,
+        handleResetFilter,
     };
 };
