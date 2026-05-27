@@ -141,11 +141,18 @@ export const useProductsController = () => {
     };
 
     /**
-     * Handle reset bộ lọc
+     * Handle reset bộ lọc và kiểm tra có bộ lọc nào đang được chọn ko
      */
     const handleResetFilter = () => {
         setSearchParams({});
     }
+    const hasActiveFilter = Boolean(
+        currentCategory !== "" ||
+        currentType !== "" ||
+        currentBrands.length > 0 ||
+        currentInStock === true ||
+        currentPriceValue !== "-"
+    );
 
     return {
         products: store.products,
@@ -161,6 +168,8 @@ export const useProductsController = () => {
         currentBrands,
         currentInStock,
         currentPriceValue,
+
+        hasActiveFilter,
 
         // Handlers
         handlePageChange,

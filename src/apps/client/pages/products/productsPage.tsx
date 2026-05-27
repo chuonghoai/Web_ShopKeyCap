@@ -18,9 +18,21 @@ export const ProductsPage = () => {
                 {/* Filter Sidebar */}
                 <div className="w-full lg:w-70 shrink-0 top-24 self-start">
                     <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-4 min-h-[calc(100vh-7rem)] overflow-y-auto">
-                        <div className="flex items-center gap-2 border-b border-slate-100 pb-2">
-                            <span className="material-icons-outlined text-slate-800 text-[24px]">filter_alt</span>
-                            <h2 className="text-[20px] font-bold text-slate-900 tracking-tight">Bộ Lọc</h2>
+                        <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                            <div className="flex items-center gap-2">
+                                <span className="material-icons-outlined text-slate-800 text-[24px]">filter_alt</span>
+                                <h2 className="text-[20px] font-bold text-slate-900 tracking-tight">Bộ Lọc</h2>
+                            </div>
+
+                            {controller.hasActiveFilter && (
+                                <button
+                                    onClick={controller.handleResetFilter}
+                                    className="flex items-center gap-1 text-[14px] font-semibold text-red-500 hover:text-red-700 transition-colors cursor-pointer"
+                                >
+                                    <span className="material-icons-outlined text-[18px]">replay</span>
+                                    Xóa tất cả
+                                </button>
+                            )}
                         </div>
 
                         {/* In stock */}
