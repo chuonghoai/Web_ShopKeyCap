@@ -8,7 +8,7 @@ export const ProductsPage = () => {
     const controller = useProductsController();
 
     return (
-        <div className="w-full pb-20">
+        <div className="w-full ">
             {/* Banner Top */}
             <div className="mb-8">
                 <HeroSection />
@@ -195,25 +195,56 @@ export const ProductsPage = () => {
 
                             {/* Pagination */}
                             {controller.totalPages > 1 && (
-                                <div className="mt-12 flex justify-center items-center gap-4">
+                                <div className="mt-12 flex justify-center items-center gap-2 sm:gap-4">
+                                    <button
+                                        onClick={() => controller.handlePageChange(1)}
+                                        disabled={controller.currentPage === 1}
+                                        className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-600 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                                        title="Trang đầu"
+                                    >
+                                        <span className="material-icons-outlined text-[20px]">keyboard_double_arrow_left</span>
+                                    </button>
+
                                     <button
                                         onClick={() => controller.handlePageChange(controller.currentPage - 1)}
                                         disabled={controller.currentPage === 1}
                                         className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-600 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                                        title="Trang trước"
                                     >
                                         <span className="material-icons-outlined text-[20px]">arrow_back_ios_new</span>
                                     </button>
 
-                                    <span className="text-[15px] font-medium text-slate-700">
-                                        Trang {controller.currentPage} / {controller.totalPages}
-                                    </span>
+                                    <form onSubmit={controller.handlePageSubmit} className="flex items-center gap-2">
+                                        <span className="text-[15px] font-medium text-slate-700 hidden sm:inline">Trang</span>
+                                        <input
+                                            type="number"
+                                            value={controller.pageInput}
+                                            onChange={(e) => controller.setPageInput(e.target.value)}
+                                            onBlur={() => controller.setPageInput(String(controller.currentPage))}
+                                            className="w-14 h-10 text-center border border-slate-300 rounded-lg text-[15px] font-medium text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 hide-number-spinners"
+                                            min={1}
+                                            max={controller.totalPages}
+                                        />
+                                        <span className="text-[15px] font-medium text-slate-700">/ {controller.totalPages}</span>
+                                        <button type="submit" className="hidden"></button>
+                                    </form>
 
                                     <button
                                         onClick={() => controller.handlePageChange(controller.currentPage + 1)}
                                         disabled={controller.currentPage === controller.totalPages}
                                         className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-600 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                                        title="Trang sau"
                                     >
                                         <span className="material-icons-outlined text-[20px]">arrow_forward_ios</span>
+                                    </button>
+
+                                    <button
+                                        onClick={() => controller.handlePageChange(controller.totalPages)}
+                                        disabled={controller.currentPage === controller.totalPages}
+                                        className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-600 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                                        title="Trang cuối"
+                                    >
+                                        <span className="material-icons-outlined text-[20px]">keyboard_double_arrow_right</span>
                                     </button>
                                 </div>
                             )}

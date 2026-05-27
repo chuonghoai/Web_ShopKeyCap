@@ -1,4 +1,4 @@
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useProductsStore } from "./products.store";
 import type { FilterState } from "../../features/products/dto/filterState.dto";
@@ -9,6 +9,7 @@ export const useProductsController = () => {
     const store = useProductsStore();
 
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [pageInput, setPageInput] = useState<string>("1");
 
     const currentSort = searchParams.get("sort") as SortOption | "";
     const currentCategory = searchParams.get("categorySlug") || "";
@@ -52,6 +53,7 @@ export const useProductsController = () => {
         const pageParam = searchParams.get("page");
         const pageToFetch = pageParam ? Number(pageParam) : 1;
         setCurrentPage(pageToFetch);
+        setPageInput(String(pageToFetch));
 
         store.fetchProducts(pageToFetch, filterState);
     }, [searchParams]);
@@ -141,6 +143,23 @@ export const useProductsController = () => {
     };
 
     /**
+     * Handle thay đổi page trực tiếp từ bàn phím
+     */
+    const handlePageSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        let newPage = parseInt(pageInput, 10);
+
+        if (isNaN(newPage) || newPage < 1) {
+            newPage = 1;
+        } else if (newPage > store.totalPages) {
+            newPage = store.totalPages;
+        }
+
+        handlePageChange(newPage);
+        setPageInput(String(newPage));
+    };
+
+    /**
      * Handle reset bộ lọc và kiểm tra có bộ lọc nào đang được chọn ko
      */
     const handleResetFilter = () => {
@@ -170,6 +189,7 @@ export const useProductsController = () => {
         currentPriceValue,
 
         hasActiveFilter,
+        pageInput,
 
         // Handlers
         handlePageChange,
@@ -180,5 +200,8 @@ export const useProductsController = () => {
         handleInStockChange,
         handlePriceChange,
         handleResetFilter,
+
+        setPageInput,
+        handlePageSubmit,
     };
 };

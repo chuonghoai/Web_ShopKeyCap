@@ -1,5 +1,4 @@
-// homepage/components/ProductCard.tsx
-import { Heart, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import type { ProductItem } from "../../../features/products/model/product.model";
 import { useProductCardController } from "../cpnController/productCard.controller";
 
@@ -77,7 +76,7 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
                 <div className="p-5 flex flex-col flex-1 justify-between">
                     <div>
                         <h3 className="
-                            text-[20px] lg:text-[22px]
+                            text-[18px] lg:text-[20px]
                             font-bold
                             text-slate-800
                             leading-tight
@@ -103,43 +102,44 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
                                 <span className="flex-1 h-px bg-slate-200" />
                             </div>
                         )}
+                    </div>
 
-                        <div className="mt-3 flex items-end gap-2 flex-wrap">
+                    {/* Giá - Nút thêm vào giỏ hàng */}
+                    <div className="relative h-12 overflow-hidden w-full">
+
+                        {/* Giá tiền */}
+                        <div className="absolute inset-0 flex items-center gap-2 transition-all duration-300 transform group-hover:-translate-y-full group-hover:opacity-0">
                             <span className="
-                                text-[24px] lg:text-[28px]
+                                text-[22px] lg:text-[26px]
                                 font-extrabold
                                 tracking-tight
                                 text-blue-700
+                                leading-none
                             ">
                                 {controller.formatPrice(data.price)}
                             </span>
                             {data.originalPrice > data.price && (
-                                <span className="text-[14px] text-slate-400 line-through mb-1.5 font-medium">
+                                <span className="text-[14px] text-slate-400 line-through font-medium leading-none pb-0.5">
                                     {controller.formatPrice(data.originalPrice)}
                                 </span>
                             )}
                         </div>
-                    </div>
 
-                    <div className="mt-5 flex items-center gap-3">
+                        {/* Nút giỏ hàng */}
                         <button
                             onClick={controller.handleActionClick}
                             className="
-                                flex-1
-                                h-12
+                                absolute inset-0 w-full h-full
                                 rounded-xl
-                                bg-linear-to-r
-                                from-blue-500
-                                to-blue-700
+                                bg-linear-to-r from-blue-500 to-blue-700
                                 text-white
-                                text-[14px] lg:text-[15px]
-                                font-semibold
+                                text-[14px] lg:text-[15px] font-semibold
                                 flex items-center justify-center gap-2.5
                                 shadow-lg shadow-blue-500/20
                                 transition-all duration-300
-                                hover:scale-[1.02]
-                                hover:shadow-blue-500/40
-                                active:scale-[0.99]
+                                translate-y-full opacity-0
+                                group-hover:translate-y-0 group-hover:opacity-100
+                                hover:from-blue-600 hover:to-blue-800
                                 cursor-pointer
                             "
                         >
@@ -147,28 +147,6 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
                             Thêm vào giỏ
                         </button>
 
-                        <button
-                            onClick={controller.handleActionClick}
-                            className={`
-                                shrink-0
-                                w-12 h-12
-                                rounded-xl
-                                flex items-center justify-center
-                                border
-                                transition-all duration-300
-                                hover:scale-105 active:scale-95
-                                cursor-pointer
-                                ${data.isFavorite
-                                    ? 'bg-red-50 border-red-100 shadow-sm shadow-red-500/10'
-                                    : 'bg-slate-50 border-slate-200 shadow-sm hover:bg-slate-100'
-                                }
-                            `}
-                        >
-                            <Heart
-                                size={20}
-                                className={data.isFavorite ? "fill-red-500 text-red-500" : "text-slate-400"}
-                            />
-                        </button>
                     </div>
                 </div>
             </div>
