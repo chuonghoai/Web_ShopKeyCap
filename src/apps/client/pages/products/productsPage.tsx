@@ -3,21 +3,6 @@ import HeroSection from "../homepage/components/HeroSection";
 import ProductCard from "../homepage/components/ProductCard";
 import { useProductsController } from "./products.controller";
 
-const MOCK_TYPES = [
-    { name: "Bàn phím", slug: "ban-phim" },
-    { name: "Switch", slug: "switch" },
-    { name: "Keycap", slug: "keycap" },
-    { name: "Phụ kiện", slug: "phu-kien" }
-];
-
-const MOCK_BRANDS = [
-    { name: "Akko", slug: "akko" },
-    { name: "Evoworks", slug: "evoworks" },
-    { name: "Lofree", slug: "lofree" },
-    { name: "Piifox", slug: "piifox" },
-    { name: "Yunzii", slug: "yunzii" }
-];
-
 export const ProductsPage = () => {
     const controller = useProductsController();
 
@@ -56,17 +41,17 @@ export const ProductsPage = () => {
                     <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                         <h3 className="font-bold text-slate-800 mb-4 text-[15px] uppercase tracking-wide">Danh mục</h3>
                         <div className="flex flex-col gap-3.5">
-                            {MOCK_TYPES.map(type => (
-                                <label key={type.slug} className="flex items-center gap-3 cursor-pointer group">
+                            {controller.filter.category.map(category => (
+                                <label key={category.slug} className="flex items-center gap-3 cursor-pointer group">
                                     <input
                                         type="radio"
-                                        name="typeFilter"
-                                        checked={controller.currentType === type.slug}
-                                        onChange={() => controller.handleTypeChange(type.slug)}
+                                        name="categoryFilter"
+                                        checked={controller.currentCategory === category.slug}
+                                        onChange={() => controller.handleCategoryChange(category.slug)}
                                         className="w-5 h-5 border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                                     />
                                     <span className="text-[15px] font-medium text-slate-600 group-hover:text-blue-600 transition-colors">
-                                        {type.name}
+                                        {category.name}
                                     </span>
                                 </label>
                             ))}
@@ -77,7 +62,7 @@ export const ProductsPage = () => {
                     <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                         <h3 className="font-bold text-slate-800 mb-4 text-[15px] uppercase tracking-wide">Loại sản phẩm</h3>
                         <div className="flex flex-col gap-3.5">
-                            {MOCK_TYPES.map(type => (
+                            {controller.filter.type.map(type => (
                                 <label key={type.slug} className="flex items-center gap-3 cursor-pointer group">
                                     <input
                                         type="radio"
@@ -98,7 +83,7 @@ export const ProductsPage = () => {
                     <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                         <h3 className="font-bold text-slate-800 mb-4 text-[15px] uppercase tracking-wide">Thương Hiệu</h3>
                         <div className="flex flex-col gap-3.5">
-                            {MOCK_BRANDS.map(brand => (
+                            {controller.filter.brand.map(brand => (
                                 <label key={brand.slug} className="flex items-center gap-3 cursor-pointer group">
                                     <input
                                         type="checkbox"

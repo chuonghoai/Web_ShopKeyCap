@@ -12,6 +12,7 @@ export const useProductsController = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
 
     const currentSort = searchParams.get("sort") as SortOption | "";
+    const currentCategory = searchParams.get("categorySlug") || "";
     const currentType = searchParams.get("typeSlug") || "";
     const currentBrands = searchParams.getAll("brandSlugs");
     const currentInStock = searchParams.get("inStock") === "true";
@@ -70,6 +71,10 @@ export const useProductsController = () => {
         updateFilter("sort", e.target.value);
     };
 
+    const handleCategoryChange = (categorySlug: string) => {
+        updateFilter("categorySlug", currentCategory === categorySlug ? null : categorySlug);
+    };
+
     const handleTypeChange = (typeSlug: string) => {
         updateFilter("typeSlug", currentType === typeSlug ? null : typeSlug);
     };
@@ -92,12 +97,14 @@ export const useProductsController = () => {
 
     return {
         products: store.products,
+        filter: store.filter,
         isLoading: store.isLoading,
         currentPage,
         totalPages: store.totalPages,
 
         // UI States
         currentSort,
+        currentCategory,
         currentType,
         currentBrands,
         currentInStock,
@@ -105,6 +112,7 @@ export const useProductsController = () => {
         // Handlers
         handlePageChange,
         handleSortChange,
+        handleCategoryChange,
         handleTypeChange,
         handleBrandChange,
         handleInStockChange
