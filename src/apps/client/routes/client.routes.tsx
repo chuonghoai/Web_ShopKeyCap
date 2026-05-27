@@ -3,6 +3,7 @@ import AuthGuard from "../../../core/auth/auth.guard";
 import { ROLE } from "../../../core/constants/role.constant";
 import ClientLayout from "../layout/clientLayout";
 import { HomePage } from "../pages/homepage/homepage";
+import ProductsPage from "../pages/products/productsPage";
 
 const ProfilePage = () => {
     return <h1>Thông tin cá nhân (Cần đăng nhập)</h1>;
@@ -23,6 +24,7 @@ export const clientRoutes: RouteObject[] = [
                 ),
                 children: [
                     { path: "/", element: <HomePage /> },
+                    { path: "/products", element: <ProductsPage /> },
                 ]
             },
 

@@ -2,6 +2,7 @@ import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import { USE_MOCK } from "../../../../../core/config/useMock.config";
 import { CategorySlug } from "../../../../../models/type/categorySlug.type";
 import { ProductTypeSlug } from "../../../../../models/type/productSlug.type";
+import type { FilterState } from "../dto/filterState.dto";
 import type { ListProductRequest } from "../dto/productRequest.dto";
 import type { ProductItem } from "../model/product.model";
 import { productSection, type ProductSectionData } from "../model/productSection.model";
@@ -10,6 +11,7 @@ import { ProductApiRepo } from "../repo/productApi.repo";
 import { ProductMockRepo } from "../repo/productMock.repo";
 
 const LIMIT_DEFAULT = 10;
+const PAGE_SIZE = 50;
 
 export class ProductService {
     private readonly productRepo: ProductRepo;
@@ -17,7 +19,12 @@ export class ProductService {
         this.productRepo = productRepo ?? new ProductApiRepo();
     }
 
-    async getProduct(request: ListProductRequest): Promise<ApiResponse<ProductItem[]>> {
+    async getProduct(currentPage: number, filterState: FilterState): Promise<ApiResponse<ProductItem[]>> {
+        const request: ListProductRequest = {
+            page: currentPage,
+            pageSize: PAGE_SIZE,
+            filter: filterState
+        };
         return this.productRepo.getProducts(request);
     }
 

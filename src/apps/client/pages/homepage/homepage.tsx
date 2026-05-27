@@ -1,7 +1,7 @@
 // homepage.tsx
 import HeroSection from "./components/HeroSection";
 import Section from "./components/Section";
-import { useHomepageController } from "./homepage.controller"; // Chỉ gọi Controller, không gọi trực tiếp Store
+import { useHomepageController } from "./homepage.controller";
 
 export const HomePage = () => {
     const controller = useHomepageController();
@@ -12,7 +12,6 @@ export const HomePage = () => {
 
             <div className="space-y-4">
 
-                {/* Render dữ liệu từ Store (thông qua Controller) */}
                 {controller.isLoading ? (
                     <div className="w-full flex justify-center items-center py-20">
                         <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div>
