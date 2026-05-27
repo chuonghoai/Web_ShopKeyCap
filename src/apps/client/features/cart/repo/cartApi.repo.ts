@@ -17,14 +17,40 @@ export class CartApiRepo implements CartRepo {
 
     /**
      * POST /cart/items
-     * @body UpdateCartRequest
+     * @body productId, quantity
      * @returns null
      * 
      * Mô tả: 
      *  - Thêm sản phẩm vào giỏ hàng
      *  - Nếu sản phẩm đã tồn tại, cộng dồn số lượng (ko tạo mới)
      */
-    async addToCart(request: UpdateCartRequest): Promise<ApiResponse<null>> {
-        return apiClient.post<ApiResponse<null>>("/cart/items", request);
+    async addToCart(productId: number, quantity: number): Promise<ApiResponse<null>> {
+        return apiClient.post<ApiResponse<null>>("/cart/items", {
+            productId, quantity
+        });
+    }
+
+    /**
+     * PATCH /cart/items
+     * @body UpdateCartRequest[]
+     * @returns null
+     * 
+     * Mô tả: Cập nhật số lượng sản phẩm trong giỏ hàng
+     */
+    updateCartItem(request: UpdateCartRequest[]): Promise<ApiResponse<null>> {
+        return apiClient.patch<ApiResponse<null>>("/cart/items", request);
+    }
+
+    /**
+     * DELETE /cart/items/{productId}
+     * @param productId
+     * @returns null
+     * 
+     * Mô tả: Xóa sản phẩm khỏi giỏ hàng
+     */
+    deleteCartItem(productId: string): Promise<ApiResponse<null>> {
+        return apiClient.delete<ApiResponse<null>>("/cart/items", {
+            params: productId
+        });
     }
 }

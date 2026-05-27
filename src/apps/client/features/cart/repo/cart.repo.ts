@@ -5,7 +5,7 @@ import type { CartSummaryModel } from "../model/summary.model";
 export interface CartRepo {
     getCartSummary(): Promise<ApiResponse<CartSummaryModel>>;
 
-    addToCart(request: UpdateCartRequest): Promise<ApiResponse<null>>;
-    // updateCartItem(id: string, quantity: number): Promise<ApiResponse<null>>;
-    // deleteCartItem(id: string): Promise<ApiResponse<null>>;
+    addToCart(productId: number, quantity: number): Promise<ApiResponse<null>>;
+    updateCartItem(request: UpdateCartRequest[]): Promise<ApiResponse<null>>;
+    deleteCartItem(productId: string): Promise<ApiResponse<null>>;
 }
