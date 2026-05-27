@@ -127,11 +127,11 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
 
                         {/* Nút giỏ hàng */}
                         <button
-                            onClick={controller.handleActionClick}
-                            className="
+                            onClick={controller.handleAddToCart}
+                            disabled={controller.isAdding}
+                            className={`
                                 absolute inset-0 w-full h-full
                                 rounded-xl
-                                bg-linear-to-r from-blue-500 to-blue-700
                                 text-white
                                 text-[14px] lg:text-[15px] font-semibold
                                 flex items-center justify-center gap-2.5
@@ -139,12 +139,21 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
                                 transition-all duration-300
                                 translate-y-full opacity-0
                                 group-hover:translate-y-0 group-hover:opacity-100
-                                hover:from-blue-600 hover:to-blue-800
                                 cursor-pointer
-                            "
+                                ${controller.isAdding
+                                    ? "bg-slate-500 opacity-90 cursor-not-allowed group-hover:translate-y-0"
+                                    : "bg-linear-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
+                                }
+                            `}
                         >
-                            <ShoppingCart size={18} />
-                            Thêm vào giỏ
+                            {controller.isAdding ? (
+                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                            ) : (
+                                <>
+                                    <ShoppingCart size={18} />
+                                    Thêm vào giỏ
+                                </>
+                            )}
                         </button>
 
                     </div>

@@ -6,6 +6,7 @@ class CartUpdateDebouncer {
     private pendingUpdates: Map<string, number> = new Map();
     private syncTimeout: ReturnType<typeof setTimeout> | null = null;
     private readonly DELAY_MS = 500;
+    private syncCallback?: (count: number) => void;
 
     constructor() {
         this.registerUnloadHandler();
@@ -39,13 +40,23 @@ class CartUpdateDebouncer {
         this.pendingUpdates.clear();
 
         try {
-            await cartService.updateCartItem(requestPayload);
+            const response = await cartService.updateCartItem(requestPayload);
+            if (this.syncCallback && response.data) {
+                this.syncCallback(response.data.newCartCount);
+            }
         } catch (error) {
             const errMsg = error.data?.message
                 || error.message
-                || "Lỗi đồng bộ giỏ hàng, cần xử lý retry hoặc báo lỗi";
+                || "Lỗi đồng bộ giỏ hàng";
             throw new Error(errMsg);
         }
+    }
+
+    /**
+     * Callback function
+     */
+    public registerSyncCallback(cb: (count: number) => void) {
+        this.syncCallback = cb;
     }
 
     private registerUnloadHandler() {

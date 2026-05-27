@@ -20,9 +20,9 @@ export class CartService {
     /**
      * Add to cart
      */
-    async addToCart(productId: number) {
-        const quantity = 1;
-        return this.cartRepo.addToCart(productId, quantity);
+    async addToCart(productId: number, quantity?: number) {
+        const qty = quantity || 1;
+        return this.cartRepo.addToCart(productId, qty);
     }
 
     /**

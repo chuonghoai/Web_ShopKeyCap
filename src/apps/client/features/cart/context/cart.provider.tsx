@@ -22,6 +22,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const syncCartCount = (newCartCount: number) => {
+        setCartCount(newCartCount);
+        cartSummaryStorageService.save(newCartCount);
+    };
     useEffect(() => {
         if (!user) {
             setCartCount(0);
@@ -43,7 +47,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }, [user]);
 
     return (
-        <CartContext.Provider value={{ cartCount, fetchCartSummary }}>
+        <CartContext.Provider value={{ cartCount, fetchCartSummary, syncCartCount }}>
             {children}
         </CartContext.Provider>
     );

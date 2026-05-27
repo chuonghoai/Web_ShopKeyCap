@@ -6,7 +6,8 @@ export const useCart = () => {
     if (context === undefined) {
         return {
             cartCount: 0,
-            fetchCartSummary: async () => { }
+            fetchCartSummary: async () => { },
+            syncCartCount: () => { }
         };
     }
 
