@@ -1,6 +1,5 @@
 import type { SortOption } from "../model/filter.model";
 
-
 export interface FilterState {
     keyword?: string;
 

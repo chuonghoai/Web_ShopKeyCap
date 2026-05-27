@@ -1,6 +1,7 @@
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import type { ListProductRequest } from "../dto/productRequest.dto";
 import type { RecommendedProductRequest } from "../dto/recommendedProductRequest.dto";
+import type { FilterModel } from "../model/filter.model";
 import type { ProductItem } from "../model/product.model";
 import type { ProductRepo } from "./product.repo";
 
@@ -138,6 +139,31 @@ export class ProductMockRepo implements ProductRepo {
         return {
             success: true,
             message: "Lấy sản phẩm gợi ý thành công",
+            data,
+        };
+    }
+
+    async getFilter(): Promise<ApiResponse<FilterModel>> {
+        let data: FilterModel = {
+            category: [
+                { id: "1", name: "Gaming", slug: "gaming" },
+                { id: "2", name: "Văn phòng", slug: "van-phong" }
+            ],
+            type: [
+                { id: "1", name: "Bàn phím", slug: "ban-phim" },
+                { id: "2", name: "Switch", slug: "switch" },
+                { id: "3", name: "Keycap", slug: "keycap" },
+                { id: "4", name: "Phụ kiện", slug: "phu-kien" }
+            ],
+            brand: [
+                { id: "1", name: "Akko", slug: "akko" },
+                { id: "2", name: "Lofree", slug: "lofree" },
+                { id: "3", name: "Wired", slug: "wired" }
+            ],
+        };
+        return {
+            success: true,
+            message: "Lấy danh sách lọc thành công",
             data,
         };
     }

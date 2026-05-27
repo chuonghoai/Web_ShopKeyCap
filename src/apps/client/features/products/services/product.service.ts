@@ -4,6 +4,7 @@ import { CategorySlug } from "../../../../../models/type/categorySlug.type";
 import { ProductTypeSlug } from "../../../../../models/type/productSlug.type";
 import type { FilterState } from "../dto/filterState.dto";
 import type { ListProductRequest } from "../dto/productRequest.dto";
+import type { FilterModel } from "../model/filter.model";
 import type { ProductItem } from "../model/product.model";
 import { productSection, type ProductSectionData } from "../model/productSection.model";
 import type { ProductRepo } from "../repo/product.repo";
@@ -26,6 +27,10 @@ export class ProductService {
             filter: filterState
         };
         return this.productRepo.getProducts(request);
+    }
+
+    async getFilter(): Promise<ApiResponse<FilterModel>> {
+        return this.productRepo.getFilter();
     }
 
     /**

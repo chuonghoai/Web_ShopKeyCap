@@ -1,6 +1,7 @@
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import type { ListProductRequest } from "../dto/productRequest.dto";
 import type { RecommendedProductRequest } from "../dto/recommendedProductRequest.dto";
+import type { FilterModel } from "../model/filter.model";
 import type { ProductItem } from "../model/product.model";
 
 export interface ProductRepo {
@@ -11,4 +12,6 @@ export interface ProductRepo {
     getProductsByHotBrand(limit: number): Promise<ApiResponse<ProductItem[]>>;
 
     getRecommendedProducts(request: RecommendedProductRequest): Promise<ApiResponse<ProductItem[]>>;
+
+    getFilter(): Promise<ApiResponse<FilterModel>>;
 }

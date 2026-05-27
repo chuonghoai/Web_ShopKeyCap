@@ -2,6 +2,7 @@ import { apiClient } from "../../../../../core/api/apiClient";
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import type { ListProductRequest } from "../dto/productRequest.dto";
 import type { RecommendedProductRequest } from "../dto/recommendedProductRequest.dto";
+import type { FilterModel } from "../model/filter.model";
 import type { ProductItem } from "../model/product.model";
 import type { ProductRepo } from "./product.repo";
 
@@ -90,5 +91,18 @@ export class ProductApiRepo implements ProductRepo {
         return apiClient.get<ApiResponse<ProductItem[]>>("/products/recommended", {
             params: request
         });
+    }
+
+    /**
+     * GET /products/filter
+     * @returns FilterModel
+     * 
+     * Mô tả: Lấy danh sách các bộ lọc
+     *  - category: Danh mục sản phẩm
+     *  - type: Loại sản phẩm
+     *  - brand: Thương hiệu sản phẩm
+     */
+    async getFilter(): Promise<ApiResponse<FilterModel>> {
+        return apiClient.get<ApiResponse<FilterModel>>("/products/filter");
     }
 }
