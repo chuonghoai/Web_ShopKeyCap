@@ -4,19 +4,19 @@ export interface FilterModel {
     brand: Brand[];
 }
 
-interface Category {
+export interface Category {
     id: string;
     name: string;
     slug: string;
 }
 
-interface Type {
+export interface Type {
     id: string;
     name: string;
     slug: string;
 }
 
-interface Brand {
+export interface Brand {
     id: string;
     name: string;
     slug: string;

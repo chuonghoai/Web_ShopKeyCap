@@ -1,0 +1,71 @@
+import type { Brand, Category, Type } from "./filter.model";
+import type { ProductItem } from "./product.model";
+import type { ProductOption, ProductVariant } from "./variant.model";
+
+export interface ProductDetail {
+    id: string;
+    name: string;
+    slug: string;
+
+    /**
+     * Danh mục, hãng, loại sản phẩm
+     */
+    category: Category;
+    type: Type;
+    brand: Brand;
+
+    /**
+     * imageUrl: Ảnh đại diện chính của sản phẩm
+     * thumbnailUr: List các hình ảnh giới thiệu của sản phẩm
+     */
+    imageUrl: string;
+    thumbnailUrl: string[];
+
+    /**
+     * Dùng để render ra các tùy chọn variant: chọn màu, chọn switch...
+     */
+    options: ProductOption[];
+
+    /**
+     * Danh sách các tổ hợp biến thể. Dùng để check xem tổ hợp user vừa chọn 
+     * còn hàng không, giá bao nhiêu, và lấy ID để add vào giỏ hàng.
+     */
+    variants: ProductVariant[];
+
+    /**
+     * Tổng số tồn kho của tất cả các biến thể
+     */
+    totalStockQuantity: number;
+
+    /**
+     * Sản phẩm có được user thêm vào wishlist hay ko
+     */
+    isFavorite: boolean;
+
+    /**
+     * Mô tả sản phẩm (dạng markdown hoặc html)
+    */
+    description: string;
+
+    /**
+     * Thông số kỹ thuật, được lưu dưới dạng object
+     * Ví dụ: { name: 'Kích thước', value: '15cm x 15cm x 5cm' }
+     */
+    specifications: Specifications[];
+
+    /**
+     * Số sao đánh giá trung bình
+     */
+    rating: number;
+
+    /**
+     * Các sản phẩm khác có liên quan đến sản phẩm hiện tại.
+     * Chỉ cần lấy tối đa 10-20 sản phẩm
+     */
+    relateTo: ProductItem[];
+}
+
+interface Specifications {
+    name: string;
+    value: string;
+}
