@@ -4,6 +4,7 @@ import type { ListProductRequest } from "../dto/productRequest.dto";
 import type { RecommendedProductRequest } from "../dto/recommendedProductRequest.dto";
 import type { FilterModel } from "../model/filter.model";
 import type { ProductItem } from "../model/product.model";
+import type { ProductDetail } from "../model/productDetail.model";
 import type { ProductRepo } from "./product.repo";
 
 export class ProductApiRepo implements ProductRepo {
@@ -104,5 +105,14 @@ export class ProductApiRepo implements ProductRepo {
      */
     async getFilter(): Promise<ApiResponse<FilterModel>> {
         return apiClient.get<ApiResponse<FilterModel>>("/products/filter");
+    }
+
+    /**
+     * GET /products/:productSlug
+     * @param productSlug 
+     * @returns ProductDetail
+     */
+    async getProductBySlug(productSlug: string): Promise<ApiResponse<ProductDetail>> {
+        return apiClient.get<ApiResponse<ProductDetail>>(`/products/${productSlug}`);
     }
 }

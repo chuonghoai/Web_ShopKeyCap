@@ -36,7 +36,7 @@ export class CartMockRepo implements CartRepo {
         );
     }
 
-    async addToCart(productId: number, quantity: number): Promise<ApiResponse<null>> {
+    async addToCart(productId: number, quantity: number): Promise<ApiResponse<{ newCartCount: number }>> {
         if (quantity <= 0) {
             return fail<null>("Số lượng phải lớn hơn 0");
         }
@@ -45,10 +45,10 @@ export class CartMockRepo implements CartRepo {
         const current = mockItems.get(key) ?? 0;
         mockItems.set(key, current + quantity);
 
-        return ok(null, "Thêm sản phẩm vào giỏ hàng thành công");
+        return ok({ newCartCount: totalCount() }, "Thêm sản phẩm vào giỏ hàng thành công");
     }
 
-    async updateCartItem(request: UpdateCartRequest[]): Promise<ApiResponse<null>> {
+    async updateCartItem(request: UpdateCartRequest[]): Promise<ApiResponse<{ newCartCount: number }>> {
         for (const { productId, quantity } of request) {
             if (quantity <= 0) {
                 return fail<null>(`Số lượng của sản phẩm ${productId} phải lớn hơn 0`);
@@ -61,16 +61,16 @@ export class CartMockRepo implements CartRepo {
             mockItems.set(productId, quantity);
         }
 
-        return ok(null, "Cập nhật giỏ hàng thành công");
+        return ok({ newCartCount: totalCount() }, "Cập nhật giỏ hàng thành công");
     }
 
-    async deleteCartItem(productId: string): Promise<ApiResponse<null>> {
+    async deleteCartItem(productId: string): Promise<ApiResponse<{ newCartCount: number }>> {
         if (!mockItems.has(productId)) {
             return fail<null>(`Sản phẩm ${productId} không tồn tại trong giỏ hàng`);
         }
 
         mockItems.delete(productId);
 
-        return ok(null, "Xóa sản phẩm khỏi giỏ hàng thành công");
+        return ok({ newCartCount: totalCount() }, "Xóa sản phẩm khỏi giỏ hàng thành công");
     }
 }

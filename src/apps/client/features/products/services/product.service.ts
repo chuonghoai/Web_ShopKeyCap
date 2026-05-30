@@ -6,6 +6,7 @@ import type { FilterState } from "../dto/filterState.dto";
 import type { ListProductRequest } from "../dto/productRequest.dto";
 import type { FilterModel } from "../model/filter.model";
 import type { ProductItem } from "../model/product.model";
+import type { ProductDetail } from "../model/productDetail.model";
 import { productSection, type ProductSectionData } from "../model/productSection.model";
 import type { ProductRepo } from "../repo/product.repo";
 import { ProductApiRepo } from "../repo/productApi.repo";
@@ -31,6 +32,10 @@ export class ProductService {
 
     async getFilter(): Promise<ApiResponse<FilterModel>> {
         return this.productRepo.getFilter();
+    }
+
+    async getProductBySlug(productSlug: string): Promise<ApiResponse<ProductDetail>> {
+        return this.productRepo.getProductBySlug(productSlug);
     }
 
     /**

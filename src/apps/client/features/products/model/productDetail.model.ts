@@ -7,9 +7,6 @@ export interface ProductDetail {
     name: string;
     slug: string;
 
-    /**
-     * Danh mục, hãng, loại sản phẩm
-     */
     category: Category;
     type: Type;
     brand: Brand;
