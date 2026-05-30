@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logoImg from "../../../../assets/logo.png";
 
 function Footer() {
     return (
@@ -31,7 +32,7 @@ function Footer() {
 
                         <div className="md:col-span-5 flex flex-col gap-6">
                             <Link to="/" className="flex items-center gap-3">
-                                <img src="src/assets/logo.png" alt="Cyber Keys" className="h-10 w-auto object-contain" />
+                                <img src={logoImg} alt="Cyber Keys" className="h-10 w-auto object-contain" />
                                 <span className="text-[24px] font-extrabold text-slate-900 tracking-tight">
                                     Cyber <span className="text-blue-600">Keys</span>
                                 </span>

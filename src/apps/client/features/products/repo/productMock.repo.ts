@@ -257,12 +257,33 @@ export class ProductMockRepo implements ProductRepo {
         ],
         totalStockQuantity: 10,
         isFavorite: true,
-        description: "Mô tả sản phẩm",
+        description: `
+            <div class="product-description">
+                <h3>Bàn phím cơ Akko 3068B Plus</h3>
+                <p>Đây là chiếc bàn phím <strong>tuyệt vời nhất</strong> trong tầm giá dành cho dân văn phòng và game thủ.</p>
+                
+                <ul>
+                    <li>Switch: Akko CS Jelly Pink</li>
+                    <li>Keycap: PBT Double-Shot, Cherry Profile</li>
+                    <li>Kết nối: Bluetooth 5.0 / 2.4Ghz / Type-C</li>
+                </ul>
+
+                <script>
+                    console.warn("🚨 XSS TEST 1: Nếu bạn thấy dòng chữ này trên tab Console, hệ thống của bạn ĐANG bị lỗi XSS do không lọc thẻ <script>!");
+                </script>
+
+                <img src="linh-tinh.jpg" style="display: none;" onerror="console.error('🚨 XSS TEST 2: Thẻ img bị lỗi đã kích hoạt mã độc qua thuộc tính onerror!'); alert('Lỗ hổng XSS hoạt động!');" />
+            </div>
+        `,
         specifications: [
             {
                 name: "Kích thước",
                 value: "15cm x 15cm x 5cm",
             },
+            {
+                name: "chất liệu",
+                value: "Kim cương"
+            }
         ],
         rating: 4.5,
         relateTo: [

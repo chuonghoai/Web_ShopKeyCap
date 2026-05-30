@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../../features/cart/hooks/useCart";
 import { useHeaderController } from "./header.controller";
+import logoImg from "../../../../assets/logo.png";
 
 function Header() {
     const { cartCount } = useCart();
@@ -13,7 +14,7 @@ function Header() {
                 {/* Logo */}
                 <Link to="/" className="flex items-center gap-2 shrink-0 pl-2">
                     <img
-                        src="src/assets/logo.png"
+                        src={logoImg}
                         alt="Cyber Keys"
                         className="h-8 w-auto object-contain"
                     />
