@@ -45,8 +45,18 @@ export interface ProductVariant {
     attributes: Record<string, string>;
 
     /**
-     * Giá của riêng biến thể này.
-     * Nếu không có, có thể lấy giá mặc định giống Product gốc.
+     * price: Giá hiện tại
+     * originalPrice: Giá gốc
+     * percentDiscount: Phần trăm giảm giá, có thể bằng 0 nếu không giảm giá
+     * 
+     * Quy tắc tính sản phẩm có giảm giá hay ko:
+     *  - price < originalPrice && percentDiscount == 0: Sản phẩm giảm tiền trực tiếp,
+     *      ví dụ: Giá gốc là 100k, giá hiện tại là 90k -> Sản phẩm đang được giảm trực tiếp 10k
+     * 
+     *  - price < originalPrice && percentDiscount > 0: Sản phẩm được giảm tiền theo %,
+     *      ví dụ: Giá gốc là 100k, giá hiện tại là 90k -> Sản phẩm đang được giảm 10%
+     * 
+     *  - price == originalPrice: Sản phẩm không được giảm giá
      */
     price: number;
     originalPrice: number;
@@ -56,10 +66,4 @@ export interface ProductVariant {
      * Số lượng tồn kho thực tế của tổ hợp này
      */
     stockQuantity: number;
-
-    /**
-     * (Optional)
-     * Ảnh đại diện của biến thể này
-     */
-    imageUrl?: string;
 }
