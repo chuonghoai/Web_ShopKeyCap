@@ -46,7 +46,15 @@ export interface ProductDetail {
 
     /**
      * Thông số kỹ thuật, được lưu dưới dạng object
-     * Ví dụ: { name: 'Kích thước', value: '15cm x 15cm x 5cm' }
+     * Lưu database: [{ name: 'Kích thước', value: '15cm x 15cm x 5cm' }, { name: 'Trọng lượng', value: '1kg' }]
+     * Trả response:
+     *      [
+     *          { 
+     *              name: 'Kích thước', 
+     *              value: '15cm x 15cm x 5cm' 
+     *          },
+     *          {...}
+     *      ]
      */
     specifications: Specifications[];
 
