@@ -1,4 +1,6 @@
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
+import { ApiException } from "../../../../../core/exceptions/api.exception";
+import { useAuth } from "../../../../../core/hooks/useAuth";
 import type { UpdateCartRequest } from "../dto/UpdateCartRequest.dto";
 import type { CartSummaryModel } from "../model/summary.model";
 import type { CartRepo } from "./cart.repo";
@@ -27,6 +29,8 @@ const fail = <T>(message: string): ApiResponse<T> => ({
     data: undefined as T,
 });
 
+const LOGGED_IN = true;
+
 // Repo
 export class CartMockRepo implements CartRepo {
     async getCartSummary(): Promise<ApiResponse<CartSummaryModel>> {
@@ -36,41 +40,49 @@ export class CartMockRepo implements CartRepo {
         );
     }
 
-    async addToCart(productId: number, quantity: number): Promise<ApiResponse<{ newCartCount: number }>> {
-        if (quantity <= 0) {
-            return fail<null>("Số lượng phải lớn hơn 0");
+    async addToCart(variantId: string, quantity: number): Promise<ApiResponse<{ newCartCount: number }>> {
+        if (LOGGED_IN) {
+            if (quantity <= 0) {
+                return fail<null>("Số lượng phải lớn hơn 0");
+            }
+
+            const current = mockItems.get(variantId) ?? 0;
+            mockItems.set(variantId, current + quantity);
+
+            return ok({ newCartCount: totalCount() }, "Thêm sản phẩm vào giỏ hàng thành công");
         }
-
-        const key = String(productId);
-        const current = mockItems.get(key) ?? 0;
-        mockItems.set(key, current + quantity);
-
-        return ok({ newCartCount: totalCount() }, "Thêm sản phẩm vào giỏ hàng thành công");
+        throw new ApiException("Bạn phải đăng nhập để thêm sản phẩm vào giỏ hàng", 401);
     }
 
     async updateCartItem(request: UpdateCartRequest[]): Promise<ApiResponse<{ newCartCount: number }>> {
-        for (const { productId, quantity } of request) {
-            if (quantity <= 0) {
-                return fail<null>(`Số lượng của sản phẩm ${productId} phải lớn hơn 0`);
+        if (LOGGED_IN) {
+            for (const { productId, quantity } of request) {
+                if (quantity <= 0) {
+                    return fail<null>(`Số lượng của sản phẩm ${productId} phải lớn hơn 0`);
+                }
+
+                if (!mockItems.has(productId)) {
+                    return fail<null>(`Sản phẩm ${productId} không tồn tại trong giỏ hàng`);
+                }
+
+                mockItems.set(productId, quantity);
             }
 
+            return ok({ newCartCount: totalCount() }, "Cập nhật giỏ hàng thành công");
+        }
+        throw new ApiException("Bạn phải đăng nhập để cập nhật giỏ hàng", 401);
+    }
+
+    async deleteCartItem(productId: string): Promise<ApiResponse<{ newCartCount: number }>> {
+        if (LOGGED_IN) {
             if (!mockItems.has(productId)) {
                 return fail<null>(`Sản phẩm ${productId} không tồn tại trong giỏ hàng`);
             }
 
-            mockItems.set(productId, quantity);
+            mockItems.delete(productId);
+
+            return ok({ newCartCount: totalCount() }, "Xóa sản phẩm khỏi giỏ hàng thành công");
         }
-
-        return ok({ newCartCount: totalCount() }, "Cập nhật giỏ hàng thành công");
-    }
-
-    async deleteCartItem(productId: string): Promise<ApiResponse<{ newCartCount: number }>> {
-        if (!mockItems.has(productId)) {
-            return fail<null>(`Sản phẩm ${productId} không tồn tại trong giỏ hàng`);
-        }
-
-        mockItems.delete(productId);
-
-        return ok({ newCartCount: totalCount() }, "Xóa sản phẩm khỏi giỏ hàng thành công");
+        throw new ApiException("Bạn phải đăng nhập để cập nhật giỏ hàng", 401);
     }
 }

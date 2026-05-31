@@ -18,11 +18,11 @@ export class CartService {
     }
 
     /**
-     * Add to cart
+     * Add to cart by variantId
      */
-    async addToCart(productId: number, quantity?: number) {
+    async addToCart(variantId: string, quantity?: number) {
         const qty = quantity || 1;
-        return this.cartRepo.addToCart(productId, qty);
+        return this.cartRepo.addToCart(variantId, qty);
     }
 
     /**

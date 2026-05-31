@@ -17,16 +17,16 @@ export class CartApiRepo implements CartRepo {
 
     /**
      * POST /cart/items
-     * @body productId, quantity
+     * @body variantId, quantity
      * @returns newCartCount
      * 
      * Mô tả: 
-     *  - Thêm sản phẩm vào giỏ hàng
-     *  - Nếu sản phẩm đã tồn tại, cộng dồn số lượng (ko tạo mới)
+     *  - Thêm sản phẩm vào giỏ hàng theo variantId
+     *  - Nếu variant đã tồn tại, cộng dồn số lượng (không tạo mới)
      */
-    async addToCart(productId: number, quantity: number): Promise<ApiResponse<{ newCartCount: number }>> {
+    async addToCart(variantId: string, quantity: number): Promise<ApiResponse<{ newCartCount: number }>> {
         return apiClient.post<ApiResponse<{ newCartCount: number }>>("/cart/items", {
-            productId, quantity
+            variantId, quantity
         });
     }
 

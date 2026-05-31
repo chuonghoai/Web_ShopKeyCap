@@ -128,11 +128,7 @@ export const useProductDetailController = () => {
 
         setIsAddingToCart(true);
         try {
-            // Lưu ý: Trong thực tế sẽ gửi currentVariant.id thay vì product.id
-            // Nhưng do API mock hiện tại hàm addToCart nhận productId kiểu number,
-            // cần đồng bộ lại kiểu dữ liệu ID giữa cartService và productVariant sau.
-            // Tạm thời truyền tạm id của sản phẩm gốc để mock chạy.
-            const response = await cartService.addToCart(Number(store.product.id), quantity);
+            const response = await cartService.addToCart(currentVariant.id, quantity);
 
             if (response.data) {
                 syncCartCount(response.data.newCartCount);
