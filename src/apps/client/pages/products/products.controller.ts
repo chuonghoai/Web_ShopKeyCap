@@ -41,7 +41,7 @@ export const useProductsController = () => {
         const sort = searchParams.get("sort");
         if (sort) filterState.sort = sort as SortOption;
         else {
-            updateFilter("sort", SORT_OPTIONS[0].slug);
+            updateFilter("sort", SORT_OPTIONS[0].slug, true);
         }
 
         const priceMin = searchParams.get("priceMin");
@@ -58,7 +58,7 @@ export const useProductsController = () => {
         store.fetchProducts(pageToFetch, filterState);
     }, [searchParams]);
 
-    const updateFilter = (key: string, value: string | null | string[]) => {
+    const updateFilter = (key: string, value: string | null | string[], replaceHistory: boolean = false) => {
         const newParams = new URLSearchParams(searchParams);
 
         if (value === null || value === "" || (Array.isArray(value) && value.length === 0)) {
@@ -71,7 +71,7 @@ export const useProductsController = () => {
         }
 
         newParams.set("page", "1");
-        setSearchParams(newParams);
+        setSearchParams(newParams, { replace: replaceHistory });
     };
 
     /**

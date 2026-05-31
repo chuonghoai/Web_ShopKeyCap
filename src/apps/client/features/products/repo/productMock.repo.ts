@@ -57,7 +57,7 @@ export class ProductMockRepo implements ProductRepo {
 
     private mockProductDetail: ProductDetail = {
         id: "1",
-        name: "Bàn phím cơ custom Akko 3068B Plus Bàn phím cơ custom Akko 3068B PlusBàn phím cơ custom Akko 3068B PlusBàn phím cơ custom Akko 3068B Plus",
+        name: "Bàn phím cơ custom Akko 3068B Plus",
         slug: "ban-phim-co-custom-akko-3068b-plus",
         category: {
             id: "1",
