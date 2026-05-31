@@ -4,6 +4,12 @@ import { useProductDetailStore } from "./productDetail.store";
 import { useCart } from "../../features/cart/hooks/useCart";
 import { cartService } from "../../features/cart/service/cart.service";
 import { useToast } from "../../../../components/toast/toast";
+import {
+    getAvailableOptionsWithStatus,
+    findMatchingVariant,
+    getAttributesFromSku,
+    sanitizeSelectedAttributes,
+} from "../../features/products/utils/variantSelection.utils";
 
 export const useProductDetailController = () => {
     const { slug } = useParams<{ slug: string }>();
@@ -31,26 +37,32 @@ export const useProductDetailController = () => {
             setMainImage(store.product.imageUrl);
             const skuFromUrl = searchParams.get("sku");
             if (skuFromUrl) {
-                const matchedVariant = store.product.variants.find(v => v.sku === skuFromUrl);
-                if (matchedVariant) {
-                    setSelectedAttributes(matchedVariant.attributes);
-                    if (matchedVariant.imageUrl) setMainImage(matchedVariant.imageUrl);
+                const restored = getAttributesFromSku(store.product.variants, skuFromUrl);
+                if (restored) {
+                    const variant = store.product.variants.find(v => v.sku === skuFromUrl);
+                    setSelectedAttributes(restored);
+                    if (variant?.imageUrl) setMainImage(variant.imageUrl);
                 }
             }
         }
     }, [store.product]);
 
     const currentVariant = useMemo(() => {
-        if (!store.product || !store.product.variants) return null;
+        if (!store.product) return null;
+        return findMatchingVariant(
+            store.product.variants,
+            selectedAttributes,
+            store.product.options
+        );
+    }, [selectedAttributes, store.product]);
 
-        const isFullySelected = store.product.options.every(opt => selectedAttributes[opt.name]);
-        if (!isFullySelected) return null;
-
-        return store.product.variants.find(variant => {
-            return Object.keys(selectedAttributes).every(
-                key => selectedAttributes[key] === variant.attributes[key]
-            );
-        }) || null;
+    const optionsWithStatus = useMemo(() => {
+        if (!store.product) return [];
+        return getAvailableOptionsWithStatus(
+            store.product.variants,
+            selectedAttributes,
+            store.product.options
+        );
     }, [selectedAttributes, store.product]);
 
     useEffect(() => {
@@ -61,25 +73,39 @@ export const useProductDetailController = () => {
         }
     }, [currentVariant]);
 
+    const displayPrice = currentVariant
+        ? currentVariant.price
+        : store.product?.variants[0]?.price ?? 0;
 
-    const displayPrice = currentVariant ? currentVariant.price : store.product?.variants[0].price ?? 0;
-    const displayOriginalPrice = currentVariant ? currentVariant.originalPrice : store.product?.variants[0].originalPrice ?? 0;
-    const displayStock = currentVariant ? currentVariant.stockQuantity : store.product?.totalStockQuantity ?? 0;
-    const formatPrice = (price: number) => new Intl.NumberFormat("vi-VN").format(price) + "₫";
+    const displayOriginalPrice = currentVariant
+        ? currentVariant.originalPrice
+        : store.product?.variants[0]?.originalPrice ?? 0;
 
-    // Handlers
+    const displayStock = currentVariant
+        ? currentVariant.stockQuantity
+        : store.product?.totalStockQuantity ?? 0;
+
+    const formatPrice = (price: number) =>
+        new Intl.NumberFormat("vi-VN").format(price) + "₫";
+
     const handleOptionSelect = (optionName: string, value: string) => {
+        if (!store.product) return;
+
         setSelectedAttributes(prev => {
-            const newState = { ...prev, [optionName]: value };
-            return newState;
+            const updated = { ...prev, [optionName]: value };
+            return sanitizeSelectedAttributes(
+                store.product!.variants,
+                updated,
+                store.product!.options
+            );
         });
-        setQuantity(1); // Reset số lượng về 1 khi đổi phân loại
+        setQuantity(1);
     };
 
-    const handleQuantityChange = (type: 'increase' | 'decrease') => {
-        if (type === 'increase' && quantity < displayStock) {
+    const handleQuantityChange = (type: "increase" | "decrease") => {
+        if (type === "increase" && quantity < displayStock) {
             setQuantity(prev => prev + 1);
-        } else if (type === 'decrease' && quantity > 1) {
+        } else if (type === "decrease" && quantity > 1) {
             setQuantity(prev => prev - 1);
         }
     };
@@ -87,7 +113,9 @@ export const useProductDetailController = () => {
     const handleAddToCart = async () => {
         if (!store.product) return;
 
-        const isFullySelected = store.product.options.every(opt => selectedAttributes[opt.name]);
+        const isFullySelected = store.product.options.every(
+            opt => selectedAttributes[opt.name] !== undefined
+        );
         if (!isFullySelected) {
             toast("Vui lòng chọn đầy đủ phân loại sản phẩm", "warning");
             return;
@@ -101,7 +129,7 @@ export const useProductDetailController = () => {
         setIsAddingToCart(true);
         try {
             // Lưu ý: Trong thực tế sẽ gửi currentVariant.id thay vì product.id
-            // Nhưng do API mock hiện tại hàm addToCart nhận productId kiểu number, 
+            // Nhưng do API mock hiện tại hàm addToCart nhận productId kiểu number,
             // cần đồng bộ lại kiểu dữ liệu ID giữa cartService và productVariant sau.
             // Tạm thời truyền tạm id của sản phẩm gốc để mock chạy.
             const response = await cartService.addToCart(Number(store.product.id), quantity);
@@ -130,6 +158,9 @@ export const useProductDetailController = () => {
         setMainImage,
         selectedAttributes,
         currentVariant,
+
+        optionsWithStatus,
+
         quantity,
         isAddingToCart,
 
@@ -141,6 +172,6 @@ export const useProductDetailController = () => {
         handleOptionSelect,
         handleQuantityChange,
         handleAddToCart,
-        handleNavigateFilter
+        handleNavigateFilter,
     };
 };

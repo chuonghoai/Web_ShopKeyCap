@@ -102,29 +102,52 @@ export const ProductDetailPage = () => {
                         </div>
                     </div>
 
-                    {/* Variants / Options */}
+                    {/* Variants */}
                     <div className="flex flex-col gap-6 mb-8">
-                        {product.options.map(option => (
+                        {controller.optionsWithStatus.map(option => (
                             <div key={option.name}>
                                 <h3 className="text-[15px] font-bold text-slate-800 mb-3">{option.name}:</h3>
                                 <div className="flex flex-wrap gap-3">
-                                    {option.values.map(val => {
-                                        const isSelected = controller.selectedAttributes[option.name] === val;
+                                    {option.values.map(({ value, status }) => {
+                                        const isSelected = status === "selected";
+                                        const isDisabled = status === "disabled";
                                         return (
                                             <button
-                                                key={val}
-                                                onClick={() => controller.handleOptionSelect(option.name, val)}
+                                                key={value}
+                                                onClick={() => !isDisabled && controller.handleOptionSelect(option.name, value)}
+                                                disabled={isDisabled}
+                                                title={isDisabled ? "Không có sẵn hoặc đã hết hàng" : undefined}
                                                 className={`
-                                                    px-5 py-2.5 rounded-xl text-[14px] font-medium transition-all border
+                                                    relative px-5 py-2.5 rounded-xl text-[14px] font-medium transition-all border
                                                     ${isSelected
-                                                        ? 'bg-blue-50 border-blue-500 text-blue-700 shadow-sm'
-                                                        : 'bg-white border-slate-200 text-slate-600 hover:border-blue-300 hover:bg-slate-50'
+                                                        ? "bg-blue-50 border-blue-500 text-blue-700 shadow-sm"
+                                                        : isDisabled
+                                                            ? "bg-slate-50 border-slate-200 text-slate-300 cursor-not-allowed"
+                                                            : "bg-white border-slate-200 text-slate-600 hover:border-blue-300 hover:bg-slate-50"
                                                     }
                                                 `}
                                             >
-                                                {val}
+                                                {isDisabled && (
+                                                    <span
+                                                        aria-hidden="true"
+                                                        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                                                    >
+                                                        <svg
+                                                            className="w-full h-full absolute top-0 left-0 rounded-xl overflow-visible"
+                                                            preserveAspectRatio="none"
+                                                        >
+                                                            <line
+                                                                x1="0" y1="100%"
+                                                                x2="100%" y2="0"
+                                                                stroke="#cbd5e1"
+                                                                strokeWidth="1.5"
+                                                            />
+                                                        </svg>
+                                                    </span>
+                                                )}
+                                                {value}
                                             </button>
-                                        )
+                                        );
                                     })}
                                 </div>
                             </div>

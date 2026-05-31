@@ -79,9 +79,7 @@ export class ProductMockRepo implements ProductRepo {
         options: [
             {
                 name: "Kích thước",
-                values: [
-                    "Nhỏ", "Vừa", "Lớn"
-                ]
+                values: ["Nhỏ", "Vừa", "Lớn"]
             },
             {
                 name: "Màu sắc",
@@ -89,7 +87,6 @@ export class ProductMockRepo implements ProductRepo {
             }
         ],
         variants: [
-            // Kích thước: Nhỏ
             {
                 id: "v-1",
                 sku: "AKKO-3068-NHO-DO",
@@ -144,7 +141,6 @@ export class ProductMockRepo implements ProductRepo {
                 percentDiscount: 21,
                 stockQuantity: 5,
             },
-            // Kích thước: Vừa
             {
                 id: "v-7",
                 sku: "AKKO-3068-VUA-DO",
@@ -199,7 +195,6 @@ export class ProductMockRepo implements ProductRepo {
                 percentDiscount: 20,
                 stockQuantity: 7,
             },
-            // Kích thước: Lớn
             {
                 id: "v-13",
                 sku: "AKKO-3068-LON-DO",
@@ -211,33 +206,6 @@ export class ProductMockRepo implements ProductRepo {
             },
             {
                 id: "v-14",
-                sku: "AKKO-3068-LON-CAM",
-                attributes: { "Kích thước": "Lớn", "Màu sắc": "Cam" },
-                price: 1350000,
-                originalPrice: 1600000,
-                percentDiscount: 16,
-                stockQuantity: 6,
-            },
-            {
-                id: "v-15",
-                sku: "AKKO-3068-LON-VANG",
-                attributes: { "Kích thước": "Lớn", "Màu sắc": "Vàng" },
-                price: 1350000,
-                originalPrice: 1600000,
-                percentDiscount: 16,
-                stockQuantity: 4,
-            },
-            {
-                id: "v-16",
-                sku: "AKKO-3068-LON-XANHLA",
-                attributes: { "Kích thước": "Lớn", "Màu sắc": "Xanh Lá" },
-                price: 1350000,
-                originalPrice: 1600000,
-                percentDiscount: 16,
-                stockQuantity: 17,
-            },
-            {
-                id: "v-17",
                 sku: "AKKO-3068-LON-XANHDUONG",
                 attributes: { "Kích thước": "Lớn", "Màu sắc": "Xanh Dương" },
                 price: 1350000,
@@ -246,13 +214,13 @@ export class ProductMockRepo implements ProductRepo {
                 stockQuantity: 25,
             },
             {
-                id: "v-18",
+                id: "v-15",
                 sku: "AKKO-3068-LON-TIM",
                 attributes: { "Kích thước": "Lớn", "Màu sắc": "Tím" },
                 price: 1350000,
                 originalPrice: 1600000,
                 percentDiscount: 16,
-                stockQuantity: 3,
+                stockQuantity: 0, 
             },
         ],
         totalStockQuantity: 10,
