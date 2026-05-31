@@ -50,25 +50,11 @@ export const ProductDetailPage = () => {
                 <div className="w-full lg:w-[45%] shrink-0">
                     <div className="bg-slate-50 rounded-2xl overflow-hidden aspect-square border border-slate-100 mb-4 flex items-center justify-center p-4">
                         <img
-                            src={controller.mainImage || product.imageUrl}
+                            src={product.imageUrl}
                             alt={product.name}
                             className="w-full h-full object-contain mix-blend-multiply"
                         />
                     </div>
-                    {/* Thumbnail list */}
-                    {product.thumbnailUrl.length > 1 && (
-                        <div className="flex gap-3 overflow-x-auto pb-2 custom-scrollbar">
-                            {product.thumbnailUrl.map((img, idx) => (
-                                <button
-                                    key={idx}
-                                    onClick={() => controller.setMainImage(img)}
-                                    className={`w-20 h-20 shrink-0 rounded-xl border-2 p-1 overflow-hidden transition-all ${controller.mainImage === img ? 'border-blue-500 shadow-md' : 'border-slate-200 hover:border-blue-300'}`}
-                                >
-                                    <img src={img} className="w-full h-full object-contain mix-blend-multiply" alt="" />
-                                </button>
-                            ))}
-                        </div>
-                    )}
                 </div>
 
                 {/* Right: Info & Actions */}

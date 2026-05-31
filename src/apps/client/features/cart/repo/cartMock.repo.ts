@@ -1,6 +1,5 @@
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import { ApiException } from "../../../../../core/exceptions/api.exception";
-import { useAuth } from "../../../../../core/hooks/useAuth";
 import type { UpdateCartRequest } from "../dto/UpdateCartRequest.dto";
 import type { CartSummaryModel } from "../model/summary.model";
 import type { CartRepo } from "./cart.repo";
@@ -56,16 +55,16 @@ export class CartMockRepo implements CartRepo {
 
     async updateCartItem(request: UpdateCartRequest[]): Promise<ApiResponse<{ newCartCount: number }>> {
         if (LOGGED_IN) {
-            for (const { productId, quantity } of request) {
+            for (const { variantId, quantity } of request) {
                 if (quantity <= 0) {
-                    return fail<null>(`Số lượng của sản phẩm ${productId} phải lớn hơn 0`);
+                    return fail<null>(`Số lượng của variant ${variantId} phải lớn hơn 0`);
                 }
 
-                if (!mockItems.has(productId)) {
-                    return fail<null>(`Sản phẩm ${productId} không tồn tại trong giỏ hàng`);
+                if (!mockItems.has(variantId)) {
+                    return fail<null>(`Variant ${variantId} không tồn tại trong giỏ hàng`);
                 }
 
-                mockItems.set(productId, quantity);
+                mockItems.set(variantId, quantity);
             }
 
             return ok({ newCartCount: totalCount() }, "Cập nhật giỏ hàng thành công");
@@ -73,13 +72,13 @@ export class CartMockRepo implements CartRepo {
         throw new ApiException("Bạn phải đăng nhập để cập nhật giỏ hàng", 401);
     }
 
-    async deleteCartItem(productId: string): Promise<ApiResponse<{ newCartCount: number }>> {
+    async deleteCartItem(variantId: string): Promise<ApiResponse<{ newCartCount: number }>> {
         if (LOGGED_IN) {
-            if (!mockItems.has(productId)) {
-                return fail<null>(`Sản phẩm ${productId} không tồn tại trong giỏ hàng`);
+            if (!mockItems.has(variantId)) {
+                return fail<null>(`Variant ${variantId} không tồn tại trong giỏ hàng`);
             }
 
-            mockItems.delete(productId);
+            mockItems.delete(variantId);
 
             return ok({ newCartCount: totalCount() }, "Xóa sản phẩm khỏi giỏ hàng thành công");
         }

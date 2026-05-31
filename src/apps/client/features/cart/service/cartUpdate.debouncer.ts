@@ -14,12 +14,12 @@ class CartUpdateDebouncer {
 
     /**
      * Mỗi khi bấm +/- số lượng item trong giỏ hàng, 
-     * sẽ gọi hàm này, truyền productId và quantity, 
+     * sẽ gọi hàm này, truyền variantId và quantity, 
      * sau 500ms nếu không có thay đổi nào nữa 
      * thì mới gọi API để cập nhật giỏ hàng.
      */
-    public updateCartItem(productId: string, quantity: number) {
-        this.pendingUpdates.set(productId, quantity);
+    public updateCartItem(variantId: string, quantity: number) {
+        this.pendingUpdates.set(variantId, quantity);
 
         if (this.syncTimeout) {
             clearTimeout(this.syncTimeout);
@@ -34,7 +34,7 @@ class CartUpdateDebouncer {
         if (this.pendingUpdates.size === 0) return;
 
         const requestPayload: UpdateCartRequest[] = Array.from(this.pendingUpdates.entries()).map(
-            ([id, qty]) => ({ productId: id, quantity: qty })
+            ([id, qty]) => ({ variantId: id, quantity: qty })
         );
 
         this.pendingUpdates.clear();
@@ -63,7 +63,7 @@ class CartUpdateDebouncer {
         window.addEventListener('beforeunload', () => {
             if (this.pendingUpdates.size > 0) {
                 const requestPayload = Array.from(this.pendingUpdates.entries()).map(
-                    ([id, qty]) => ({ productId: id, quantity: qty })
+                    ([id, qty]) => ({ variantId: id, quantity: qty })
                 );
 
                 const token = tokenService.getAccessToken();

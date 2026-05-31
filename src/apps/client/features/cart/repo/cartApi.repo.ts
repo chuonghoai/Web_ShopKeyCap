@@ -42,15 +42,15 @@ export class CartApiRepo implements CartRepo {
     }
 
     /**
-     * DELETE /cart/items/{productId}
-     * @param productId
+     * DELETE /cart/items/{variantId}
+     * @param variantId
      * @returns newCartCount
      * 
-     * Mô tả: Xóa sản phẩm khỏi giỏ hàng
+     * Mô tả: Xóa variant khỏi giỏ hàng
      */
-    deleteCartItem(productId: string): Promise<ApiResponse<{ newCartCount: number }>> {
+    deleteCartItem(variantId: string): Promise<ApiResponse<{ newCartCount: number }>> {
         return apiClient.delete<ApiResponse<{ newCartCount: number }>>("/cart/items", {
-            params: productId
+            params: variantId
         });
     }
 }

@@ -33,10 +33,10 @@ export class CartService {
     }
 
     /**
-     * Delete item from cart
+     * Delete item from cart by variantId
      */
-    async deleteCartItem(productId: string) {
-        return this.cartRepo.deleteCartItem(productId);
+    async deleteCartItem(variantId: string) {
+        return this.cartRepo.deleteCartItem(variantId);
     }
 }
 

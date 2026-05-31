@@ -23,7 +23,6 @@ export const useProductDetailController = () => {
     const [selectedAttributes, setSelectedAttributes] = useState<Record<string, string>>({});
     const [quantity, setQuantity] = useState<number>(1);
     const [isAddingToCart, setIsAddingToCart] = useState(false);
-    const [mainImage, setMainImage] = useState<string>("");
 
     useEffect(() => {
         if (slug) {
@@ -34,14 +33,11 @@ export const useProductDetailController = () => {
 
     useEffect(() => {
         if (store.product) {
-            setMainImage(store.product.imageUrl);
             const skuFromUrl = searchParams.get("sku");
             if (skuFromUrl) {
                 const restored = getAttributesFromSku(store.product.variants, skuFromUrl);
                 if (restored) {
-                    const variant = store.product.variants.find(v => v.sku === skuFromUrl);
                     setSelectedAttributes(restored);
-                    if (variant?.imageUrl) setMainImage(variant.imageUrl);
                 }
             }
         }
@@ -150,8 +146,6 @@ export const useProductDetailController = () => {
         isLoading: store.isLoading,
         error: store.error,
 
-        mainImage,
-        setMainImage,
         selectedAttributes,
         currentVariant,
 

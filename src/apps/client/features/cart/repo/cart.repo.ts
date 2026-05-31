@@ -7,5 +7,5 @@ export interface CartRepo {
 
     addToCart(variantId: string, quantity: number): Promise<ApiResponse<{ newCartCount: number }>>;
     updateCartItem(request: UpdateCartRequest[]): Promise<ApiResponse<{ newCartCount: number }>>;
-    deleteCartItem(productId: string): Promise<ApiResponse<{ newCartCount: number }>>;
+    deleteCartItem(variantId: string): Promise<ApiResponse<{ newCartCount: number }>>;
 }

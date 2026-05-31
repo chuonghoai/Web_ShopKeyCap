@@ -1,4 +1,4 @@
 export interface UpdateCartRequest {
-    productId: string;
+    variantId: string;
     quantity: number;
 }
