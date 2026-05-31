@@ -1,4 +1,4 @@
-import { ShoppingCart } from "lucide-react";
+import { Eye } from "lucide-react";
 import type { ProductItem } from "../../../features/products/model/product.model";
 import { useProductCardController } from "../cpnController/productCard.controller";
 
@@ -115,10 +115,9 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
                             </span>
                         </div>
 
-                        {/* Nút giỏ hàng */}
+                        {/* Nút Xem chi tiết */}
                         <button
-                            onClick={controller.handleAddToCart}
-                            disabled={controller.isAdding}
+                            onClick={controller.handleCardClick}
                             className={`
                                 absolute inset-0 w-full h-full
                                 rounded-xl
@@ -130,20 +129,11 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
                                 translate-y-full opacity-0
                                 group-hover:translate-y-0 group-hover:opacity-100
                                 cursor-pointer
-                                ${controller.isAdding
-                                    ? "bg-slate-500 opacity-90 cursor-not-allowed group-hover:translate-y-0"
-                                    : "bg-linear-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
-                                }
+                                bg-linear-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800
                             `}
                         >
-                            {controller.isAdding ? (
-                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                            ) : (
-                                <>
-                                    <ShoppingCart size={18} />
-                                    Thêm vào giỏ
-                                </>
-                            )}
+                            <Eye size={18} />
+                            Xem chi tiết
                         </button>
 
                     </div>
