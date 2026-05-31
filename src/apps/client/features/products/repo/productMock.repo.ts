@@ -14,9 +14,7 @@ export class ProductMockRepo implements ProductRepo {
             name: "Bàn phím cơ custom Akko 3068B Plus Bàn phím cơ custom Akko 3068B PlusBàn phím cơ custom Akko 3068B PlusBàn phím cơ custom Akko 3068B Plus",
             imageUrl: "https://product.hstatic.net/200000889805/product/ooth-5-0-wireless-2-4ghz-hotswap-foam-tieu-am-akko-cs-jelly-pink-5pkuf_5b9c81513a474a26b6fc8b26f99ffe61_master.jpg",
             typeName: "Bàn phím",
-            price: 1200000,
-            originalPrice: 1500000,
-            percentDiscount: 0,
+            minPrice: 1100000,
             isFavorite: true,
             slug: "ban-phim-co-custom-akko-3068b-plus",
         },
@@ -25,9 +23,7 @@ export class ProductMockRepo implements ProductRepo {
             name: "Bàn phím kèm chuột tai mèo Mimi Plus",
             imageUrl: "https://bizweb.dktcdn.net/thumb/1024x1024/100/450/808/products/09d25459-d55c-49b6-946e-b7936f95d107.jpg?v=1675152844267",
             typeName: "Bàn phím",
-            price: 180000,
-            originalPrice: 180000,
-            percentDiscount: 0,
+            minPrice: 180000,
             isFavorite: false,
             slug: "ban-phim-kem-chuot-tai-meo-mimi-plus",
         },
@@ -36,9 +32,7 @@ export class ProductMockRepo implements ProductRepo {
             name: "Combo lót chuột kèm kê tay Mezy Mouse",
             imageUrl: "https://bizweb.dktcdn.net/100/450/808/products/d726d464-2f14-4b16-be63-cfd528b27bec.jpg?v=1677662229473",
             typeName: "Bàn phím",
-            price: 200000,
-            originalPrice: 200000,
-            percentDiscount: 0,
+            minPrice: 200000,
             isFavorite: true,
             slug: "combo-lot-chuot-kem-ke-tay-mezy-mouse",
         },
@@ -47,9 +41,7 @@ export class ProductMockRepo implements ProductRepo {
             name: "Bàn phím cơ Yunzii C98 siêu cute tiếng êm",
             imageUrl: "https://bizweb.dktcdn.net/thumb/1024x1024/100/436/596/products/7-1775644073454.png?v=1775644115560",
             typeName: "Bàn phím",
-            price: 2200000,
-            originalPrice: 2200000,
-            percentDiscount: 0,
+            minPrice: 2200000,
             isFavorite: false,
             slug: "ban-phim-co-yunzii-c98-sieu-cute-tieng-em",
         },
@@ -223,6 +215,8 @@ export class ProductMockRepo implements ProductRepo {
                 stockQuantity: 0, 
             },
         ],
+        minPrice: 1100000,
+        maxPrice: 1350000,
         totalStockQuantity: 10,
         isFavorite: true,
         description: `
@@ -260,9 +254,7 @@ export class ProductMockRepo implements ProductRepo {
                 name: "Bàn phím cơ custom Akko 3068B Plus Bàn phím cơ custom Akko 3068B PlusBàn phím cơ custom Akko 3068B PlusBàn phím cơ custom Akko 3068B Plus",
                 imageUrl: "https://product.hstatic.net/200000889805/product/ooth-5-0-wireless-2-4ghz-hotswap-foam-tieu-am-akko-cs-jelly-pink-5pkuf_5b9c81513a474a26b6fc8b26f99ffe61_master.jpg",
                 typeName: "Bàn phím",
-                price: 1200000,
-                originalPrice: 1500000,
-                percentDiscount: 0,
+                minPrice: 1100000,
                 isFavorite: true,
                 slug: "ban-phim-co-custom-akko-3068b-plus",
             },
@@ -345,10 +337,10 @@ export class ProductMockRepo implements ProductRepo {
 
         // Áp dụng lọc giá để mock gần giống thực tế
         if (request.priceMin !== undefined) {
-            data = data.filter(p => p.price >= request.priceMin!);
+            data = data.filter(p => p.minPrice >= request.priceMin!);
         }
         if (request.priceMax !== undefined) {
-            data = data.filter(p => p.price <= request.priceMax!);
+            data = data.filter(p => p.minPrice <= request.priceMax!);
         }
 
         return {

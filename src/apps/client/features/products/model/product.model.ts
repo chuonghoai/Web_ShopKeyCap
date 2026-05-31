@@ -8,22 +8,10 @@ export interface ProductItem {
     typeName: string;
 
     /**
-     * price: Giá hiện tại
-     * originalPrice: Giá gốc
-     * percentDiscount: Phần trăm giảm giá, có thể bằng 0 nếu không giảm giá
-     * 
-     * Quy tắc tính sản phẩm có giảm giá hay ko:
-     *  - price < originalPrice && percentDiscount == 0: Sản phẩm giảm tiền trực tiếp,
-     *      ví dụ: Giá gốc là 100k, giá hiện tại là 90k -> Sản phẩm đang được giảm trực tiếp 10k
-     * 
-     *  - price < originalPrice && percentDiscount > 0: Sản phẩm được giảm tiền theo %,
-     *      ví dụ: Giá gốc là 100k, giá hiện tại là 90k -> Sản phẩm đang được giảm 10%
-     * 
-     *  - price == originalPrice: Sản phẩm không được giảm giá
+     * minPrice: Giá thấp nhất trong tất cả các variants của sản phẩm.
+     * Được Backend tính sẵn, Frontend chỉ hiển thị, không tự tính.
      */
-    price: number;
-    originalPrice: number;
-    percentDiscount: number;
+    minPrice: number;
 
     /**
      * Sản phẩm đang có được user thêm vào wishlist hay ko

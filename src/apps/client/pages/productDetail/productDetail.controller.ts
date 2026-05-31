@@ -69,20 +69,25 @@ export const useProductDetailController = () => {
         }
     }, [currentVariant]);
 
-    const displayPrice = currentVariant
-        ? currentVariant.price
-        : store.product?.variants[0]?.price ?? 0;
+    // Giá hiển thị khi đã chọn đủ variant
+    const displayPrice = currentVariant?.price ?? null;
+    const displayOriginalPrice = currentVariant?.originalPrice ?? null;
+    const displayPercentDiscount = currentVariant?.percentDiscount ?? null;
 
-    const displayOriginalPrice = currentVariant
-        ? currentVariant.originalPrice
-        : store.product?.variants[0]?.originalPrice ?? 0;
+    const formatPrice = (price: number) =>
+        new Intl.NumberFormat("vi-VN").format(price) + "₫";
+
+    // Khoảng giá hiển thị khi chưa chọn variant (dùng dữ liệu Backend tính sẵn)
+    const priceRangeText = (() => {
+        if (!store.product) return "";
+        const { minPrice, maxPrice } = store.product;
+        if (minPrice === maxPrice) return formatPrice(minPrice);
+        return `${formatPrice(minPrice)} - ${formatPrice(maxPrice)}`;
+    })();
 
     const displayStock = currentVariant
         ? currentVariant.stockQuantity
         : store.product?.totalStockQuantity ?? 0;
-
-    const formatPrice = (price: number) =>
-        new Intl.NumberFormat("vi-VN").format(price) + "₫";
 
     const handleOptionSelect = (optionName: string, value: string) => {
         if (!store.product) return;
@@ -156,6 +161,8 @@ export const useProductDetailController = () => {
 
         displayPrice,
         displayOriginalPrice,
+        displayPercentDiscount,
+        priceRangeText,
         displayStock,
         formatPrice,
 

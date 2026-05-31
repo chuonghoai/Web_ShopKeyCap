@@ -30,6 +30,17 @@ export interface ProductDetail {
     variants: ProductVariant[];
 
     /**
+     * Khoảng giá của sản phẩm, được Backend tính sẵn từ toàn bộ variants.
+     * Frontend không tự dưyệt variants để tính lại.
+     * 
+     * Hiển thị:
+     *   - minPrice != maxPrice → “1.200.000đ - 1.800.000đ”
+     *   - minPrice == maxPrice → “1.200.000đ”
+     */
+    minPrice: number;
+    maxPrice: number;
+
+    /**
      * Tổng số tồn kho của tất cả các biến thể
      */
     totalStockQuantity: number;

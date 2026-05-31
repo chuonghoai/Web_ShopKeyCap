@@ -51,11 +51,6 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-20 bg-orange-300/40 blur-3xl z-1" />
 
                     <div className="absolute top-3 left-3 z-10 flex items-center gap-2">
-                        {controller.discountText && (
-                            <div className="px-3 py-1 rounded-full bg-red-500 text-white text-[11px] font-bold tracking-wide shadow-md">
-                                {controller.discountText}
-                            </div>
-                        )}
                         {isNew && (
                             <div className="px-3 py-1 rounded-full bg-blue-600 text-white text-[11px] font-bold tracking-wide shadow-md">
                                 NEW
@@ -116,13 +111,8 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
                                 text-blue-700
                                 leading-none
                             ">
-                                {controller.formatPrice(data.price)}
+                                {controller.formatPrice(data.minPrice)}
                             </span>
-                            {data.originalPrice > data.price && (
-                                <span className="text-[14px] text-slate-400 line-through font-medium leading-none pb-0.5">
-                                    {controller.formatPrice(data.originalPrice)}
-                                </span>
-                            )}
                         </div>
 
                         {/* Nút giỏ hàng */}

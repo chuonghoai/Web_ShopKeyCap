@@ -15,12 +15,6 @@ export const useProductCardController = (data: ProductItem) => {
         return new Intl.NumberFormat("vi-VN").format(price) + "₫";
     };
 
-    let discountText = "";
-    if (data.percentDiscount > 0) {
-        discountText = `-${data.percentDiscount}%`;
-    } else if (data.originalPrice > data.price) {
-        discountText = `-${formatPrice(data.originalPrice - data.price)}`;
-    }
 
     const handleCardClick = () => {
         navigate(`/product/${data.slug}`);
@@ -53,7 +47,6 @@ export const useProductCardController = (data: ProductItem) => {
     return {
         isAdding,
         formatPrice,
-        discountText,
         handleCardClick,
         handleAddToCart
     };

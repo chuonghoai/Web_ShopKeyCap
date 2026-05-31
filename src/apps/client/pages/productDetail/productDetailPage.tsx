@@ -76,16 +76,31 @@ export const ProductDetailPage = () => {
 
                     {/* Price Block */}
                     <div className="bg-slate-50 rounded-2xl p-6 mb-8 border border-slate-100">
-                        <div className="flex items-end gap-3">
-                            <span className="text-[32px] font-extrabold text-blue-600 leading-none">
-                                {controller.formatPrice(controller.displayPrice)}
-                            </span>
-                            {controller.displayOriginalPrice > controller.displayPrice && (
-                                <span className="text-[16px] font-medium text-slate-400 line-through mb-1">
-                                    {controller.formatPrice(controller.displayOriginalPrice)}
+                        {controller.currentVariant ? (
+                            // Đã chọn variant: hiển thị giá thực tế của variant
+                            <div className="flex items-end gap-3 flex-wrap">
+                                <span className="text-[32px] font-extrabold text-blue-600 leading-none">
+                                    {controller.formatPrice(controller.displayPrice!)}
                                 </span>
-                            )}
-                        </div>
+                                {controller.displayOriginalPrice! > controller.displayPrice! && (
+                                    <span className="text-[16px] font-medium text-slate-400 line-through mb-1">
+                                        {controller.formatPrice(controller.displayOriginalPrice!)}
+                                    </span>
+                                )}
+                                {controller.displayPercentDiscount !== null && controller.displayPercentDiscount > 0 && (
+                                    <span className="px-2.5 py-1 rounded-full bg-red-500 text-white text-[13px] font-bold mb-1">
+                                        -{controller.displayPercentDiscount}%
+                                    </span>
+                                )}
+                            </div>
+                        ) : (
+                            // Chưa chọn variant: hiển thị khoảng giá Backend đã tính sẵn
+                            <div className="flex items-center gap-2">
+                                <span className="text-[28px] font-extrabold text-blue-600 leading-none">
+                                    {controller.priceRangeText}
+                                </span>
+                            </div>
+                        )}
                     </div>
 
                     {/* Variants */}
