@@ -202,8 +202,17 @@ export const ProductDetailPage = () => {
                                     </>
                                 )}
                             </button>
-                            <button className="w-12 h-12 shrink-0 rounded-md border border-slate-200 flex items-center justify-center text-slate-500 hover:text-red-500 hover:border-red-200 hover:bg-red-50 transition-colors">
-                                <span className="material-icons-outlined">favorite_border</span>
+                            <button 
+                                onClick={controller.handleToggleFavorite}
+                                className={`w-12 h-12 shrink-0 rounded-md border flex items-center justify-center transition-colors
+                                    ${product.isFavorite 
+                                        ? 'text-red-500 border-red-200 bg-red-50 hover:bg-red-100' 
+                                        : 'border-slate-200 text-slate-500 hover:text-red-500 hover:border-red-200 hover:bg-red-50'
+                                    }`}
+                            >
+                                <span className={product.isFavorite ? "material-icons" : "material-icons-outlined"}>
+                                    {product.isFavorite ? "favorite" : "favorite_border"}
+                                </span>
                             </button>
                         </div>
                     </div>

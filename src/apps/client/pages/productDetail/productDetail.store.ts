@@ -38,6 +38,10 @@ export const useProductDetailStore = () => {
         setProduct(null);
     }
 
+    const setProductFavorite = (isFavorite: boolean) => {
+        setProduct(prev => prev ? { ...prev, isFavorite } : null);
+    };
+
     const loadReviews = async (productId: string, page: number) => {
         setLoadingReview(true);
         setErrorReview(null);
@@ -66,6 +70,7 @@ export const useProductDetailStore = () => {
 
         fetchProduct,
         clearProduct,
+        setProductFavorite,
 
         reviewList,
         currentPage,

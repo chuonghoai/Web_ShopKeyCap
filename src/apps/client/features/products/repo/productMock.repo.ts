@@ -6,9 +6,7 @@ import type { ProductItem } from "../model/product.model";
 import type { ProductDetail } from "../model/productDetail.model";
 import type { ProductRepo } from "./product.repo";
 
-export class ProductMockRepo implements ProductRepo {
-    //Mock products data
-    private mockProducts: ProductItem[] = [
+export const MOCK_PRODUCTS: ProductItem[] = [
         {
             id: "1",
             name: "Bàn phím cơ custom Akko 3068B Plus Bàn phím cơ custom Akko 3068B PlusBàn phím cơ custom Akko 3068B PlusBàn phím cơ custom Akko 3068B Plus",
@@ -47,7 +45,7 @@ export class ProductMockRepo implements ProductRepo {
         },
     ];
 
-    private mockProductDetail: ProductDetail = {
+export const MOCK_PRODUCT_DETAIL: ProductDetail = {
         id: "1",
         name: "Bàn phím cơ custom Akko 3068B Plus",
         slug: "ban-phim-co-custom-akko-3068b-plus",
@@ -218,7 +216,7 @@ export class ProductMockRepo implements ProductRepo {
         minPrice: 1100000,
         maxPrice: 1350000,
         totalStockQuantity: 10,
-        isFavorite: true,
+        isFavorite: false,
         description: `
             <div class="product-description">
                 <h3>Bàn phím cơ Akko 3068B Plus</h3>
@@ -261,9 +259,11 @@ export class ProductMockRepo implements ProductRepo {
         ],
     };
 
+export class ProductMockRepo implements ProductRepo {
+
     async getProducts(request: ListProductRequest): Promise<ApiResponse<ProductItem[]>> {
         const mockProducts50 = Array.from({ length: request.pageSize }, (_, index) => {
-            const originalItem = this.mockProducts[index % this.mockProducts.length];
+            const originalItem = MOCK_PRODUCTS[index % MOCK_PRODUCTS.length];
             return {
                 ...originalItem,
                 id: (index + 1).toString(),
@@ -289,7 +289,7 @@ export class ProductMockRepo implements ProductRepo {
      */
     private _expand(limit: number): ProductItem[] {
         return Array.from({ length: limit }, (_, i) => ({
-            ...this.mockProducts[i % this.mockProducts.length],
+            ...MOCK_PRODUCTS[i % MOCK_PRODUCTS.length],
             id: (i + 1).toString(),
         }));
     }
@@ -332,7 +332,7 @@ export class ProductMockRepo implements ProductRepo {
      * (có lọc thêm priceMin / priceMax nếu được truyền vào)
      */
     async getRecommendedProducts(request: RecommendedProductRequest): Promise<ApiResponse<ProductItem[]>> {
-        const limit = request.limit ?? this.mockProducts.length;
+        const limit = request.limit ?? MOCK_PRODUCTS.length;
         let data = this._expand(limit);
 
         // Áp dụng lọc giá để mock gần giống thực tế
@@ -377,7 +377,7 @@ export class ProductMockRepo implements ProductRepo {
 
 
     async getProductBySlug(productSlug: string): Promise<ApiResponse<ProductDetail>> {
-        let response: ProductDetail = { ...this.mockProductDetail, slug: productSlug };
+        let response: ProductDetail = { ...MOCK_PRODUCT_DETAIL, slug: productSlug };
         return {
             success: true,
             message: "Lấy thông tin sản phẩm thành công",

@@ -10,6 +10,7 @@ import {
     getAttributesFromSku,
     sanitizeSelectedAttributes,
 } from "../../features/products/utils/variantSelection.utils";
+import { favoriteService } from "../../features/favorite/services/favorite.service";
 
 export const useProductDetailController = () => {
     const { slug } = useParams<{ slug: string }>();
@@ -167,6 +168,32 @@ export const useProductDetailController = () => {
         }
     };
 
+    const handleToggleFavorite = async () => {
+        if (!store.product) return;
+
+        const productId = store.product.id;
+        const previousFavorite = store.product.isFavorite;
+
+        // Optimistic update
+        store.setProductFavorite(!previousFavorite);
+
+        try {
+            const response = await favoriteService.toggleFavorite(productId);
+            if (response.success && response.data) {
+                // Backend returns the actual final state
+                store.setProductFavorite(response.data.isFavorite);
+            } else {
+                // Rollback
+                store.setProductFavorite(previousFavorite);
+                toast(response.message || "Không thể cập nhật danh sách yêu thích", "error");
+            }
+        } catch (error: any) {
+            // Rollback
+            store.setProductFavorite(previousFavorite);
+            toast(error.message || "Không thể cập nhật danh sách yêu thích", "error");
+        }
+    };
+
     return {
         product: store.product,
         isLoading: store.isLoading,
@@ -191,6 +218,8 @@ export const useProductDetailController = () => {
         handleQuantityChange,
         handleAddToCart,
         handleNavigateFilter,
+        
+        handleToggleFavorite,
 
         reviewList: store.reviewList,
         reviewCurrentPage: store.currentPage,
