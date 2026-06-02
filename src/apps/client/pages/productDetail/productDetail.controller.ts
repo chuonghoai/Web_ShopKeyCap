@@ -24,6 +24,9 @@ export const useProductDetailController = () => {
     const [quantity, setQuantity] = useState<number>(1);
     const [isAddingToCart, setIsAddingToCart] = useState(false);
 
+    /**
+     * Load product detail when init page
+     */
     useEffect(() => {
         if (slug) {
             store.fetchProduct(slug);
@@ -31,6 +34,18 @@ export const useProductDetailController = () => {
         return () => store.clearProduct();
     }, [slug]);
 
+    /**
+     * Load product's review when init page
+     */
+    useEffect(() => {
+        if (store.product?.id) {
+            store.loadReviews(store.product.id, 1);
+        }
+    }, [store.product?.id]);
+
+    /**
+     * Restore selected attributes from URL when init page
+     */
     useEffect(() => {
         if (store.product) {
             const skuFromUrl = searchParams.get("sku");
@@ -146,6 +161,12 @@ export const useProductDetailController = () => {
         navigate(`/products?${filterKey}=${filterValue}`);
     };
 
+    const handleReviewPageChange = (newPage: number) => {
+        if (store.product && newPage >= 1 && newPage <= store.totalPages) {
+            store.loadReviews(store.product.id, newPage);
+        }
+    };
+
     return {
         product: store.product,
         isLoading: store.isLoading,
@@ -170,5 +191,12 @@ export const useProductDetailController = () => {
         handleQuantityChange,
         handleAddToCart,
         handleNavigateFilter,
+
+        reviewList: store.reviewList,
+        reviewCurrentPage: store.currentPage,
+        reviewTotalPages: store.totalPages,
+        loadingReview: store.loadingReview,
+        errorReview: store.errorReview,
+        handleReviewPageChange,
     };
 };
