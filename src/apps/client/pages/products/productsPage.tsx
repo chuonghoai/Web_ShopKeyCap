@@ -13,11 +13,11 @@ export const ProductsPage = () => {
             <div className="mb-8">
                 <HeroSection />
             </div>
-            <div className="flex flex-col lg:flex-row gap-6 items-start">
+            <div id="product-list" className="flex flex-col lg:flex-row gap-6 items-start">
 
                 {/* Filter Sidebar */}
                 <div className="w-full lg:w-70 shrink-0 top-24 self-start">
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-4 min-h-[calc(100vh-7rem)] overflow-y-auto">
+                    <div className="bg-white p-6 rounded-md border border-slate-200 flex flex-col gap-4 min-h-[calc(100vh-7rem)] overflow-y-auto">
                         <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                             <div className="flex items-center gap-2">
                                 <span className="material-icons-outlined text-slate-800 text-[24px]">filter_alt</span>
@@ -140,7 +140,7 @@ export const ProductsPage = () => {
                 <div className="flex-1 w-full min-w-0">
 
                     {/* Sort Options */}
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 px-5 rounded-2xl  mb-6">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 px-5 rounded-md mb-6">
                         <span className="text-[16px] text-slate-500 font-bold whitespace-nowrap hidden sm:block">
                             Sắp xếp theo:
                         </span>
@@ -149,9 +149,9 @@ export const ProductsPage = () => {
                                 <label
                                     key={option.slug}
                                     className={`
-                                        px-4 py-2 rounded-xl text-[14px] font-medium cursor-pointer transition-colors
+                                        px-4 py-2 rounded-md text-[14px] font-medium cursor-pointer transition-colors
                                         ${controller.currentSort === option.slug
-                                            ? 'bg-blue-600 text-white shadow-md'
+                                            ? 'bg-blue-600 text-white'
                                             : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
                                         }
                                     `}
@@ -172,7 +172,7 @@ export const ProductsPage = () => {
 
                     {/* Products */}
                     {controller.isLoading ? (
-                        <div className="w-full flex justify-center items-center py-32 bg-white rounded-3xl border border-slate-200 shadow-sm">
+                        <div className="w-full flex justify-center items-center py-32 bg-white rounded-md border border-slate-200">
                             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div>
                             <span className="ml-3 text-slate-500 font-medium">Đang tải dữ liệu...</span>
                         </div>
@@ -187,7 +187,7 @@ export const ProductsPage = () => {
                                     ))}
                                 </div>
                             ) : (
-                                <div className="w-full flex flex-col items-center justify-center py-20 bg-white rounded-3xl border border-slate-200 shadow-sm">
+                                <div className="w-full flex flex-col items-center justify-center py-20 bg-white rounded-md border border-slate-200">
                                     <span className="material-icons-outlined text-6xl mb-4 text-slate-300">inventory_2</span>
                                     <p className="text-lg text-slate-500 font-medium">Không tìm thấy sản phẩm nào phù hợp với bộ lọc.</p>
                                 </div>
@@ -199,7 +199,7 @@ export const ProductsPage = () => {
                                     <button
                                         onClick={() => controller.handlePageChange(1)}
                                         disabled={controller.currentPage === 1}
-                                        className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-600 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                                        className="w-10 h-10 rounded-md flex items-center justify-center bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                         title="Trang đầu"
                                     >
                                         <span className="material-icons-outlined text-[20px]">keyboard_double_arrow_left</span>
@@ -208,7 +208,7 @@ export const ProductsPage = () => {
                                     <button
                                         onClick={() => controller.handlePageChange(controller.currentPage - 1)}
                                         disabled={controller.currentPage === 1}
-                                        className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-600 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                                        className="w-10 h-10 rounded-md flex items-center justify-center bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                         title="Trang trước"
                                     >
                                         <span className="material-icons-outlined text-[20px]">arrow_back_ios_new</span>
@@ -221,7 +221,7 @@ export const ProductsPage = () => {
                                             value={controller.pageInput}
                                             onChange={(e) => controller.setPageInput(e.target.value)}
                                             onBlur={() => controller.setPageInput(String(controller.currentPage))}
-                                            className="w-14 h-10 text-center border border-slate-300 rounded-lg text-[15px] font-medium text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 hide-number-spinners"
+                                            className="w-14 h-10 text-center border border-slate-300 rounded-md text-[15px] font-medium text-slate-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 hide-number-spinners"
                                             min={1}
                                             max={controller.totalPages}
                                         />
@@ -232,7 +232,7 @@ export const ProductsPage = () => {
                                     <button
                                         onClick={() => controller.handlePageChange(controller.currentPage + 1)}
                                         disabled={controller.currentPage === controller.totalPages}
-                                        className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-600 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                                        className="w-10 h-10 rounded-md flex items-center justify-center bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                         title="Trang sau"
                                     >
                                         <span className="material-icons-outlined text-[20px]">arrow_forward_ios</span>
@@ -241,7 +241,7 @@ export const ProductsPage = () => {
                                     <button
                                         onClick={() => controller.handlePageChange(controller.totalPages)}
                                         disabled={controller.currentPage === controller.totalPages}
-                                        className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-600 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                                        className="w-10 h-10 rounded-md flex items-center justify-center bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                         title="Trang cuối"
                                     >
                                         <span className="material-icons-outlined text-[20px]">keyboard_double_arrow_right</span>

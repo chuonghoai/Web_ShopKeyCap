@@ -1,4 +1,3 @@
-import { Eye } from "lucide-react";
 import type { ProductItem } from "../../../features/products/model/product.model";
 import { useProductCardController } from "../cpnController/productCard.controller";
 
@@ -17,19 +16,18 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
         >
             {/* tooltip */}
             <div className="
-                absolute bottom-full mb-3 left-1/2 -translate-x-1/2 z-9999
-                w-max max-w-55 rounded-lg bg-slate-900 px-3 py-2 text-[13px] font-medium text-white shadow-lg
-                opacity-0 invisible translate-y-2
-                transition-all duration-200
-                group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
+                absolute bottom-full mb-2 left-1/2 -translate-x-1/2 z-9999
+                w-max max-w-55 rounded-sm bg-slate-800 px-2 py-1 text-[12px] text-white
+                opacity-0 invisible
+                transition-opacity duration-200
+                group-hover:opacity-100 group-hover:visible
                 group-has-[button:hover]:opacity-0 group-has-[button:hover]:invisible
                 pointer-events-none text-center
             ">
-                <span className="line-clamp-2 whitespace-normal leading-snug">
+                <span className="line-clamp-2 whitespace-normal leading-tight">
                     {data.name}
                 </span>
-
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-slate-900 rotate-45"></div>
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div>
             </div>
 
             <div className="
@@ -37,22 +35,19 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
                 flex flex-col
                 h-full
                 overflow-hidden
-                rounded-[28px]
+                rounded-md
                 bg-white
-                shadow-sm
                 border border-slate-200
                 transition-all duration-300
+                group-hover:border-blue-500
                 group-hover:-translate-y-1
-                group-hover:shadow-xl
+                group-hover:shadow-lg
             ">
                 {/* Image */}
-                <div className="relative z-10 overflow-hidden bg-black aspect-4/3 w-full shrink-0">
-                    <div className="absolute inset-0 bg-linear-to-b from-black/20 via-black/40 to-black/80 z-1" />
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-20 bg-orange-300/40 blur-3xl z-1" />
-
-                    <div className="absolute top-3 left-3 z-10 flex items-center gap-2">
+                <div className="relative z-10 overflow-hidden bg-slate-100 aspect-4/3 w-full shrink-0 border-b border-slate-100">
+                    <div className="absolute top-2 left-2 z-10 flex items-center gap-2">
                         {isNew && (
-                            <div className="px-3 py-1 rounded-full bg-blue-600 text-white text-[11px] font-bold tracking-wide shadow-md">
+                            <div className="px-2 py-0.5 rounded-sm bg-blue-600 text-white text-[11px] font-bold tracking-wide">
                                 NEW
                             </div>
                         )}
@@ -62,7 +57,7 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
                         <img
                             src={data.imageUrl}
                             alt={data.name}
-                            className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                            className="object-cover w-full h-full"
                         />
                     </div>
                 </div>
@@ -99,18 +94,11 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
                         )}
                     </div>
 
-                    {/* Giá - Nút thêm vào giỏ hàng */}
-                    <div className="relative h-12 overflow-hidden w-full">
-
+                    {/* Giá - Nút Xem chi tiết */}
+                    <div className="relative h-10 overflow-hidden w-full mt-2">
                         {/* Giá tiền */}
                         <div className="absolute inset-0 flex items-center gap-2 transition-all duration-300 transform group-hover:-translate-y-full group-hover:opacity-0">
-                            <span className="
-                                text-[22px] lg:text-[26px]
-                                font-extrabold
-                                tracking-tight
-                                text-blue-700
-                                leading-none
-                            ">
+                            <span className="text-[18px] font-bold text-slate-900 leading-none">
                                 {controller.formatPrice(data.minPrice)}
                             </span>
                         </div>
@@ -118,24 +106,21 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
                         {/* Nút Xem chi tiết */}
                         <button
                             onClick={controller.handleCardClick}
-                            className={`
+                            className="
                                 absolute inset-0 w-full h-full
-                                rounded-xl
+                                rounded-md
                                 text-white
-                                text-[14px] lg:text-[15px] font-semibold
-                                flex items-center justify-center gap-2.5
-                                shadow-lg shadow-blue-500/20
+                                text-[13px] font-medium
+                                flex items-center justify-center
                                 transition-all duration-300
                                 translate-y-full opacity-0
                                 group-hover:translate-y-0 group-hover:opacity-100
                                 cursor-pointer
-                                bg-linear-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800
-                            `}
+                                bg-blue-600 hover:bg-blue-700
+                            "
                         >
-                            <Eye size={18} />
                             Xem chi tiết
                         </button>
-
                     </div>
                 </div>
             </div>
