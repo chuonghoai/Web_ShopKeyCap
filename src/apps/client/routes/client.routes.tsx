@@ -5,6 +5,7 @@ import ClientLayout from "../layout/clientLayout";
 import { HomePage } from "../pages/homepage/homepage";
 import ProductsPage from "../pages/products/productsPage";
 import ProductDetailPage from "../pages/productDetail/productDetailPage";
+import CartPage from "../pages/cart/cartPage";
 
 const ProfilePage = () => {
     return <h1>Thông tin cá nhân (Cần đăng nhập)</h1>;
@@ -41,6 +42,7 @@ export const clientRoutes: RouteObject[] = [
                 ),
                 children: [
                     { path: "/profile", element: <ProfilePage /> },
+                    { path: "/cart", element: <CartPage /> },
                 ]
             }
         ]

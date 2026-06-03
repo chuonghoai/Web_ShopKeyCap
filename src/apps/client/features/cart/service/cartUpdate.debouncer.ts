@@ -8,6 +8,11 @@ class CartUpdateDebouncer {
     private readonly DELAY_MS = 500;
     private syncCallback?: (count: number) => void;
 
+    private pendingResolvers: Array<{
+        resolve: (val: number) => void;
+        reject: (reason?: any) => void;
+    }> = [];
+
     constructor() {
         this.registerUnloadHandler();
     }
@@ -17,19 +22,27 @@ class CartUpdateDebouncer {
      * sẽ gọi hàm này, truyền variantId và quantity, 
      * sau 500ms nếu không có thay đổi nào nữa 
      * thì mới gọi API để cập nhật giỏ hàng.
+     * Trả về Promise resolve với totalPrice mới nhất.
      */
-    public updateCartItem(variantId: string, quantity: number) {
+    public updateCartItem(variantId: string, quantity: number): Promise<number> {
         this.pendingUpdates.set(variantId, quantity);
 
         if (this.syncTimeout) {
             clearTimeout(this.syncTimeout);
         }
 
-        this.syncTimeout = setTimeout(() => {
-            this.syncNow();
-        }, this.DELAY_MS);
+        return new Promise((resolve, reject) => {
+            this.pendingResolvers.push({ resolve, reject });
+
+            this.syncTimeout = setTimeout(() => {
+                this.syncNow();
+            }, this.DELAY_MS);
+        });
     }
 
+    /**
+     * Sync data cart count
+     */
     public async syncNow() {
         if (this.pendingUpdates.size === 0) return;
 
@@ -39,21 +52,28 @@ class CartUpdateDebouncer {
 
         this.pendingUpdates.clear();
 
+        const resolversToNotify = [...this.pendingResolvers];
+        this.pendingResolvers = [];
+
         try {
             const response = await cartService.updateCartItem(requestPayload);
             if (this.syncCallback && response.data) {
                 this.syncCallback(response.data.newCartCount);
             }
-        } catch (error) {
+            const totalPrice = response.data?.totalPrice || 0;
+            resolversToNotify.forEach(({ resolve }) => resolve(totalPrice));
+        } catch (error: any) {
             const errMsg = error.data?.message
                 || error.message
                 || "Lỗi đồng bộ giỏ hàng";
-            throw new Error(errMsg);
+
+            resolversToNotify.forEach(({ reject }) => reject(new Error(errMsg)));
         }
     }
 
     /**
-     * Callback function
+     * Callback function to store (or controller) register function syncCartCount
+     * Which use cart debouncer, they need to register this in useEffect
      */
     public registerSyncCallback(cb: (count: number) => void) {
         this.syncCallback = cb;

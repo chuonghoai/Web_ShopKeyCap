@@ -85,7 +85,6 @@ export const useProductDetailController = () => {
         }
     }, [currentVariant]);
 
-    // Giá hiển thị khi đã chọn đủ variant
     const displayPrice = currentVariant?.price ?? null;
     const displayOriginalPrice = currentVariant?.originalPrice ?? null;
     const displayPercentDiscount = currentVariant?.percentDiscount ?? null;
@@ -93,7 +92,6 @@ export const useProductDetailController = () => {
     const formatPrice = (price: number) =>
         new Intl.NumberFormat("vi-VN").format(price) + "₫";
 
-    // Khoảng giá hiển thị khi chưa chọn variant (dùng dữ liệu Backend tính sẵn)
     const priceRangeText = (() => {
         if (!store.product) return "";
         const { minPrice, maxPrice } = store.product;
@@ -174,21 +172,17 @@ export const useProductDetailController = () => {
         const productId = store.product.id;
         const previousFavorite = store.product.isFavorite;
 
-        // Optimistic update
         store.setProductFavorite(!previousFavorite);
 
         try {
             const response = await favoriteService.toggleFavorite(productId);
             if (response.success && response.data) {
-                // Backend returns the actual final state
                 store.setProductFavorite(response.data.isFavorite);
             } else {
-                // Rollback
                 store.setProductFavorite(previousFavorite);
                 toast(response.message || "Không thể cập nhật danh sách yêu thích", "error");
             }
         } catch (error: any) {
-            // Rollback
             store.setProductFavorite(previousFavorite);
             toast(error.message || "Không thể cập nhật danh sách yêu thích", "error");
         }
@@ -218,7 +212,7 @@ export const useProductDetailController = () => {
         handleQuantityChange,
         handleAddToCart,
         handleNavigateFilter,
-        
+
         handleToggleFavorite,
 
         reviewList: store.reviewList,

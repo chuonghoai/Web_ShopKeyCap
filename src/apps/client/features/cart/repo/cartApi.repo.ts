@@ -2,6 +2,7 @@ import { apiClient } from "../../../../../core/api/apiClient";
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import type { UpdateCartRequest } from "../dto/UpdateCartRequest.dto";
 import type { CartSummaryModel } from "../model/summary.model";
+import type { CartDetailModel } from "../model/cart.model";
 import type { CartRepo } from "./cart.repo";
 
 export class CartApiRepo implements CartRepo {
@@ -16,9 +17,17 @@ export class CartApiRepo implements CartRepo {
     }
 
     /**
+     * GET /cart
+     * @returns CartDetailModel
+     */
+    async getCarts(): Promise<ApiResponse<CartDetailModel>> {
+        return apiClient.get<ApiResponse<CartDetailModel>>("/cart");
+    }
+
+    /**
      * POST /cart/items
      * @body variantId, quantity
-     * @returns newCartCount
+     * @returns newCartCount, totalPrice
      * 
      * Mô tả: 
      *  - Thêm sản phẩm vào giỏ hàng theo variantId
@@ -33,24 +42,22 @@ export class CartApiRepo implements CartRepo {
     /**
      * PATCH /cart/items
      * @body UpdateCartRequest[]
-     * @returns newCartCount
+     * @returns newCartCount, totalPrice
      * 
      * Mô tả: Cập nhật số lượng sản phẩm trong giỏ hàng
      */
-    updateCartItem(request: UpdateCartRequest[]): Promise<ApiResponse<{ newCartCount: number }>> {
-        return apiClient.patch<ApiResponse<{ newCartCount: number }>>("/cart/items", request);
+    updateCartItem(request: UpdateCartRequest[]): Promise<ApiResponse<{ newCartCount: number; totalPrice?: number }>> {
+        return apiClient.patch<ApiResponse<{ newCartCount: number; totalPrice?: number }>>("/cart/items", request);
     }
 
     /**
      * DELETE /cart/items/{variantId}
      * @param variantId
-     * @returns newCartCount
+     * @returns newCartCount, totalPrice
      * 
      * Mô tả: Xóa variant khỏi giỏ hàng
      */
-    deleteCartItem(variantId: string): Promise<ApiResponse<{ newCartCount: number }>> {
-        return apiClient.delete<ApiResponse<{ newCartCount: number }>>("/cart/items", {
-            params: variantId
-        });
+    deleteCartItem(variantId: string): Promise<ApiResponse<{ newCartCount: number; totalPrice?: number }>> {
+        return apiClient.delete<ApiResponse<{ newCartCount: number; totalPrice?: number }>>(`/cart/items/${variantId}`);
     }
 }

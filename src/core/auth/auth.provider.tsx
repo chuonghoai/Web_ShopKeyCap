@@ -7,14 +7,9 @@ import { cartSummaryStorageService } from "../../apps/client/features/cart/CartL
 import { authService } from "../../apps/auth/features/services/auth.service";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [user, setUser] = useState<User | null>(null);
-
-    useEffect(() => {
-        const storedUser = userStorageService.getUser();
-        if (storedUser) {
-            setUser(storedUser);
-        }
-    }, []);
+    const [user, setUser] = useState<User | null>(() => {
+        return userStorageService.getUser();
+    });
 
     const login = (userData: User) => {
         setUser(userData);
