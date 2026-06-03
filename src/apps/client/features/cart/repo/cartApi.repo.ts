@@ -27,7 +27,7 @@ export class CartApiRepo implements CartRepo {
     /**
      * POST /cart/items
      * @body variantId, quantity
-     * @returns newCartCount, totalPrice
+     * @returns newCartCount
      * 
      * Mô tả: 
      *  - Thêm sản phẩm vào giỏ hàng theo variantId

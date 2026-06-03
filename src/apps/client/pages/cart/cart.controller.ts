@@ -28,11 +28,16 @@ export const useCartController = () => {
         }).format(price);
     };
 
+    const handleAddAddress = () => {
+        alert("Tính năng đang phát triển");
+    };
+
     return {
         ...store,
         handleUpdateQuantity,
         handleDeleteItem,
         handleCheckout,
+        handleAddAddress,
         formatPrice,
     };
 };

@@ -38,6 +38,10 @@ export class ProductService {
         return this.productRepo.getProductBySlug(productSlug);
     }
 
+    async getRelatedProducts(productIds: string[]): Promise<ApiResponse<ProductItem[]>> {
+        return this.productRepo.getRelatedProducts(productIds, LIMIT_DEFAULT);
+    }
+
     /**
      * 1. Lấy sản phẩm mới cập bến
      */

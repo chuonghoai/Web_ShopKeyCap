@@ -13,6 +13,7 @@ export const CartItemCard = memo(({ item, onUpdateQuantity, onDelete, formatPric
     const price = item.variant?.price || 0;
     const originalPrice = item.variant?.originalPrice;
     const quantity = item.variant?.quantity || 1;
+    const stockQuantity = item.variant?.stockQuantity ?? 0;
 
     return (
         <div className="flex gap-4 p-4 sm:p-5 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 group">
@@ -44,6 +45,27 @@ export const CartItemCard = memo(({ item, onUpdateQuantity, onDelete, formatPric
                                 ))}
                             </div>
                         )}
+                        
+                        <div className="pt-0.5">
+                            {stockQuantity > 10 && (
+                                <span className="inline-flex items-center gap-1 text-[12px] font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">
+                                    <span className="material-icons-outlined text-[14px]">check_circle</span>
+                                    Còn hàng
+                                </span>
+                            )}
+                            {stockQuantity > 0 && stockQuantity <= 10 && (
+                                <span className="inline-flex items-center gap-1 text-[12px] font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md">
+                                    <span className="material-icons-outlined text-[14px]">warning_amber</span>
+                                    Chỉ còn {stockQuantity} sản phẩm
+                                </span>
+                            )}
+                            {stockQuantity === 0 && (
+                                <span className="inline-flex items-center gap-1 text-[12px] font-medium text-red-600 bg-red-50 px-2 py-0.5 rounded-md">
+                                    <span className="material-icons-outlined text-[14px]">cancel</span>
+                                    Hết hàng
+                                </span>
+                            )}
+                        </div>
                     </div>
 
                     <button

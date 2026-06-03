@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { useCartController } from "./cart.controller";
 import { CartItemCard } from "./components/CartItemCard";
+import { CartDeliveryInfo } from "./components/CartDeliveryInfo";
+import { CartStoreGuarantee } from "./components/CartStoreGuarantee";
+import { CartRelatedProducts } from "./components/CartRelatedProducts";
 
 const CartPage = () => {
     const controller = useCartController();
@@ -39,11 +42,11 @@ const CartPage = () => {
 
     return (
         <div className="min-h-screen bg-slate-50/50">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-390.5 mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="mb-6 flex items-end justify-between gap-2">
                     <div>
-                        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Giỏ hàng</h1>
+                        <h1 className="-mt-1 mb-2.5 text-3xl font-bold text-slate-900 tracking-tight">Giỏ hàng</h1>
                         <p className="text-slate-500 mt-1.5 flex items-center gap-1.5">
                             Bạn đang có <strong className="text-blue-600">{controller.items.length}</strong> sản phẩm trong giỏ
                         </p>
@@ -72,8 +75,8 @@ const CartPage = () => {
                         ))}
                     </div>
 
-                    {/* Right Column: Order Summary */}
-                    <div className="w-full lg:w-95 shrink-0 sticky top-24">
+                    {/* Right Column: Order Summary & Delivery Info */}
+                    <div className="w-full lg:w-95 shrink-0 sticky top-24 space-y-6">
                         <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
                             {/* Card Header */}
                             <div className="px-6 py-5 border-b border-slate-100 bg-slate-50/50">
@@ -111,8 +114,22 @@ const CartPage = () => {
                                 </div>
                             </div>
                         </div>
+
+                        <CartDeliveryInfo
+                            deliveryInfo={controller.deliveryInfo}
+                            isLoading={controller.loadingDelivery}
+                            onAddAddress={controller.handleAddAddress}
+                        />
                     </div>
                 </div>
+
+                {/* Related Products */}
+                {!controller.isLoading && (
+                    <CartRelatedProducts products={controller.relatedProducts} />
+                )}
+
+                {/* Store Guarantee */}
+                <CartStoreGuarantee />
             </div>
         </div>
     );

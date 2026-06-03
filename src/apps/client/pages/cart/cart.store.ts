@@ -4,6 +4,10 @@ import { cartSyncManager } from "../../features/cart/service/cartUpdate.debounce
 import type { CartItemModel } from "../../features/cart/model/cart.model";
 import { useToast } from "../../../../components/toast/toast";
 import { useCart } from "../../features/cart/hooks/useCart";
+import { productService } from "../../features/products/services/product.service";
+import type { ProductItem } from "../../features/products/model/product.model";
+import { profileService } from "../../features/profile/services/profile.service";
+import type { DeliveryInfoModel } from "../../features/profile/models/address.model";
 
 export const useCartStore = () => {
     const { toast } = useToast();
@@ -12,24 +16,60 @@ export const useCartStore = () => {
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
+    const [relatedProducts, setRelatedProducts] = useState<ProductItem[]>([]);
+    const [loadingRelatedProducts, setLoadingRelatedProducts] = useState<boolean>(false);
+
+    const [deliveryInfo, setDeliveryInfo] = useState<DeliveryInfoModel | null>(null);
+    const [loadingDelivery, setLoadingDelivery] = useState<boolean>(true);
+
     /**
      * Fetch data carts
      */
     const fetchCarts = useCallback(async () => {
         setIsLoading(true);
+        setLoadingDelivery(true);
+        setLoadingRelatedProducts(true);
         try {
-            const response = await cartService.getCarts();
-            if (response.data) {
-                setItems(response.data.items);
-                setTotalPrice(response.data.summary.total);
-                syncCartCount(response.data.summary.cartCount);
+            // Fetch cart and shipping time
+            const [cartRes, deliveryRes] = await Promise.all([
+                cartService.getCarts(),
+                profileService.getDefaultAddressAndShippingTime()
+            ]);
+
+            if (deliveryRes.data) {
+                setDeliveryInfo(deliveryRes.data);
+            }
+
+            if (cartRes.data) {
+                const cartItems = cartRes.data.items;
+                setItems(cartItems);
+                setTotalPrice(cartRes.data.summary.total);
+                syncCartCount(cartRes.data.summary.cartCount);
+
+                // Fetch product relate to cart items
+                const uniqueProductIds = Array.from(new Set(cartItems.map(item => item.product.id)));
+                if (uniqueProductIds.length > 0) {
+                    productService.getRelatedProducts(uniqueProductIds).then(relatedRes => {
+                        if (relatedRes.data) {
+                            setRelatedProducts(relatedRes.data);
+                        }
+                    }).finally(() => {
+                        setLoadingRelatedProducts(false);
+                    });
+                } else {
+                    setLoadingRelatedProducts(false);
+                }
+            } else {
+                setLoadingRelatedProducts(false);
             }
         } catch (error: any) {
-            toast(error.message || "Lỗi khi lấy dữ liệu giỏ hàng", "error");
+            toast(error.message || "Lỗi khi lấy dữ liệu", "error");
+            setLoadingRelatedProducts(false);
         } finally {
             setIsLoading(false);
+            setLoadingDelivery(false);
         }
-    }, [toast]);
+    }, [toast, syncCartCount]);
 
     useEffect(() => {
         fetchCarts();
@@ -87,6 +127,10 @@ export const useCartStore = () => {
         items,
         totalPrice,
         isLoading,
+        relatedProducts,
+        loadingRelatedProducts,
+        deliveryInfo,
+        loadingDelivery,
         updateItemQuantity,
         deleteItem,
         refetch: fetchCarts,
