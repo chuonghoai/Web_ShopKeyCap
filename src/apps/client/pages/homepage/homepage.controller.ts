@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import type { RecommendedProductRequest } from "../../features/products/dto/recommendedProductRequest.dto";
-import { useHomepageSectionsQuery } from "../../features/products/hooks/queries/useHomepageSectionsQuery";
+import { useHomepageSectionsQuery } from "../../features/products/hooks/queries/useHomepageSections.query";
 
 export const useHomepageController = () => {
     const navigate = useNavigate();

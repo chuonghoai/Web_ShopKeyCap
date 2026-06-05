@@ -37,7 +37,7 @@ export class AuthMockRepo implements AuthRepo {
         return response;
     }
 
-    async loginByGoogle(idToken: string): Promise<ApiResponse<LoginResponse>> {
+    async loginByGoogle(_idToken: string): Promise<ApiResponse<LoginResponse>> {
         let response: ApiResponse<LoginResponse> = {
             success: true,
             message: "Login success",
@@ -88,7 +88,7 @@ export class AuthMockRepo implements AuthRepo {
         return response;
     }
 
-    async resetPassword(request: ResetPasswordRequest): Promise<ApiResponse<null>> {
+    async resetPassword(_request: ResetPasswordRequest): Promise<ApiResponse<null>> {
         let response: ApiResponse<null> = {
             success: true,
             message: 'Đặt lại mật khẩu thành công',

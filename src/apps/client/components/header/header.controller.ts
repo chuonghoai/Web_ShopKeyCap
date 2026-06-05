@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useUserProfileQuery } from "../../../../apps/auth/features/hooks/queries/useUserProfileQuery";
-import { useLogoutMutation } from "../../../../apps/auth/features/hooks/mutations/useLogoutMutation";
+import { useUserProfileQuery } from "../../../../apps/auth/features/hooks/queries/useUserProfile.query";
+import { useLogoutMutation } from "../../../../apps/auth/features/hooks/mutations/useLogout.mutation";
 import { useCartCount } from "../../features/cart/hooks/useCartCount";
 
 export const useHeaderController = () => {

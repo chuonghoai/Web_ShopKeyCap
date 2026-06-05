@@ -1,6 +1,5 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { useCartViewModel } from "./useCartViewModel";
+import { useCartViewModel } from "./useCart.viewmodel";
 import { CartItemCard } from "./components/CartItemCard";
 import { CartDeliveryInfo } from "./components/CartDeliveryInfo";
 import { CartStoreGuarantee } from "./components/CartStoreGuarantee";

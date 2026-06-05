@@ -1,5 +1,5 @@
 import { tokenService } from '../../../../../core/auth/token.service';
-import { useCartSummaryQuery } from './queries/useCartSummaryQuery';
+import { useCartSummaryQuery } from './queries/useCartSummary.query';
 
 export const useCartCount = () => {
     const hasToken = !!tokenService.getAccessToken();

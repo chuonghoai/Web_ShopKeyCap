@@ -1,10 +1,10 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useToastStore } from "../../../../core/store/useToastStore";
-import { useProductDetailQuery } from "../../features/products/hooks/queries/useProductDetailQuery";
-import { useProductReviewsQuery } from "../../features/review/hooks/queries/useProductReviewsQuery";
-import { useAddToCartMutation } from "../../features/cart/hooks/mutations/useAddToCartMutation";
-import { useToggleFavoriteMutation } from "../../features/favorite/hooks/mutations/useToggleFavoriteMutation";
+import { useProductDetailQuery } from "../../features/products/hooks/queries/useProductDetail.query";
+import { useProductReviewsQuery } from "../../features/review/hooks/queries/useProductReviews.query";
+import { useAddToCartMutation } from "../../features/cart/hooks/mutations/useAddToCart.mutation";
+import { useToggleFavoriteMutation } from "../../features/favorite/hooks/mutations/useToggleFavorite.mutation";
 import {
     getAvailableOptionsWithStatus,
     findMatchingVariant,

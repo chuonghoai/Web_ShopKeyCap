@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useToastStore } from "../../../../core/store/useToastStore";
-import { useCartQuery } from "../../features/cart/hooks/queries/useCartQuery";
-import { useDeliveryInfoQuery } from "../../features/profile/hooks/queries/useDeliveryInfoQuery";
-import { useRelatedProductsQuery } from "../../features/products/hooks/queries/useRelatedProductsQuery";
-import { useUpdateCartItemMutation } from "../../features/cart/hooks/mutations/useUpdateCartItemMutation";
-import { useDeleteCartItemMutation } from "../../features/cart/hooks/mutations/useDeleteCartItemMutation";
+import { useCartQuery } from "../../features/cart/hooks/queries/useCart.query";
+import { useDeliveryInfoQuery } from "../../features/profile/hooks/queries/useDeliveryInfo.query";
+import { useRelatedProductsQuery } from "../../features/products/hooks/queries/useRelatedProducts.query";
+import { useUpdateCartItemMutation } from "../../features/cart/hooks/mutations/useUpdateCartItem.mutation";
+import { useDeleteCartItemMutation } from "../../features/cart/hooks/mutations/useDeleteCartItem.mutation";
 
 
 export const useCartViewModel = () => {
@@ -23,8 +23,7 @@ export const useCartViewModel = () => {
     const updateMutation = useUpdateCartItemMutation();
     const deleteMutation = useDeleteCartItemMutation();
 
-    const handleUpdateQuantity = async (variantId: string, currentQuantity: number, change: number) => {
-        const newQuantity = currentQuantity + change;
+    const handleUpdateQuantity = async (variantId: string, newQuantity: number) => {
         if (newQuantity > 0) {
             try {
                 await updateMutation.mutateAsync({ variantId, quantity: newQuantity });

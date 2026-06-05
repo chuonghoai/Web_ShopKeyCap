@@ -5,7 +5,7 @@ import { OtpPurpose } from '../../../features/dto/otp.dto';
 import { useNavigate } from 'react-router-dom';
 import { useDocumentTitle } from '../../../../../core/hooks/useDocumentTitle';
 import { getAdminRoute } from '../../../../../utils/getAdminRoute';
-import { useRegisterMutation } from '../../../features/hooks/mutations/useRegisterMutation';
+import { useRegisterMutation } from '../../../features/hooks/mutations/useRegister.mutation';
 
 export const useRegisterController = () => {
     useDocumentTitle("Đăng ký - Cyber Key");

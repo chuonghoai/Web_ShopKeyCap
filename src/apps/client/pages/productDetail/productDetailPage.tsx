@@ -1,5 +1,5 @@
 import DOMPurify from "dompurify";
-import { useProductDetailViewModel } from "./useProductDetailViewModel";
+import { useProductDetailViewModel } from "./useProductDetail.viewmodel";
 import ProductCard from "../homepage/components/ProductCard";
 import { ReviewSection } from "./components/ReviewSection";
 

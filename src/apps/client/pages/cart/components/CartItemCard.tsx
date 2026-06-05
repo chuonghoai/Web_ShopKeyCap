@@ -1,9 +1,10 @@
 import { memo } from "react";
 import type { CartItemModel } from "../../../features/cart/model/cart.model";
+import { useCartItemCardController } from "../componentControllers/useCartItemCard.controller";
 
 interface CartItemCardProps {
     item: CartItemModel;
-    onUpdateQuantity: (variantId: string, currentQty: number, change: number) => void;
+    onUpdateQuantity: (variantId: string, newQty: number) => void;
     onDelete: (variantId: string) => void;
     formatPrice: (price: number) => string;
 }
@@ -12,8 +13,9 @@ export const CartItemCard = memo(({ item, onUpdateQuantity, onDelete, formatPric
     const targetId = item.variant?.id || item.product.id;
     const price = item.variant?.price || 0;
     const originalPrice = item.variant?.originalPrice;
-    const quantity = item.variant?.quantity || 1;
     const stockQuantity = item.variant?.stockQuantity ?? 0;
+
+    const controller = useCartItemCardController(item, onUpdateQuantity);
 
     return (
         <div className="flex gap-4 p-4 sm:p-5 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 group">
@@ -95,20 +97,26 @@ export const CartItemCard = memo(({ item, onUpdateQuantity, onDelete, formatPric
                     {/* Quantity Controls */}
                     <div className="flex items-center bg-white border border-slate-200 rounded-lg p-0.5 shadow-sm">
                         <button
-                            onClick={() => onUpdateQuantity(targetId, quantity, -1)}
-                            disabled={quantity <= 1}
+                            onClick={controller.handleDecrease}
+                            disabled={controller.isDecreaseDisabled}
                             className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-slate-500 hover:bg-slate-50 hover:text-slate-800 rounded-md transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                         >
                             <span className="material-icons-outlined text-[16px]">remove</span>
                         </button>
 
-                        <span className="w-8 sm:w-10 text-center text-[13px] sm:text-[14px] font-semibold text-slate-700">
-                            {quantity}
-                        </span>
+                        <input
+                            type="text"
+                            value={controller.inputValue}
+                            onChange={controller.handleInputChange}
+                            onBlur={controller.handleBlur}
+                            onKeyDown={controller.handleKeyDown}
+                            className="w-8 sm:w-10 text-center text-[13px] sm:text-[14px] font-semibold text-slate-700 bg-transparent outline-none focus:bg-slate-50 rounded-md"
+                        />
 
                         <button
-                            onClick={() => onUpdateQuantity(targetId, quantity, 1)}
-                            className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-slate-500 hover:bg-slate-50 hover:text-slate-800 rounded-md transition-colors"
+                            onClick={controller.handleIncrease}
+                            disabled={controller.isIncreaseDisabled}
+                            className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-slate-500 hover:bg-slate-50 hover:text-slate-800 rounded-md transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                         >
                             <span className="material-icons-outlined text-[16px]">add</span>
                         </button>

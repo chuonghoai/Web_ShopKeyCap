@@ -2,8 +2,8 @@ import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 import type { FilterState } from "../../features/products/dto/filterState.dto";
 import { SORT_OPTIONS, type SortOption } from "../../features/products/model/filter.model";
-import { useProductsQuery } from "../../features/products/hooks/queries/useProductsQuery";
-import { useFilterQuery } from "../../features/products/hooks/queries/useFilterQuery";
+import { useProductsQuery } from "../../features/products/hooks/queries/useProducts.query";
+import { useFilterQuery } from "../../features/products/hooks/queries/useFilter.query";
 
 export const useProductsController = () => {
     const [searchParams, setSearchParams] = useSearchParams();

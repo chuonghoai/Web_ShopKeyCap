@@ -1,4 +1,4 @@
-import { useProductDetailViewModel } from "../useProductDetailViewModel";
+import { useProductDetailViewModel } from "../useProductDetail.viewmodel";
 import type { Review } from "../../../features/review/model/review.model";
 
 export const ReviewSection = () => {

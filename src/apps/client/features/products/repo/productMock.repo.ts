@@ -350,7 +350,7 @@ export class ProductMockRepo implements ProductRepo {
         };
     }
 
-    async getRelatedProducts(productIds: string[], size: number): Promise<ApiResponse<ProductItem[]>> {
+    async getRelatedProducts(_productIds: string[], size: number): Promise<ApiResponse<ProductItem[]>> {
         return {
             success: true,
             message: "Lấy sản phẩm liên quan thành công",

@@ -4,7 +4,7 @@ import { useToastStore } from '../../../../../core/store/useToastStore';
 import { useNavigate } from 'react-router-dom';
 import { type CredentialResponse } from '@react-oauth/google';
 import { getAdminRoute } from '../../../../../utils/getAdminRoute';
-import { useLoginMutation, useLoginGoogleMutation } from '../../../features/hooks/mutations/useLoginMutation';
+import { useLoginMutation, useLoginGoogleMutation } from '../../../features/hooks/mutations/useLogin.mutation';
 
 export const useLoginController = () => {
     useDocumentTitle('Đăng nhập - Cyber Key');

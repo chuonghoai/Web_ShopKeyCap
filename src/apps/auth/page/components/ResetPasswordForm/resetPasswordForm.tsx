@@ -11,7 +11,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ email, onN
     const controller = useResetPasswordController(email, onNavigate);
 
     return (
-        <div className="w-full max-w-[400px] bg-white p-6 sm:p-7 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+        <div className="w-full max-w-100 bg-white p-6 sm:p-7 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
             {/* Title */}
             <div className="text-center mb-4">
                 <p className="text-[13px] text-slate-500 font-medium">Đặt lại mật khẩu</p>
@@ -55,7 +55,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ email, onN
                         setter: controller.setConfirmPassword,
                         placeholder: 'Xác nhận mật khẩu mới'
                     }
-                ].map((field, idx) => (
+                ].map((field, _idx) => (
                     <div key={field.id}>
                         <label htmlFor={field.id} className="block text-[13px] font-medium text-[#334155] mb-1">
                             {field.label}

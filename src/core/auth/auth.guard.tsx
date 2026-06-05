@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { ROLE } from "../constants/role.constant";
 import { tokenService } from "./token.service";
-import { useUserProfileQuery } from "../../apps/auth/features/hooks/queries/useUserProfileQuery";
+import { useUserProfileQuery } from "../../apps/auth/features/hooks/queries/useUserProfile.query";
 
 interface Props {
     children: React.ReactNode;

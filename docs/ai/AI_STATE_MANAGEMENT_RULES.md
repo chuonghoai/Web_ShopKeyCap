@@ -24,3 +24,14 @@ Tài liệu này chứa các quy tắc **CẤM KỴ** (Mandatory Rules) mà AI A
 6. **CART BADGE ĐÃ TỐI ƯU**:
    - Header Cart Badge đã được tối ưu hóa bằng `CartSummaryModel`.
    - Cấm import `CartDetailModel` (chứa toàn bộ item, hình ảnh) ở Header chỉ để đếm số lượng. Bắt buộc gọi `useCartCount()`.
+
+7. **FILE NAMING CONVENTION**:
+   - Khi tạo mới các file architecture, BẮT BUỘC dùng định dạng hậu tố `.[feature].ts`:
+     - Controller: `use[Name].controller.ts`
+     - ViewModel: `use[Name].viewmodel.ts`
+     - Query: `use[Name].query.ts`
+     - Mutation: `use[Name].mutation.ts`
+     - Service: `[name].service.ts`
+     - Repository: `[name].repository.ts`
+     - Guard: `[name].guard.tsx`
+     - Interceptor: `[name].interceptor.ts`
