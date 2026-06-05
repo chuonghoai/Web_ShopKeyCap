@@ -1,7 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { authService } from '../../services/auth.service';
-import { userStorageService } from '../../../../../core/auth/userStorage.service';
-import { tokenService } from '../../../../../core/auth/token.service';
 import { profileKeys } from '../profileKeys';
 import type { LoginRequest, LoginResponse } from '../../dto/login.dto';
 

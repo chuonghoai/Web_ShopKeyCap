@@ -11,7 +11,10 @@ export const useAddToCartMutation = () => {
             if (!res.success) throw new Error(res.message);
             return res.data;
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
+            if (data?.newCartCount !== undefined) {
+                queryClient.setQueryData(cartKeys.summary(), { cartCount: data.newCartCount });
+            }
             queryClient.invalidateQueries({ queryKey: cartKeys.all });
         },
     });

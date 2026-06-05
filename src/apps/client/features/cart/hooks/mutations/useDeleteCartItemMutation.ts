@@ -13,6 +13,10 @@ export const useDeleteCartItemMutation = () => {
             return { variantId, newTotalPrice: res.data?.totalPrice, newCartCount: res.data?.newCartCount };
         },
         onSuccess: ({ variantId, newTotalPrice, newCartCount }) => {
+            if (newCartCount !== undefined) {
+                queryClient.setQueryData(cartKeys.summary(), { cartCount: newCartCount });
+            }
+
             queryClient.setQueryData(cartKeys.items(), (oldData: CartDetailModel | undefined) => {
                 if (!oldData) return oldData;
                 const newItems = oldData.items.filter(item => 

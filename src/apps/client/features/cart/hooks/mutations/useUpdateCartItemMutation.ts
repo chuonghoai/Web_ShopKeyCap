@@ -23,6 +23,9 @@ export const useUpdateCartItemMutation = () => {
                     return item;
                 });
                 const newCartCount = newItems.reduce((sum, item) => sum + (item.variant?.quantity || 1), 0);
+                
+                queryClient.setQueryData(cartKeys.summary(), { cartCount: newCartCount });
+
                 return {
                     ...oldData,
                     items: newItems,
