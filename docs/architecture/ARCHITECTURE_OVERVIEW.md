@@ -38,7 +38,7 @@ Một trang (Page) thường được cấu trúc thành 3 lớp chính, phân c
 ```mermaid
 graph TD
     A[View: page.tsx] -->|Nhận data, handlers| B(Controller: page.controller.ts)
-    B -->|Đọc/Ghi trạng thái| C(Store: page.store.ts)
+    B -->|Đọc/Ghi trạng thái| C(Feature Hooks: TanStack Query / Zustand)
     B -->|Điều hướng, Params| Router(React Router)
     C -->|Gọi Business Logic| D(Service: feature.service.ts)
     D -->|Fetch Data| E(Repository: featureApi.repo.ts)
@@ -56,9 +56,10 @@ graph TD
    - Gọi custom hook `use[Page]Store()` để tương tác với state.
    - Trả về dữ liệu và hàm cho View sử dụng.
 
-3. **Store (`[page].store.ts`)**:
-   - Quản lý trạng thái cục bộ (React State - `useState`, `useEffect`).
-   - Xử lý các side-effects (gọi API, tải dữ liệu).
+3. **Feature Hooks (TanStack Query / Zustand)**:
+   - Quản lý Server State bằng TanStack Query (`useQuery`, `useMutation`).
+   - Quản lý Global Client State (nếu có) bằng Zustand (`useToastStore`, `useAuthStore`).
+   - Xử lý các side-effects và Cache Invalidation.
    - Gọi trực tiếp đến các Services.
 
 4. **Service (`[feature].service.ts`)**:
@@ -71,8 +72,8 @@ graph TD
 
 ## Dependency Direction (Hướng phụ thuộc)
 * **View** phụ thuộc vào **Controller**.
-* **Controller** phụ thuộc vào **Store**, **Router**, và **DTO/Models**.
-* **Store** phụ thuộc vào **Service**, và **Models**.
+* **Controller** phụ thuộc vào **Feature Hooks**, **Router**, và **DTO/Models**.
+* **Feature Hooks** phụ thuộc vào **Service**, và **Models**.
 * **Service** phụ thuộc vào **Repository**.
 * **Repository** phụ thuộc vào **Core API Client** (`axios.ts`).
 * Chiều ngược lại bị nghiêm cấm (Ví dụ: Service không được import Controller, Controller không được thao tác trực tiếp với DOM).

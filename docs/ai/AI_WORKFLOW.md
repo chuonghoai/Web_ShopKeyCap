@@ -104,7 +104,7 @@ Component
 → Existing Service
 → Repository
 
-Store is NOT required when:
+Store/ViewModel is NOT required when:
 - state is local to a component
 - state does not need sharing
 - state lifecycle only exists during one interaction
@@ -118,7 +118,7 @@ Examples:
 ## 2. Architecture Validation Workflow
 
 Trước khi tiến hành viết code, AI cần chuẩn bị:
-- **Đọc `ARCHITECTURE_RULES.md`**: Để biết cách chia tầng Controller - Store - Service - Repository.
+- **Đọc `ARCHITECTURE_RULES.md`**: Để biết cách chia tầng Controller - Query Hooks - Service - Repository.
 - **Đọc `ENGINEERING_SKILLS.md`**: Để biết "Good Example" và "Bad Example" cho task sắp làm.
 - **Đọc `ANTI_PATTERN_CATALOG.md`**: Để biết những lỗi cấm kỵ (như The God Page, import ngược tầng).
 
@@ -131,7 +131,7 @@ Sau khi định hình được giải pháp trong đầu, AI phải **tự kiể
 
 Quy trình thực hiện code phải tuân theo thứ tự:
 1. **Understand**: Hiểu rõ yêu cầu nghiệp vụ của user.
-2. **Analyze**: Phân tích xem cần sửa/tạo những file nào dựa trên kiến trúc hiện tại (Model, Repo, Service, Store, Controller, Page).
+2. **Analyze**: Phân tích xem cần sửa/tạo những file nào dựa trên kiến trúc hiện tại (Model, Repo, Service, Feature Hooks, Controller, Page).
 3. **Find Existing Pattern**: Tìm code tương tự đang có trong project.
 4. **Implement**: Viết code, tái sử dụng tối đa code cũ.
 5. **Self Review**: Tự rà soát lại code vừa viết.
@@ -140,7 +140,7 @@ Quy trình thực hiện code phải tuân theo thứ tự:
 ## 4. Mandatory Rules (Quy tắc cấm kỵ)
 
 AI **KHÔNG ĐƯỢC**:
-- Tạo ra kiến trúc mới (Ví dụ: Tự ý mang Clean Architecture strict, CQRS, Redux saga vào nếu project đang dùng Controller/Store pattern hiện tại).
+- Tạo ra kiến trúc mới (Ví dụ: Tự ý mang Clean Architecture strict, CQRS, Redux saga vào nếu project đang dùng Controller/Query Hooks pattern hiện tại).
 - Tạo ra Design Pattern mới thay cho pattern đang tồn tại.
 - Bỏ qua convention đặt tên và tổ chức thư mục hiện có.
 - Duplicate code (copy-paste logic) nếu trong project đã có implementation tương tự (ví dụ utils, hooks chung).

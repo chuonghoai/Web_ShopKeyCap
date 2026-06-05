@@ -29,14 +29,14 @@ Bộ quy tắc này hướng dẫn cách tổ chức code và thêm mới tính 
 ## 5. Khi nào tạo Controller (`[name].controller.ts`)
 * **Purpose**: Xử lý logic hiển thị, tương tác với URL (search parameters) và trả về state/handlers cho View.
 * **Required**: Mọi thư mục Page đều phải có một controller, trừ khi page đó hoàn toàn tĩnh.
-* **Forbidden**: Fetch API trực tiếp, lưu state phức tạp (nên ủy quyền cho Store). Trả về JSX/React Node.
+* **Forbidden**: Fetch API trực tiếp. Trả về JSX/React Node.
 * **Example**: `products.controller.ts`
 
-## 6. Khi nào tạo Store (`[name].store.ts`)
-* **Purpose**: Quản lý State (`useState`) và Lifecycle (`useEffect`) của một Page.
-* **Required**: Khi trang có nhu cầu fetch dữ liệu từ service và duy trì trạng thái loading, data.
-* **Forbidden**: Đọc/Ghi URL params (nhiệm vụ của Controller). Trả về hàm event UI thuần túy.
-* **Example**: `products.store.ts`
+## 6. Khi nào tạo Feature Hooks (TanStack Query / Zustand)
+* **Purpose**: Quản lý Server State (TanStack Query) và Global Client State (Zustand).
+* **Required**: Khi Controller cần lấy dữ liệu từ API hoặc thay đổi dữ liệu (Mutations).
+* **Forbidden**: Sử dụng `useState` để lưu lại (mirror) dữ liệu từ `query.data`. Trả về hàm event UI thuần túy.
+* **Example**: `useProductsQuery.ts`, `useToastStore.ts`
 
 ## 7. Khi nào tách Component
 * **Purpose**: Tránh việc file View (`.tsx`) quá dài (trên 200 dòng), tái sử dụng UI.
