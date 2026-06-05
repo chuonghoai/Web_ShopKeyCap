@@ -1,15 +1,16 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useProductsStore } from "./products.store";
 import type { FilterState } from "../../features/products/dto/filterState.dto";
 import { SORT_OPTIONS, type SortOption } from "../../features/products/model/filter.model";
+import { useProductsQuery } from "../../features/products/hooks/queries/useProductsQuery";
+import { useFilterQuery } from "../../features/products/hooks/queries/useFilterQuery";
 
 export const useProductsController = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const store = useProductsStore();
 
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [pageInput, setPageInput] = useState<string>("1");
+    const [filterState, setFilterState] = useState<FilterState>({});
 
     const currentSort = searchParams.get("sort") as SortOption | "";
     const currentCategory = searchParams.get("categorySlug") || "";
@@ -21,42 +22,49 @@ export const useProductsController = () => {
     const currentPriceValue = `${currentPriceMin || ""}-${currentPriceMax || ""}`;
 
     useEffect(() => {
-        const filterState: FilterState = {};
+        const newFilterState: FilterState = {};
 
         const keyword = searchParams.get("keyword");
-        if (keyword) filterState.keyword = keyword;
+        if (keyword) newFilterState.keyword = keyword;
 
         const categorySlug = searchParams.get("categorySlug");
-        if (categorySlug) filterState.categorySlug = categorySlug;
+        if (categorySlug) newFilterState.categorySlug = categorySlug;
 
         const typeSlug = searchParams.get("typeSlug");
-        if (typeSlug) filterState.typeSlug = typeSlug;
+        if (typeSlug) newFilterState.typeSlug = typeSlug;
 
         const brandSlugs = searchParams.getAll("brandSlugs");
-        if (brandSlugs.length > 0) filterState.brandSlugs = brandSlugs;
+        if (brandSlugs.length > 0) newFilterState.brandSlugs = brandSlugs;
 
         const inStock = searchParams.get("inStock");
-        if (inStock !== null) filterState.inStock = inStock === "true";
+        if (inStock !== null) newFilterState.inStock = inStock === "true";
 
         const sort = searchParams.get("sort");
-        if (sort) filterState.sort = sort as SortOption;
+        if (sort) newFilterState.sort = sort as SortOption;
         else {
             updateFilter("sort", SORT_OPTIONS[0].slug, true);
         }
 
         const priceMin = searchParams.get("priceMin");
-        if (priceMin) filterState.priceMin = Number(priceMin);
+        if (priceMin) newFilterState.priceMin = Number(priceMin);
 
         const priceMax = searchParams.get("priceMax");
-        if (priceMax) filterState.priceMax = Number(priceMax);
+        if (priceMax) newFilterState.priceMax = Number(priceMax);
 
         const pageParam = searchParams.get("page");
         const pageToFetch = pageParam ? Number(pageParam) : 1;
         setCurrentPage(pageToFetch);
         setPageInput(String(pageToFetch));
 
-        store.fetchProducts(pageToFetch, filterState);
+        setFilterState(newFilterState);
     }, [searchParams]);
+
+    const { data: filterData = { category: [], type: [], brand: [] } } = useFilterQuery();
+    const { data: productData, isLoading, isFetching } = useProductsQuery(currentPage, filterState);
+
+    const products = productData?.products || [];
+    const totalPages = productData?.pagination.totalPages || 1;
+    const isDataLoading = isLoading || isFetching;
 
     const updateFilter = (key: string, value: string | null | string[], replaceHistory: boolean = false) => {
         const newParams = new URLSearchParams(searchParams);
@@ -151,8 +159,8 @@ export const useProductsController = () => {
 
         if (isNaN(newPage) || newPage < 1) {
             newPage = 1;
-        } else if (newPage > store.totalPages) {
-            newPage = store.totalPages;
+        } else if (newPage > totalPages) {
+            newPage = totalPages;
         }
 
         handlePageChange(newPage);
@@ -174,11 +182,11 @@ export const useProductsController = () => {
     );
 
     return {
-        products: store.products,
-        filter: store.filter,
-        isLoading: store.isLoading,
+        products,
+        filter: filterData,
+        isLoading: isDataLoading,
         currentPage,
-        totalPages: store.totalPages,
+        totalPages,
 
         // UI States
         currentSort,

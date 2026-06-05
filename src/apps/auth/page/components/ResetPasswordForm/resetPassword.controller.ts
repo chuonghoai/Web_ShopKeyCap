@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useToast } from '../../../../../components/toast/toast';
+import { useToastStore } from '../../../../../core/store/useToastStore';
 import { authService } from '../../../features/services/auth.service';
 import { OtpPurpose } from '../../../features/dto/otp.dto';
 import { useDocumentTitle } from '../../../../../core/hooks/useDocumentTitle';
@@ -11,7 +11,7 @@ export const useResetPasswordController = (email: string, onNavigate: (view: any
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const { toast } = useToast();
+    const toast = useToastStore(state => state.addToast);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

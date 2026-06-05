@@ -18,7 +18,7 @@ export const productSection = {
             ...res,
             data: res.data
                 ? { sectionName: name, items: res.data, filter }
-                : undefined,
+                : null as any,
         };
     },
 };

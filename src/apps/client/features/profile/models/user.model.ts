@@ -1,6 +1,6 @@
 import type { ROLE } from "../../../../../core/constants/role.constant";
 
-export class User {
+export interface User {
     id: string;
     email: string;
     fullName: string;

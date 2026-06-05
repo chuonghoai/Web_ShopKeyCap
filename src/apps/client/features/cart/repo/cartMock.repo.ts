@@ -97,7 +97,7 @@ export class CartMockRepo implements CartRepo {
     async addToCart(variantId: string, quantity: number): Promise<ApiResponse<{ newCartCount: number }>> {
         if (LOGGED_IN) {
             if (quantity <= 0) {
-                return fail<null>("Số lượng phải lớn hơn 0");
+                return fail<any>("Số lượng phải lớn hơn 0");
             }
 
             const current = mockItems.get(variantId) ?? 0;
@@ -112,11 +112,11 @@ export class CartMockRepo implements CartRepo {
         if (LOGGED_IN) {
             for (const { variantId, quantity } of request) {
                 if (quantity <= 0) {
-                    return fail<null>(`Số lượng của variant ${variantId} phải lớn hơn 0`);
+                    return fail<any>(`Số lượng của variant ${variantId} phải lớn hơn 0`);
                 }
 
                 if (!mockItems.has(variantId)) {
-                    return fail<null>(`Variant ${variantId} không tồn tại trong giỏ hàng`);
+                    return fail<any>(`Variant ${variantId} không tồn tại trong giỏ hàng`);
                 }
 
                 mockItems.set(variantId, quantity);
@@ -130,7 +130,7 @@ export class CartMockRepo implements CartRepo {
     async deleteCartItem(variantId: string): Promise<ApiResponse<{ newCartCount: number; totalPrice?: number }>> {
         if (LOGGED_IN) {
             if (!mockItems.has(variantId)) {
-                return fail<null>(`Variant ${variantId} không tồn tại trong giỏ hàng`);
+                return fail<any>(`Variant ${variantId} không tồn tại trong giỏ hàng`);
             }
 
             mockItems.delete(variantId);

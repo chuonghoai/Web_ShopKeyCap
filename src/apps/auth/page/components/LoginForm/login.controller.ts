@@ -1,23 +1,22 @@
 import { useState } from 'react';
 import { useDocumentTitle } from '../../../../../core/hooks/useDocumentTitle';
-import { authService } from '../../../features/services/auth.service';
-import { useToast } from '../../../../../components/toast/toast';
+import { useToastStore } from '../../../../../core/store/useToastStore';
 import { useNavigate } from 'react-router-dom';
 import { type CredentialResponse } from '@react-oauth/google';
-import { useAuth } from '../../../../../core/hooks/useAuth';
 import { getAdminRoute } from '../../../../../utils/getAdminRoute';
+import { useLoginMutation, useLoginGoogleMutation } from '../../../features/hooks/mutations/useLoginMutation';
 
 export const useLoginController = () => {
     useDocumentTitle('Đăng nhập - Cyber Key');
 
-    const { toast } = useToast();
-    const { login: setAuthContext } = useAuth();
+    const toast = useToastStore(state => state.addToast);
+    const loginMutation = useLoginMutation();
+    const loginGoogleMutation = useLoginGoogleMutation();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
 
     /**
      * Submit login request
@@ -30,22 +29,15 @@ export const useLoginController = () => {
         }
 
         try {
-            setIsLoading(true);
-            const result = await authService.login(email, password);
-
-            if (result.success) {
-                toast("Đăng nhập thành công", 'success');
-                setAuthContext(result.data.user);
-                navigate(getAdminRoute(result.data.user.role));
-            }
+            const data = await loginMutation.mutateAsync({ email, password });
+            toast("Đăng nhập thành công", 'success');
+            navigate(getAdminRoute(data.user.role));
         } catch (error: any) {
             const apiErrMsg = error.response?.data?.message
                 || error.response?.data?.message
                 || error.message
                 || "Đăng nhập thất bại";
             toast(apiErrMsg, 'error');
-        } finally {
-            setIsLoading(false);
         }
     };
 
@@ -55,22 +47,15 @@ export const useLoginController = () => {
     const handleGoogleLoginSuccess = async (credentialResponse: CredentialResponse) => {
         if (credentialResponse.credential) {
             try {
-                setIsLoading(true);
-                const result = await authService.loginByGoogle(credentialResponse.credential);
-
-                if (result.success) {
-                    toast("Đăng nhập thành công!", 'success');
-                    setAuthContext(result.data.user);
-                    navigate(getAdminRoute(result.data.user.role));
-                }
+                const data = await loginGoogleMutation.mutateAsync(credentialResponse.credential);
+                toast("Đăng nhập thành công!", 'success');
+                navigate(getAdminRoute(data.user.role));
             } catch (error: any) {
                 const apiErrMsg = error.response?.data?.message
                     || error.response?.data?.message
                     || error.message
                     || "Đăng nhập google thất bại";
                 toast(apiErrMsg, 'error');
-            } finally {
-                setIsLoading(false);
             }
         }
     };
@@ -80,7 +65,7 @@ export const useLoginController = () => {
     }
 
     return {
-        isLoading,
+        isLoading: loginMutation.isPending || loginGoogleMutation.isPending,
 
         email,
         setEmail,

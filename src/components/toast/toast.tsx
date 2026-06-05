@@ -1,28 +1,10 @@
-import { createContext, useContext, useState, useEffect, type ReactNode, useCallback } from "react";
+import { useState, useEffect } from "react";
+import { useToastStore } from "../../core/store/useToastStore";
+import type { ToastMessage } from "../../core/store/useToastStore";
 
 export type ToastType = "success" | "error" | "warning" | "info";
 
-interface ToastMessage {
-    id: string;
-    type: ToastType;
-    message: string;
-}
-
-interface ToastContextType {
-    toast: (message: string, type?: ToastType) => void;
-}
-
-const ToastContext = createContext<ToastContextType | undefined>(undefined);
-
-export const useToast = () => {
-    const context = useContext(ToastContext);
-    if (!context) {
-        throw new Error("useToast must be used within a ToastProvider");
-    }
-    return context;
-};
-
-const ToastItem = ({ type, message, onRemove }: ToastMessage & { onRemove: () => void }) => {
+const ToastItem = ({ type, message }: ToastMessage & { onRemove: () => void }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -51,26 +33,15 @@ const ToastItem = ({ type, message, onRemove }: ToastMessage & { onRemove: () =>
     );
 };
 
-export const ToastProvider = ({ children }: { children: ReactNode }) => {
-    const [toasts, setToasts] = useState<ToastMessage[]>([]);
-
-    const addToast = useCallback((message: string, type: ToastType = "info") => {
-        const id = Math.random().toString(36).substring(2, 9);
-        setToasts((prev) => [...prev, { id, type, message }]);
-
-        setTimeout(() => {
-            setToasts((prev) => prev.filter((t) => t.id !== id));
-        }, 3000);
-    }, []);
+export const ToastContainer = () => {
+    const toasts = useToastStore((state) => state.toasts);
+    const removeToast = useToastStore((state) => state.removeToast);
 
     return (
-        <ToastContext.Provider value={{ toast: addToast }}>
-            {children}
-            <div className="fixed top-6 left-1/2 -translate-x-1/2 z-9999 flex flex-col gap-3 pointer-events-none">
-                {toasts.map((t) => (
-                    <ToastItem key={t.id} {...t} onRemove={() => { }} />
-                ))}
-            </div>
-        </ToastContext.Provider>
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-9999 flex flex-col gap-3 pointer-events-none">
+            {toasts.map((t) => (
+                <ToastItem key={t.id} {...t} onRemove={() => removeToast(t.id)} />
+            ))}
+        </div>
     );
-};
+};

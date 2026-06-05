@@ -7,7 +7,7 @@ class CartSummaryStorageService {
         localStorageService.set(CART_SUMMARY_KEY, cartCount);
     }
 
-    get(): number {
+    get(): number | null {
         return localStorageService.get<number>(CART_SUMMARY_KEY);
     }
 

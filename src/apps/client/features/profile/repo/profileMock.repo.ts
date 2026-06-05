@@ -3,7 +3,7 @@ import type { DeliveryInfoModel, Address } from "../models/address.model";
 import type { ProfileRepo } from "./profile.repo";
 
 export class ProfileMockRepo implements ProfileRepo {
-    async getDefaultAddressAndShippingTime(): Promise<ApiResponse<DeliveryInfoModel>> {
+    async getDefaultAddressAndShippingTime(): Promise<ApiResponse<DeliveryInfoModel | null>> {
         const address: Address = {
             id: "addr_1",
             fullName: "Nguyễn Văn A",
@@ -24,7 +24,7 @@ export class ProfileMockRepo implements ProfileRepo {
         latest.setDate(latest.getDate() + 4);
 
         const HAVE_ADDRESS = true;
-        let dateRes: DeliveryInfoModel = null;
+        let dateRes: DeliveryInfoModel | null = null;
         if (HAVE_ADDRESS) {
             dateRes = {
                 address,

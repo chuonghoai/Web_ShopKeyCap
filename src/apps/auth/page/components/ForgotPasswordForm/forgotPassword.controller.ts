@@ -1,13 +1,13 @@
 import { useState } from "react"
 import { useDocumentTitle } from "../../../../../core/hooks/useDocumentTitle";
-import { useToast } from "../../../../../components/toast/toast";
+import { useToastStore } from "../../../../../core/store/useToastStore";
 import { authService } from "../../../features/services/auth.service";
 import { OtpPurpose } from "../../../features/dto/otp.dto";
 
 export const useForgotPasswordController = (onNavigate: (view: any, email?: string) => void) => {
     useDocumentTitle('Quên mật khẩu - Cyber Key');
 
-    const { toast } = useToast();
+    const toast = useToastStore(state => state.addToast);
 
     const [email, setEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);

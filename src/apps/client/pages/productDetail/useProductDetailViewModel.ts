@@ -1,81 +1,69 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
-import { useProductDetailStore } from "./productDetail.store";
-import { useCart } from "../../features/cart/hooks/useCart";
-import { cartService } from "../../features/cart/service/cart.service";
-import { useToast } from "../../../../components/toast/toast";
+import { useToastStore } from "../../../../core/store/useToastStore";
+import { useProductDetailQuery } from "../../features/products/hooks/queries/useProductDetailQuery";
+import { useProductReviewsQuery } from "../../features/review/hooks/queries/useProductReviewsQuery";
+import { useAddToCartMutation } from "../../features/cart/hooks/mutations/useAddToCartMutation";
+import { useToggleFavoriteMutation } from "../../features/favorite/hooks/mutations/useToggleFavoriteMutation";
 import {
     getAvailableOptionsWithStatus,
     findMatchingVariant,
     getAttributesFromSku,
     sanitizeSelectedAttributes,
 } from "../../features/products/utils/variantSelection.utils";
-import { favoriteService } from "../../features/favorite/services/favorite.service";
 
-export const useProductDetailController = () => {
+export const useProductDetailViewModel = () => {
     const { slug } = useParams<{ slug: string }>();
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
+    const toast = useToastStore(state => state.addToast);
 
-    const store = useProductDetailStore();
-    const { syncCartCount } = useCart();
-    const { toast } = useToast();
-
+    // Form states
     const [selectedAttributes, setSelectedAttributes] = useState<Record<string, string>>({});
     const [quantity, setQuantity] = useState<number>(1);
-    const [isAddingToCart, setIsAddingToCart] = useState(false);
+    const [reviewPage, setReviewPage] = useState<number>(1);
+
+    // Queries
+    const { data: product, isLoading, error } = useProductDetailQuery(slug || "");
+    const productId = product?.id || "";
+    const { data: reviewData, isLoading: loadingReview, error: errorReviewObj } = useProductReviewsQuery(productId, reviewPage);
+
+    // Mutations
+    const addToCartMutation = useAddToCartMutation();
+    const toggleFavoriteMutation = useToggleFavoriteMutation();
 
     /**
-     * Load product detail when init page
+     * Restore selected attributes from URL when product loads
      */
     useEffect(() => {
-        if (slug) {
-            store.fetchProduct(slug);
-        }
-        return () => store.clearProduct();
-    }, [slug]);
-
-    /**
-     * Load product's review when init page
-     */
-    useEffect(() => {
-        if (store.product?.id) {
-            store.loadReviews(store.product.id, 1);
-        }
-    }, [store.product?.id]);
-
-    /**
-     * Restore selected attributes from URL when init page
-     */
-    useEffect(() => {
-        if (store.product) {
+        if (product) {
             const skuFromUrl = searchParams.get("sku");
             if (skuFromUrl) {
-                const restored = getAttributesFromSku(store.product.variants, skuFromUrl);
+                const restored = getAttributesFromSku(product.variants, skuFromUrl);
                 if (restored) {
                     setSelectedAttributes(restored);
                 }
             }
         }
-    }, [store.product]);
+    }, [product]);
 
     const currentVariant = useMemo(() => {
-        if (!store.product) return null;
+        if (!product) return null;
         return findMatchingVariant(
-            store.product.variants,
+            product.variants,
             selectedAttributes,
-            store.product.options
+            product.options
         );
-    }, [selectedAttributes, store.product]);
+    }, [selectedAttributes, product]);
 
     const optionsWithStatus = useMemo(() => {
-        if (!store.product) return [];
+        if (!product) return [];
         return getAvailableOptionsWithStatus(
-            store.product.variants,
+            product.variants,
             selectedAttributes,
-            store.product.options
+            product.options
         );
-    }, [selectedAttributes, store.product]);
+    }, [selectedAttributes, product]);
 
     useEffect(() => {
         if (currentVariant) {
@@ -93,25 +81,25 @@ export const useProductDetailController = () => {
         new Intl.NumberFormat("vi-VN").format(price) + "₫";
 
     const priceRangeText = (() => {
-        if (!store.product) return "";
-        const { minPrice, maxPrice } = store.product;
+        if (!product) return "";
+        const { minPrice, maxPrice } = product;
         if (minPrice === maxPrice) return formatPrice(minPrice);
         return `${formatPrice(minPrice)} - ${formatPrice(maxPrice)}`;
     })();
 
     const displayStock = currentVariant
         ? currentVariant.stockQuantity
-        : store.product?.totalStockQuantity ?? 0;
+        : product?.totalStockQuantity ?? 0;
 
     const handleOptionSelect = (optionName: string, value: string) => {
-        if (!store.product) return;
+        if (!product) return;
 
         setSelectedAttributes(prev => {
             const updated = { ...prev, [optionName]: value };
             return sanitizeSelectedAttributes(
-                store.product!.variants,
+                product.variants,
                 updated,
-                store.product!.options
+                product.options
             );
         });
         setQuantity(1);
@@ -126,9 +114,9 @@ export const useProductDetailController = () => {
     };
 
     const handleAddToCart = async () => {
-        if (!store.product) return;
+        if (!product) return;
 
-        const isFullySelected = store.product.options.every(
+        const isFullySelected = product.options.every(
             opt => selectedAttributes[opt.name] !== undefined
         );
         if (!isFullySelected) {
@@ -141,18 +129,14 @@ export const useProductDetailController = () => {
             return;
         }
 
-        setIsAddingToCart(true);
         try {
-            const response = await cartService.addToCart(currentVariant.id, quantity);
-
-            if (response.data) {
-                syncCartCount(response.data.newCartCount);
-                toast(`Đã thêm ${quantity} sản phẩm vào giỏ`, "success");
-            }
-        } catch (error: any) {
-            toast(error.message || "Lỗi thêm giỏ hàng", "error");
-        } finally {
-            setIsAddingToCart(false);
+            await addToCartMutation.mutateAsync({
+                variantId: currentVariant.id,
+                quantity
+            });
+            toast(`Đã thêm ${quantity} sản phẩm vào giỏ`, "success");
+        } catch (err: any) {
+            toast(err.message || "Lỗi thêm giỏ hàng", "error");
         }
     };
 
@@ -161,37 +145,24 @@ export const useProductDetailController = () => {
     };
 
     const handleReviewPageChange = (newPage: number) => {
-        if (store.product && newPage >= 1 && newPage <= store.totalPages) {
-            store.loadReviews(store.product.id, newPage);
+        if (product && newPage >= 1 && newPage <= (reviewData?.pagination.totalPages || 1)) {
+            setReviewPage(newPage);
         }
     };
 
     const handleToggleFavorite = async () => {
-        if (!store.product) return;
-
-        const productId = store.product.id;
-        const previousFavorite = store.product.isFavorite;
-
-        store.setProductFavorite(!previousFavorite);
-
+        if (!product) return;
         try {
-            const response = await favoriteService.toggleFavorite(productId);
-            if (response.success && response.data) {
-                store.setProductFavorite(response.data.isFavorite);
-            } else {
-                store.setProductFavorite(previousFavorite);
-                toast(response.message || "Không thể cập nhật danh sách yêu thích", "error");
-            }
-        } catch (error: any) {
-            store.setProductFavorite(previousFavorite);
-            toast(error.message || "Không thể cập nhật danh sách yêu thích", "error");
+            await toggleFavoriteMutation.mutateAsync(product.id);
+        } catch (err: any) {
+            toast(err.message || "Không thể cập nhật danh sách yêu thích", "error");
         }
     };
 
     return {
-        product: store.product,
-        isLoading: store.isLoading,
-        error: store.error,
+        product,
+        isLoading,
+        error: error ? (error as Error).message : null,
 
         selectedAttributes,
         currentVariant,
@@ -199,7 +170,7 @@ export const useProductDetailController = () => {
         optionsWithStatus,
 
         quantity,
-        isAddingToCart,
+        isAddingToCart: addToCartMutation.isPending,
 
         displayPrice,
         displayOriginalPrice,
@@ -215,11 +186,11 @@ export const useProductDetailController = () => {
 
         handleToggleFavorite,
 
-        reviewList: store.reviewList,
-        reviewCurrentPage: store.currentPage,
-        reviewTotalPages: store.totalPages,
-        loadingReview: store.loadingReview,
-        errorReview: store.errorReview,
+        reviewList: reviewData?.reviews || [],
+        reviewCurrentPage: reviewData?.pagination.page || 1,
+        reviewTotalPages: reviewData?.pagination.totalPages || 1,
+        loadingReview,
+        errorReview: errorReviewObj ? (errorReviewObj as Error).message : null,
         handleReviewPageChange,
     };
 };

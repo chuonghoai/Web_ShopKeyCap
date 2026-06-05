@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-import { useCart } from "../../features/cart/hooks/useCart";
 import { useHeaderController } from "./header.controller";
 import logoImg from "../../../../assets/logo.png";
 
 function Header() {
-    const { cartCount } = useCart();
     const controller = useHeaderController();
+    const cartCount = controller.cartCount;
 
     return (
         <div className="top-0 left-0 right-0 z-50 p-4">

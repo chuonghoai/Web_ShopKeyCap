@@ -1,7 +1,8 @@
-import { useProductDetailController } from "../productDetail.controller";
+import { useProductDetailViewModel } from "../useProductDetailViewModel";
+import type { Review } from "../../../features/review/model/review.model";
 
 export const ReviewSection = () => {
-    const controller = useProductDetailController();
+    const controller = useProductDetailViewModel();
 
     if (controller.loadingReview) {
         return (
@@ -34,7 +35,7 @@ export const ReviewSection = () => {
                 </div>
             ) : (
                 <div className="flex flex-col gap-6">
-                    {controller.reviewList.map((review) => (
+                    {controller.reviewList.map((review: Review) => (
                         <div key={review.id} className="flex flex-col gap-3 pb-6 border-b border-slate-100 last:border-0 last:pb-0">
                             <div className="flex items-center gap-3">
                                 {review.user.avatar ? (
@@ -62,7 +63,7 @@ export const ReviewSection = () => {
 
                             {review.imageUrls && review.imageUrls.length > 0 && (
                                 <div className="flex flex-wrap gap-2 mt-2">
-                                    {review.imageUrls.map((url, idx) => (
+                                    {review.imageUrls.map((url: string, idx: number) => (
                                         <img key={idx} src={url} alt="Review attachment" className="w-20 h-20 object-cover rounded-sm border border-slate-200" />
                                     ))}
                                 </div>

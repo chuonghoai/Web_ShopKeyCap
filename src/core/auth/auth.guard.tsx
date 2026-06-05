@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { ROLE } from "../constants/role.constant";
-import { useAuth } from "../hooks/useAuth";
+import { tokenService } from "./token.service";
+import { useUserProfileQuery } from "../../apps/auth/features/hooks/queries/useUserProfileQuery";
 
 interface Props {
     children: React.ReactNode;
@@ -9,13 +10,20 @@ interface Props {
 }
 
 function AuthGuard({ children, allowedRoles, requireAuth = true }: Props) {
-    const { user } = useAuth();
+    const hasToken = !!tokenService.getAccessToken();
+    const { data: user, isLoading } = useUserProfileQuery();
 
-    if (requireAuth && !user) {
+    if (requireAuth && !hasToken) {
         return <Navigate to="/login" replace />;
     }
 
-    if (user && allowedRoles) {
+    if (requireAuth && allowedRoles) {
+        if (isLoading) return null;
+
+        if (!user) {
+            return <Navigate to="/login" replace />;
+        }
+
         if (!allowedRoles.includes(user.role)) {
             return <Navigate to="/login?reason=unauthorized" replace />;
         }

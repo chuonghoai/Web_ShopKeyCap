@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
-import { useToast } from '../../../../../components/toast/toast';
+import { useToastStore } from '../../../../../core/store/useToastStore';
 import { authService } from '../../../features/services/auth.service';
 import { OtpPurpose } from '../../../features/dto/otp.dto';
 import { useNavigate } from 'react-router-dom';
 import { useDocumentTitle } from '../../../../../core/hooks/useDocumentTitle';
-import { useAuth } from '../../../../../core/hooks/useAuth';
 import { getAdminRoute } from '../../../../../utils/getAdminRoute';
+import { useRegisterMutation } from '../../../features/hooks/mutations/useRegisterMutation';
 
 export const useRegisterController = () => {
     useDocumentTitle("Đăng ký - Cyber Key");
 
-    const { toast } = useToast();
-    const { login: setAuthContext } = useAuth();
+    const toast = useToastStore(state => state.addToast);
+    const registerMutation = useRegisterMutation();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
@@ -22,7 +22,6 @@ export const useRegisterController = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [isSendingOtp, setIsSendingOtp] = useState(false);
     const [timer, setTimer] = useState(0);
-    const [isLoading, setIsLoading] = useState(false);
 
     /**
      * Set timer after sending OTP
@@ -71,8 +70,7 @@ export const useRegisterController = () => {
         }
 
         try {
-            setIsLoading(true);
-            const response = await authService.register({
+            const data = await registerMutation.mutateAsync({
                 email,
                 otp,
                 otpPurpose: OtpPurpose.REGISTER,
@@ -80,19 +78,14 @@ export const useRegisterController = () => {
                 confirmPassword
             });
 
-            if (response.success) {
-                toast(response.message || "Đăng ký thành công!", "success");
-                setAuthContext(response.data.user);
-                navigate(getAdminRoute(response.data.user.role));
-            }
+            toast("Đăng ký thành công!", "success");
+            navigate(getAdminRoute(data.user.role));
         } catch (error: any) {
             const apiErrMsg = error.response?.data?.message
                 || error.response?.data?.message
                 || error.message
                 || "Đăng ký thất bại";
             toast(apiErrMsg, "error");
-        } finally {
-            setIsLoading(false);
         }
     };
 
@@ -106,7 +99,7 @@ export const useRegisterController = () => {
 
         timer,
         isSendingOtp,
-        isLoading,
+        isLoading: registerMutation.isPending,
 
         handleSendOtp, handleRegister,
     };

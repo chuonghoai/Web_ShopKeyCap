@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import type { RecommendedProductRequest } from "../../features/products/dto/recommendedProductRequest.dto";
-import { useHomepageStore } from "./homepage.store";
+import { useHomepageSectionsQuery } from "../../features/products/hooks/queries/useHomepageSectionsQuery";
 
 export const useHomepageController = () => {
-    const store = useHomepageStore();
     const navigate = useNavigate();
+    const { data: sections = [], isLoading } = useHomepageSectionsQuery();
 
     const handleViewAll = (filter?: RecommendedProductRequest) => {
         if (!filter) {
@@ -27,8 +27,8 @@ export const useHomepageController = () => {
 
     return {
         // Data
-        isLoading: store.isLoading,
-        sections: store.sections,
+        isLoading,
+        sections,
 
         // Handlers
         handleViewAll,

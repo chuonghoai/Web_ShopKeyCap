@@ -1,10 +1,10 @@
 import DOMPurify from "dompurify";
-import { useProductDetailController } from "./productDetail.controller";
+import { useProductDetailViewModel } from "./useProductDetailViewModel";
 import ProductCard from "../homepage/components/ProductCard";
 import { ReviewSection } from "./components/ReviewSection";
 
 export const ProductDetailPage = () => {
-    const controller = useProductDetailController();
+    const controller = useProductDetailViewModel();
     const { product, isLoading, error } = controller;
 
     if (isLoading) {

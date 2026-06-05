@@ -2,7 +2,7 @@ import React from 'react';
 import { useLoginController } from './login.controller';
 import { Eye, EyeOff } from 'lucide-react';
 import { GoogleLogin } from '@react-oauth/google';
-import { useToast } from '../../../../../components/toast/toast';
+import { useToastStore } from '../../../../../core/store/useToastStore';
 
 interface LoginFormProps {
     onNavigate: (view: 'login' | 'register' | 'forgot-password') => void;
@@ -10,7 +10,7 @@ interface LoginFormProps {
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onNavigate }) => {
     const controller = useLoginController();
-    const { toast } = useToast();
+    const toast = useToastStore(state => state.addToast);
 
     return (
         <div className="w-full max-w-100 bg-white p-6 sm:p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)]">

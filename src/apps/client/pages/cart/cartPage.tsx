@@ -1,14 +1,15 @@
+import React from "react";
 import { Link } from "react-router-dom";
-import { useCartController } from "./cart.controller";
+import { useCartViewModel } from "./useCartViewModel";
 import { CartItemCard } from "./components/CartItemCard";
 import { CartDeliveryInfo } from "./components/CartDeliveryInfo";
 import { CartStoreGuarantee } from "./components/CartStoreGuarantee";
 import { CartRelatedProducts } from "./components/CartRelatedProducts";
 
 const CartPage = () => {
-    const controller = useCartController();
+    const viewModel = useCartViewModel();
 
-    if (controller.isLoading) {
+    if (viewModel.isLoading) {
         return (
             <div className="min-h-[70vh] flex flex-col items-center justify-center bg-slate-50/50">
                 <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
@@ -17,7 +18,7 @@ const CartPage = () => {
         );
     }
 
-    if (controller.items.length === 0) {
+    if (viewModel.items.length === 0) {
         return (
             <div className="min-h-[70vh] flex flex-col items-center justify-center bg-slate-50/50 px-4">
                 <div className="w-48 h-48 mb-6 text-slate-200">
@@ -48,12 +49,12 @@ const CartPage = () => {
                     <div>
                         <h1 className="-mt-1 mb-2.5 text-3xl font-bold text-slate-900 tracking-tight">Giỏ hàng</h1>
                         <p className="text-slate-500 mt-1.5 flex items-center gap-1.5">
-                            Bạn đang có <strong className="text-blue-600">{controller.items.length}</strong> sản phẩm trong giỏ
+                            Bạn đang có <strong className="text-blue-600">{viewModel.items.length}</strong> sản phẩm trong giỏ
                         </p>
                     </div>
 
                     <button
-                        onClick={controller.refetch}
+                        onClick={() => viewModel.refetch()}
                         className="p-2.5 rounded-xl bg-white text-slate-400 hover:text-blue-600 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 transition-all shadow-sm"
                         title="Tải lại"
                     >
@@ -64,13 +65,13 @@ const CartPage = () => {
                 <div className="flex flex-col lg:flex-row gap-8 items-start">
                     {/* Left Column: Cart Items */}
                     <div className="flex-1 w-full space-y-4">
-                        {controller.items.map(item => (
+                        {viewModel.items.map(item => (
                             <CartItemCard
                                 key={item.id}
                                 item={item}
-                                onUpdateQuantity={controller.handleUpdateQuantity}
-                                onDelete={controller.handleDeleteItem}
-                                formatPrice={controller.formatPrice}
+                                onUpdateQuantity={viewModel.handleUpdateQuantity}
+                                onDelete={viewModel.handleDeleteItem}
+                                formatPrice={viewModel.formatPrice}
                             />
                         ))}
                     </div>
@@ -92,14 +93,14 @@ const CartPage = () => {
                                     <span className="text-[16px] font-medium text-slate-900">Tổng cộng</span>
                                     <div className="text-right">
                                         <span className="block text-[24px] font-bold text-blue-600 leading-none">
-                                            {controller.formatPrice(controller.totalPrice)}
+                                            {viewModel.formatPrice(viewModel.totalPrice)}
                                         </span>
                                         <span className="text-[13px] text-slate-400 mt-1 block">(Đã bao gồm VAT)</span>
                                     </div>
                                 </div>
 
                                 <button
-                                    onClick={controller.handleCheckout}
+                                    onClick={viewModel.handleCheckout}
                                     className="w-full py-3.5 mt-6 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 text-[16px] group"
                                 >
                                     Tiến hành thanh toán
@@ -116,16 +117,16 @@ const CartPage = () => {
                         </div>
 
                         <CartDeliveryInfo
-                            deliveryInfo={controller.deliveryInfo}
-                            isLoading={controller.loadingDelivery}
-                            onAddAddress={controller.handleAddAddress}
+                            deliveryInfo={viewModel.deliveryInfo ?? null}
+                            isLoading={viewModel.loadingDelivery}
+                            onAddAddress={viewModel.handleAddAddress}
                         />
                     </div>
                 </div>
 
                 {/* Related Products */}
-                {!controller.isLoading && (
-                    <CartRelatedProducts products={controller.relatedProducts} />
+                {!viewModel.isLoading && (
+                    <CartRelatedProducts products={viewModel.relatedProducts} />
                 )}
 
                 {/* Store Guarantee */}
