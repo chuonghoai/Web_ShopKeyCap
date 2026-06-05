@@ -2,6 +2,7 @@ import axios from "axios";
 import type { AxiosResponse } from "axios";
 import { axiosInstance } from "../api/axios";
 import { userStorageService } from "../auth/userStorage.service";
+import { tokenService } from "../auth/token.service";
 
 axiosInstance.interceptors.response.use(
     (response: AxiosResponse) => response,
@@ -18,6 +19,7 @@ axiosInstance.interceptors.response.use(
                     reason = "expired";
                 }
                 userStorageService.removeUser();
+                tokenService.clear();
 
                 window.location.href = `/login?reason=${reason}`;
             }

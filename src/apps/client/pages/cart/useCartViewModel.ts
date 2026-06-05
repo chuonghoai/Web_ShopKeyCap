@@ -5,8 +5,7 @@ import { useDeliveryInfoQuery } from "../../features/profile/hooks/queries/useDe
 import { useRelatedProductsQuery } from "../../features/products/hooks/queries/useRelatedProductsQuery";
 import { useUpdateCartItemMutation } from "../../features/cart/hooks/mutations/useUpdateCartItemMutation";
 import { useDeleteCartItemMutation } from "../../features/cart/hooks/mutations/useDeleteCartItemMutation";
-import { useEffect } from "react";
-import { cartSummaryStorageService } from "../../features/cart/CartLocalStorage/CartSummaryStorage.service";
+
 
 export const useCartViewModel = () => {
     const navigate = useNavigate();
@@ -19,12 +18,6 @@ export const useCartViewModel = () => {
     const uniqueProductIds = Array.from(new Set(cartData?.items.map((item: any) => item.product.id) || [])) as string[];
     const { data: relatedProducts, isLoading: loadingRelated } = useRelatedProductsQuery(uniqueProductIds);
 
-    // Sync cart summary when cart data loaded
-    useEffect(() => {
-        if (cartData) {
-            cartSummaryStorageService.save(cartData.summary.cartCount);
-        }
-    }, [cartData]);
 
     // Mutations
     const updateMutation = useUpdateCartItemMutation();

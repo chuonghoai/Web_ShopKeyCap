@@ -22,12 +22,14 @@ export const useUpdateCartItemMutation = () => {
                     }
                     return item;
                 });
+                const newCartCount = newItems.reduce((sum, item) => sum + (item.variant?.quantity || 1), 0);
                 return {
                     ...oldData,
                     items: newItems,
                     summary: {
                         ...oldData.summary,
                         total: newTotalPrice,
+                        cartCount: newCartCount,
                     }
                 };
             });
