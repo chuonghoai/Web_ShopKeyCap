@@ -4,9 +4,10 @@ import type { DeliveryInfoModel } from '../../../features/profile/models/address
 interface DeliveryAddressSectionProps {
     deliveryInfo: DeliveryInfoModel | null;
     isLoading: boolean;
+    formatDate: (isoString?: string) => string;
 }
 
-export const DeliveryAddressSection: React.FC<DeliveryAddressSectionProps> = ({ deliveryInfo, isLoading }) => {
+export const DeliveryAddressSection: React.FC<DeliveryAddressSectionProps> = ({ deliveryInfo, isLoading, formatDate }) => {
     if (isLoading) {
         return (
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 animate-pulse">
@@ -20,8 +21,8 @@ export const DeliveryAddressSection: React.FC<DeliveryAddressSectionProps> = ({ 
     const { address, shippingTime } = deliveryInfo || {};
 
     return (
-        <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden mb-6">
-            <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+        <div className="py-6">
+            <div className="flex items-center justify-between mb-4">
                 <h2 className="text-[18px] font-bold text-slate-900 flex items-center gap-2">
                     <span className="material-icons-outlined text-blue-600">location_on</span>
                     Địa chỉ nhận hàng
@@ -33,7 +34,7 @@ export const DeliveryAddressSection: React.FC<DeliveryAddressSectionProps> = ({ 
                 )}
             </div>
 
-            <div className="p-6">
+            <div className="">
                 {!address ? (
                     <div className="text-center py-4">
                         <p className="text-slate-500 mb-4">Bạn chưa có địa chỉ giao hàng mặc định.</p>
@@ -65,7 +66,7 @@ export const DeliveryAddressSection: React.FC<DeliveryAddressSectionProps> = ({ 
                                 <div>
                                     <p className="text-[13px] text-emerald-800 font-medium mb-1">Thời gian giao hàng dự kiến</p>
                                     <p className="text-[14px] text-emerald-900 font-bold">
-                                        {shippingTime.earliestDay} - {shippingTime.latestDay}
+                                        {formatDate(shippingTime.earliestDay)} - {formatDate(shippingTime.latestDay)}
                                     </p>
                                 </div>
                             </div>

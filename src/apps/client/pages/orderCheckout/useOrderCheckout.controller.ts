@@ -19,16 +19,20 @@ export const useOrderCheckoutController = () => {
 
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<EPaymentMethod>(EPaymentMethod.COD);
 
+    // Modal states
+    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+    const [isVoucherModalOpen, setIsVoucherModalOpen] = useState(false);
+
     // Queries
-    const { 
-        data: preparedData, 
+    const {
+        data: preparedData,
         isLoading: loadingPreparedData,
         error: prepareError
     } = usePrepareOrderQuery(items);
 
-    const { 
-        data: deliveryInfo, 
-        isLoading: loadingDelivery 
+    const {
+        data: deliveryInfo,
+        isLoading: loadingDelivery
     } = useDeliveryInfoQuery();
 
     // Redirect to home if no items
@@ -69,7 +73,6 @@ export const useOrderCheckoutController = () => {
             onSuccess: () => {
                 addToast('Đặt hàng thành công', 'success');
                 // TODO: Redirect to order success/result page, for now redirect to home or order history
-                navigate('/');
             },
             onError: (err: any) => {
                 addToast(err.message || 'Đặt hàng thất bại, vui lòng thử lại', 'error');
@@ -84,19 +87,34 @@ export const useOrderCheckoutController = () => {
         }).format(price);
     };
 
+    const formatDate = (isoString?: string) => {
+        if (!isoString) return '';
+        const date = new Date(isoString);
+        return new Intl.DateTimeFormat('vi-VN', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        }).format(date);
+    };
+
     return {
         // Data
         preparedData,
         deliveryInfo,
-        
+
         // State
         selectedPaymentMethod,
         isSubmitting: checkoutMutation.isPending,
         isLoading: loadingPreparedData || loadingDelivery,
-        
+        isPaymentModalOpen,
+        isVoucherModalOpen,
+
         // Handlers
         setSelectedPaymentMethod,
+        setIsPaymentModalOpen,
+        setIsVoucherModalOpen,
         handleCheckout,
-        formatPrice
+        formatPrice,
+        formatDate
     };
 };

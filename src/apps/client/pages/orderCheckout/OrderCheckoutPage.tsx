@@ -5,16 +5,19 @@ import { ProductListSection } from './components/ProductListSection';
 import { OrderSummarySection } from './components/OrderSummarySection';
 import { PaymentMethodSection } from './components/PaymentMethodSection';
 import { CheckoutActionSection } from './components/CheckoutActionSection';
+import { VoucherSection } from './components/VoucherSection';
+import { PaymentMethodModal } from './components/PaymentMethodModal';
+import { VoucherModal } from './components/VoucherModal';
 import { Link } from 'react-router-dom';
 
 const OrderCheckoutPage: React.FC = () => {
     const controller = useOrderCheckoutController();
 
     return (
-        <div className="max-w-full min-h-screen bg-slate-50/50 pb-20">
+        <div className="max-w-full min-h-screen bg-slate-50/50 pb-10">
             {/* Header */}
-            <div className="bg-white border-b border-slate-100 mb-6 sticky top-0 z-20">
-                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sticky top-0 z-20 pt-4 mb-2.5">
+                <div className="bg-white rounded-md shadow-sm border border-slate-200 h-16 px-8 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
                         <Link
                             to="/cart"
@@ -28,46 +31,64 @@ const OrderCheckoutPage: React.FC = () => {
                 </div>
             </div>
 
-            <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col lg:flex-row gap-8 items-start">
-                    {/* Left Column */}
-                    <div className="flex-1 w-full min-w-0">
-                        <DeliveryAddressSection
-                            deliveryInfo={controller.deliveryInfo ?? null}
-                            isLoading={controller.isLoading}
-                        />
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="bg-white rounded-md shadow-sm border border-slate-200 overflow-hidden px-8">
+                    <DeliveryAddressSection
+                        deliveryInfo={controller.deliveryInfo ?? null}
+                        isLoading={controller.isLoading}
+                        formatDate={controller.formatDate}
+                    />
 
-                        <ProductListSection
-                            items={controller.preparedData?.items || []}
-                            isLoading={controller.isLoading}
-                            formatPrice={controller.formatPrice}
-                        />
-                    </div>
+                    <div className="h-px bg-slate-200 w-full"></div>
 
-                    {/* Right Column */}
-                    <div className="w-full lg:w-95 shrink-0 space-y-6">
-                        <PaymentMethodSection
-                            selectedMethod={controller.selectedPaymentMethod}
-                            onSelectMethod={controller.setSelectedPaymentMethod}
-                        />
+                    <ProductListSection
+                        items={controller.preparedData?.items || []}
+                        isLoading={controller.isLoading}
+                        formatPrice={controller.formatPrice}
+                    />
 
-                        <OrderSummarySection
-                            subTotal={controller.preparedData?.subTotal || 0}
-                            shippingFee={controller.preparedData?.shippingFee}
-                            totalAmount={controller.preparedData?.totalAmount || 0}
-                            formatPrice={controller.formatPrice}
-                            isLoading={controller.isLoading}
-                        />
-                    </div>
+                    <div className="h-px bg-slate-200 w-full border-dashed"></div>
+
+                    <VoucherSection
+                        onOpenModal={() => controller.setIsVoucherModalOpen(true)}
+                    />
+
+                    <div className="h-px bg-slate-200 w-full border-dashed"></div>
+
+                    <PaymentMethodSection
+                        selectedMethod={controller.selectedPaymentMethod}
+                        onOpenModal={() => controller.setIsPaymentModalOpen(true)}
+                    />
+
+                    <div className="h-px bg-slate-200 w-full"></div>
+
+                    <OrderSummarySection
+                        subTotal={controller.preparedData?.subTotal || 0}
+                        shippingFee={controller.preparedData?.shippingFee}
+                        totalAmount={controller.preparedData?.totalAmount || 0}
+                        formatPrice={controller.formatPrice}
+                        isLoading={controller.isLoading}
+                    />
+
+                    <CheckoutActionSection
+                        onCheckout={controller.handleCheckout}
+                        isSubmitting={controller.isSubmitting}
+                        isDisabled={!controller.deliveryInfo?.address?.id}
+                    />
                 </div>
             </div>
 
-            <CheckoutActionSection
-                onCheckout={controller.handleCheckout}
-                isSubmitting={controller.isSubmitting}
-                isDisabled={!controller.deliveryInfo?.address?.id}
-                totalAmount={controller.preparedData?.totalAmount || 0}
-                formatPrice={controller.formatPrice}
+            {/* Modals */}
+            <PaymentMethodModal
+                isOpen={controller.isPaymentModalOpen}
+                onClose={() => controller.setIsPaymentModalOpen(false)}
+                selectedMethod={controller.selectedPaymentMethod}
+                onSelectMethod={controller.setSelectedPaymentMethod}
+            />
+
+            <VoucherModal
+                isOpen={controller.isVoucherModalOpen}
+                onClose={() => controller.setIsVoucherModalOpen(false)}
             />
         </div>
     );

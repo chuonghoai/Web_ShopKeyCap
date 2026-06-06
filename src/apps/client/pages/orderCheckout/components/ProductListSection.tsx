@@ -10,7 +10,7 @@ interface ProductListSectionProps {
 export const ProductListSection: React.FC<ProductListSectionProps> = ({ items, isLoading, formatPrice }) => {
     if (isLoading) {
         return (
-            <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-6 mb-6 animate-pulse">
+            <div className="py-6 animate-pulse">
                 <div className="h-6 bg-slate-200 rounded w-1/4 mb-6"></div>
                 <div className="space-y-4">
                     {[1, 2].map(i => (
@@ -29,16 +29,16 @@ export const ProductListSection: React.FC<ProductListSectionProps> = ({ items, i
     }
 
     return (
-        <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden mb-6">
-            <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+        <div className="py-6">
+            <div className="mb-4">
                 <h2 className="text-[18px] font-bold text-slate-900 flex items-center gap-2">
                     <span className="material-icons-outlined text-blue-600">inventory_2</span>
                     Sản phẩm ({items.length})
                 </h2>
             </div>
             
-            <div className="p-0">
-                <div className="hidden md:grid grid-cols-12 gap-4 px-6 py-3 bg-slate-50/50 border-b border-slate-100 text-[13px] font-medium text-slate-500">
+            <div className="">
+                <div className="hidden md:grid grid-cols-12 gap-4 py-3 border-b border-slate-200 text-[14px] text-slate-400">
                     <div className="col-span-6">Sản phẩm</div>
                     <div className="col-span-2 text-center">Đơn giá</div>
                     <div className="col-span-2 text-center">Số lượng</div>
@@ -47,7 +47,7 @@ export const ProductListSection: React.FC<ProductListSectionProps> = ({ items, i
 
                 <div className="divide-y divide-slate-100">
                     {items.map((item, index) => (
-                        <div key={`${item.product.id}-${index}`} className="p-6 flex flex-col md:grid md:grid-cols-12 gap-4 items-center hover:bg-slate-50/50 transition-colors">
+                        <div key={`${item.product.id}-${index}`} className="py-6 flex flex-col md:grid md:grid-cols-12 gap-4 items-center">
                             {/* Product Info */}
                             <div className="col-span-6 flex gap-4 w-full">
                                 <div className="w-20 h-20 shrink-0 bg-white rounded-xl border border-slate-100 p-2 relative overflow-hidden group">
@@ -67,7 +67,7 @@ export const ProductListSection: React.FC<ProductListSectionProps> = ({ items, i
                                                 key={key} 
                                                 className="px-2 py-0.5 bg-slate-100 text-slate-600 text-[12px] font-medium rounded-md whitespace-nowrap"
                                             >
-                                                {val}
+                                                <span className="text-slate-400 mr-1">{key}:</span> {val}
                                             </span>
                                         ))}
                                     </div>
