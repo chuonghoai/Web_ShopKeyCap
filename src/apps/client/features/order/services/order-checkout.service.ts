@@ -1,0 +1,40 @@
+import type { ApiResponse } from "../../../../../core/api/apiResponse";
+import { USE_MOCK } from "../../../../../core/config/useMock.config";
+import type { CheckoutRequest } from "../dto/checkout.request";
+import type { CheckoutResponse } from "../dto/checkout.response";
+import type { PrepareCheckoutRequest } from "../dto/prepareCheckout.request";
+import type { CheckoutResult } from "../models/checkoutResult.dto";
+import type { PrepareCheckoutModel } from "../models/prepareCheckout.model";
+import type { CheckoutRepo } from "../repositories/checkout.repo";
+import { CheckoutApiRepo } from "../repositories/checkoutApi.repo";
+import { CheckoutMockRepo } from "../repositories/checkoutMock.repo";
+
+export class OrderCheckoutService {
+    private readonly checkoutRepo: CheckoutRepo;
+    constructor(checkoutRepo: CheckoutRepo) {
+        this.checkoutRepo = checkoutRepo;
+    }
+
+    /**
+     * Prepare checkout
+     */
+    async prepareOrder(request: PrepareCheckoutRequest[]): Promise<ApiResponse<PrepareCheckoutModel>> {
+        return this.checkoutRepo.prepareOrder(request);
+    }
+
+    /**
+     * Request checkout order
+     */
+    async checkoutOrder(request: CheckoutRequest): Promise<ApiResponse<CheckoutResponse>> {
+        return this.checkoutRepo.checkoutOrder(request);
+    }
+
+    /**
+     * Check order result
+     */
+    async getOrderResult(orderId: string): Promise<ApiResponse<CheckoutResult>> {
+        return this.checkoutRepo.getOrderResult(orderId);
+    }
+}
+
+export const orderCheckoutService = new OrderCheckoutService(USE_MOCK ? new CheckoutApiRepo() : new CheckoutMockRepo())

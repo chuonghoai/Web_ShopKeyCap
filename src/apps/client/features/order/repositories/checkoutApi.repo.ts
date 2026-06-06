@@ -5,9 +5,9 @@ import type { CheckoutResponse } from "../dto/checkout.response";
 import type { PrepareCheckoutRequest } from "../dto/prepareCheckout.request";
 import type { CheckoutResult } from "../models/checkoutResult.dto";
 import type { PrepareCheckoutModel } from "../models/prepareCheckout.model";
-import type { CheckoutRepository } from "./checkout.repo";
+import type { CheckoutRepo } from "./checkout.repo";
 
-export class CheckoutApiRepository implements CheckoutRepository {
+export class CheckoutApiRepo implements CheckoutRepo {
     /**
      * POST /orders/prepare
      * @body request: PrepareCheckoutRequest[]

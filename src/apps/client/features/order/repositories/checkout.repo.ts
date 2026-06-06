@@ -5,7 +5,7 @@ import type { PrepareCheckoutRequest } from "../dto/prepareCheckout.request";
 import type { CheckoutResult } from "../models/checkoutResult.dto";
 import type { PrepareCheckoutModel } from "../models/prepareCheckout.model";
 
-export interface CheckoutRepository {
+export interface CheckoutRepo {
     prepareOrder(request: PrepareCheckoutRequest[]): Promise<ApiResponse<PrepareCheckoutModel>>;
 
     checkoutOrder(request: CheckoutRequest): Promise<ApiResponse<CheckoutResponse>>;

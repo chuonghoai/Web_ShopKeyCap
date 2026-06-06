@@ -1,7 +1,7 @@
 // import type { CheckoutRequestDto, CheckoutResponseDto } from "../dto/checkoutRequest.dto";
 // import type { CheckoutResultDto } from "../models/checkoutResult.dto";
 import type { PrepareCheckoutRequest } from "../dto/prepareCheckout.request";
-import type { CheckoutRepository } from "./checkout.repo";
+import type { CheckoutRepo } from "./checkout.repo";
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import type { PrepareCheckoutModel } from "../models/prepareCheckout.model";
 import type { CheckoutRequest } from "../dto/checkout.request";
@@ -10,7 +10,7 @@ import { EPaymentMethod } from "../enums/paymentMethod.enum";
 import type { CheckoutResult } from "../models/checkoutResult.dto";
 import { EPaymentStatus } from "../enums/paymentStatus.enum";
 
-export class CheckoutMockRepository implements CheckoutRepository {
+export class CheckoutMockRepo implements CheckoutRepo {
     async prepareOrder(_request: PrepareCheckoutRequest[]): Promise<ApiResponse<PrepareCheckoutModel>> {
         const response: ApiResponse<PrepareCheckoutModel> = {
             success: true,
