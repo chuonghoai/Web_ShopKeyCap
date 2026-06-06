@@ -36,9 +36,7 @@ export class ProductApiRepo implements ProductRepo {
      * Mô tả: Lấy các sản phẩm mới được cập nhật gần đây (10 ngày -> 1 tháng)
      */
     async getNewestProducts(limit: number): Promise<ApiResponse<ProductItem[]>> {
-        return apiClient.get<ApiResponse<ProductItem[]>>("/products/newest", {
-            params: limit
-        });
+        return apiClient.get<ApiResponse<ProductItem[]>>(`/products/newest/${limit}`);
     }
 
     /**
@@ -49,9 +47,7 @@ export class ProductApiRepo implements ProductRepo {
      * Mô tả: Lấy các sản phẩm bán chạy, được nhiều người quan tâm nhất trong 1 tháng gần nhất
      */
     async getPopularProducts(limit: number): Promise<ApiResponse<ProductItem[]>> {
-        return apiClient.get<ApiResponse<ProductItem[]>>("/products/popular", {
-            params: limit
-        });
+        return apiClient.get<ApiResponse<ProductItem[]>>(`/products/popular/${limit}`);
     }
 
     /**
@@ -62,9 +58,7 @@ export class ProductApiRepo implements ProductRepo {
      * Mô tả: Lấy danh sách các sản phẩm từ các thương hiệu có số lượng sản phẩm bán chạy nhất
      */
     async getProductsByHotBrand(limit: number): Promise<ApiResponse<ProductItem[]>> {
-        return apiClient.get<ApiResponse<ProductItem[]>>("/products/hot-brand", {
-            params: limit
-        });
+        return apiClient.get<ApiResponse<ProductItem[]>>(`/products/hot-brand/${limit}`);
     }
 
     /**
