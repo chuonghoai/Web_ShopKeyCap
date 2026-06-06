@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { useCartRelatedProductsController } from "../cpnController/cartRelatedProducts.controller";
+import { useCartRelatedProductsController } from "../componentControllers/cartRelatedProducts.controller";
 import type { ProductItem } from "../../../features/products/model/product.model";
 import ProductCard from "../../homepage/components/ProductCard";
 

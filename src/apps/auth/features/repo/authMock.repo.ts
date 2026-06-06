@@ -11,9 +11,9 @@ import type { AuthRepo } from "./auth.repo";
 export class AuthMockRepo implements AuthRepo {
     async login(email: string, password: string): Promise<ApiResponse<LoginResponse>> {
         let response: ApiResponse<LoginResponse>;
-        let role: ROLE = ROLE.CLIENT;
+        let role: ROLE = ROLE.USER;
 
-        if (email === "111@111" && password === "111") role = ROLE.CLIENT;
+        if (email === "111@111" && password === "111") role = ROLE.USER;
         else if (email === "222@222" && password === "222") role = ROLE.ADMIN;
         else {
             throw new ApiException("Email hoặc mật khẩu không chính xác!", 404);
@@ -48,7 +48,7 @@ export class AuthMockRepo implements AuthRepo {
                     email: "manggia@gmail.com",
                     fullName: "manggia",
                     avatar: "https://img.icons8.com/color/480/avatar.png",
-                    role: "CLIENT",
+                    role: ROLE.USER,
                 },
             },
         }
@@ -81,7 +81,7 @@ export class AuthMockRepo implements AuthRepo {
                     email: request.email,
                     fullName: 'manggia',
                     avatar: 'https://img.icons8.com/color/480/avatar.png',
-                    role: 'CLIENT',
+                    role: ROLE.USER,
                 }
             }
         }

@@ -37,4 +37,4 @@ export class OrderCheckoutService {
     }
 }
 
-export const orderCheckoutService = new OrderCheckoutService(USE_MOCK ? new CheckoutApiRepo() : new CheckoutMockRepo())
+export const orderCheckoutService = new OrderCheckoutService(USE_MOCK ? new CheckoutMockRepo() : new CheckoutApiRepo())

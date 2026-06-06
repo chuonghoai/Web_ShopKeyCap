@@ -12,6 +12,7 @@ export class ProfileMockRepo implements ProfileRepo {
             district: { code: "D1", name: "Quận 1" },
             ward: { code: "W1", name: "Phường Bến Nghé" },
             street: "Số 227 Nguyễn Văn Cừ",
+            fullAddress: "Số 227 Nguyễn Văn Cừ, Phường Bến Nghé, Quận 1, Hồ Chí Minh",
             latitude: 10.762622,
             longitude: 106.660172,
             isDefault: true,

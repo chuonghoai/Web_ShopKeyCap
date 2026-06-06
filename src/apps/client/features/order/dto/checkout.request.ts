@@ -26,7 +26,7 @@ interface CartItemIds {
 export interface CheckoutRequest {
     items: CheckoutItemRequest[];
 
-    addressId: number;
+    addressId: string;
 
     voucherIds?: string[];
 

@@ -6,6 +6,7 @@ import { HomePage } from "../pages/homepage/homepage";
 import ProductsPage from "../pages/products/productsPage";
 import ProductDetailPage from "../pages/productDetail/productDetailPage";
 import CartPage from "../pages/cart/cartPage";
+import OrderCheckoutPage from "../pages/orderCheckout/OrderCheckoutPage";
 
 const ProfilePage = () => {
     return <h1>Thông tin cá nhân (Cần đăng nhập)</h1>;
@@ -36,13 +37,14 @@ export const clientRoutes: RouteObject[] = [
              */
             {
                 element: (
-                    <AuthGuard requireAuth={true} allowedRoles={[ROLE.CLIENT]}>
+                    <AuthGuard requireAuth={true} allowedRoles={[ROLE.USER]}>
                         <Outlet />
                     </AuthGuard>
                 ),
                 children: [
                     { path: "/profile", element: <ProfilePage /> },
                     { path: "/cart", element: <CartPage /> },
+                    { path: "/checkout", element: <OrderCheckoutPage /> },
                 ]
             }
         ]

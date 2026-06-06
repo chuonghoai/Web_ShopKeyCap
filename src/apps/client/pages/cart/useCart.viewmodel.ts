@@ -44,7 +44,20 @@ export const useCartViewModel = () => {
 
     const handleCheckout = () => {
         if (!cartData || cartData.items.length === 0) return;
-        navigate("/checkout");
+        
+        const items = cartData.items.map((item: any) => ({
+            variantId: item.product.id,
+            quantity: item.quantity
+        }));
+        
+        const cartItemIds = cartData.items.map((item: any) => item.id);
+
+        navigate("/checkout", {
+            state: {
+                cartItemIds,
+                items
+            }
+        });
     };
 
     const formatPrice = (price: number) => {
