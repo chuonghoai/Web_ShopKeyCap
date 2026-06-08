@@ -34,7 +34,8 @@ export const useOrderCheckoutController = () => {
 
     const {
         data: deliveryInfo,
-        isLoading: loadingDelivery
+        isLoading: loadingDelivery,
+        error: deliveryError
     } = useDeliveryInfoQuery(selectedAddressId);
 
     // Redirect to home if no items
@@ -45,19 +46,18 @@ export const useOrderCheckoutController = () => {
         }
     }, [items, navigate, addToast]);
 
-    // Default address synchronization
-    useEffect(() => {
-        if (!selectedAddressId && deliveryInfo?.address?.id) {
-            setSelectedAddressId(deliveryInfo.address.id);
-        }
-    }, [deliveryInfo?.address?.id, selectedAddressId]);
-
     useEffect(() => {
         if (prepareError) {
             addToast('Có lỗi xảy ra khi tải thông tin đơn hàng', 'error');
             navigate('/cart');
         }
     }, [prepareError, navigate, addToast]);
+
+    useEffect(() => {
+        if (deliveryError) {
+            addToast('Không thể lấy thông tin vận chuyển. Vui lòng thử lại.', 'error');
+        }
+    }, [deliveryError, addToast]);
 
     // Mutation
     const checkoutMutation = useCheckoutOrderMutation();

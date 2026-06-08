@@ -15,7 +15,7 @@ export class AddressApiRepo implements AddressRepo {
      */
     async getShippingInfo(addressId?: string): Promise<ApiResponse<DeliveryInfoModel | null>> {
         const params = addressId ? { addressId } : undefined;
-        return apiClient.get<ApiResponse<DeliveryInfoModel | null>>("/profile/address/shipping", { params });
+        return apiClient.get<ApiResponse<DeliveryInfoModel | null>>("/address/shipping", { params });
     }
 
     /**
@@ -27,6 +27,6 @@ export class AddressApiRepo implements AddressRepo {
      *  - Địa chỉ mặc định phải đứng đầu list
      */
     async getAddresses(): Promise<ApiResponse<Address[]>> {
-        return apiClient.get<ApiResponse<Address[]>>("/profile/address");
+        return apiClient.get<ApiResponse<Address[]>>("/address");
     }
 }
