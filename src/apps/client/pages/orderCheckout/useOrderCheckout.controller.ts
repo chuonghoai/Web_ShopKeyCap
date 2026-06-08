@@ -3,10 +3,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useToastStore } from '../../../../core/store/useToastStore';
 import { EPaymentMethod } from '../../features/order/enums/paymentMethod.enum';
 import { usePrepareOrderQuery } from '../../features/order/hooks/queries/usePrepareOrder.query';
-import { useDeliveryInfoQuery } from '../../features/profile/hooks/queries/useDeliveryInfo.query';
 import { useCheckoutOrderMutation } from '../../features/order/hooks/mutations/useCheckoutOrder.mutation';
 import type { CheckoutRequest } from '../../features/order/dto/checkout.request';
 import type { CheckoutLocationState } from '../../features/order/types/checkoutLocation.type';
+import { useDeliveryInfoQuery } from '../../features/address/hooks/queries/useDeliveryInfo.query';
 
 export const useOrderCheckoutController = () => {
     const location = useLocation();
@@ -22,18 +22,20 @@ export const useOrderCheckoutController = () => {
     // Modal states
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
     const [isVoucherModalOpen, setIsVoucherModalOpen] = useState(false);
+    const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+    const [selectedAddressId, setSelectedAddressId] = useState<string | undefined>();
 
     // Queries
     const {
         data: preparedData,
         isLoading: loadingPreparedData,
         error: prepareError
-    } = usePrepareOrderQuery(items);
+    } = usePrepareOrderQuery(items, selectedAddressId);
 
     const {
         data: deliveryInfo,
         isLoading: loadingDelivery
-    } = useDeliveryInfoQuery();
+    } = useDeliveryInfoQuery(selectedAddressId);
 
     // Redirect to home if no items
     useEffect(() => {
@@ -42,6 +44,13 @@ export const useOrderCheckoutController = () => {
             navigate('/cart');
         }
     }, [items, navigate, addToast]);
+
+    // Default address synchronization
+    useEffect(() => {
+        if (!selectedAddressId && deliveryInfo?.address?.id) {
+            setSelectedAddressId(deliveryInfo.address.id);
+        }
+    }, [deliveryInfo?.address?.id, selectedAddressId]);
 
     useEffect(() => {
         if (prepareError) {
@@ -54,14 +63,15 @@ export const useOrderCheckoutController = () => {
     const checkoutMutation = useCheckoutOrderMutation();
 
     const handleCheckout = () => {
-        if (!deliveryInfo?.address?.id) {
+        const addressId = selectedAddressId || deliveryInfo?.address?.id;
+        if (!addressId) {
             addToast('Vui lòng thêm địa chỉ giao hàng', 'warning');
             return;
         }
 
         const request: CheckoutRequest = {
             paymentMethod: selectedPaymentMethod,
-            addressId: deliveryInfo.address.id,
+            addressId: addressId,
             items: items.map(item => ({
                 variantId: item.variantId,
                 quantity: item.quantity
@@ -97,6 +107,11 @@ export const useOrderCheckoutController = () => {
         }).format(date);
     };
 
+    const handleSelectAddress = (address: any) => {
+        setSelectedAddressId(address.id);
+        setIsAddressModalOpen(false);
+    };
+
     return {
         // Data
         preparedData,
@@ -108,11 +123,15 @@ export const useOrderCheckoutController = () => {
         isLoading: loadingPreparedData || loadingDelivery,
         isPaymentModalOpen,
         isVoucherModalOpen,
+        isAddressModalOpen,
+        selectedAddressId,
 
         // Handlers
         setSelectedPaymentMethod,
         setIsPaymentModalOpen,
         setIsVoucherModalOpen,
+        setIsAddressModalOpen,
+        handleSelectAddress,
         handleCheckout,
         formatPrice,
         formatDate

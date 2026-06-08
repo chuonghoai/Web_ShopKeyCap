@@ -182,25 +182,39 @@ export const ProductDetailPage = () => {
                             </span>
                         </div>
 
-                        <div className="flex gap-4 mt-2">
+                        <div className="flex flex-col sm:flex-row gap-4 mt-2">
                             <button
                                 onClick={controller.handleAddToCart}
                                 disabled={controller.isAddingToCart || controller.displayStock === 0}
                                 className={`
-                                    flex-1 h-12 rounded-md text-white font-bold text-[15px]
-                                    flex items-center justify-center gap-2 transition-colors
+                                    flex-1 h-12 rounded-md font-bold text-[15px]
+                                    flex items-center justify-center gap-2 transition-colors border-2
                                     ${(controller.isAddingToCart || controller.displayStock === 0)
-                                        ? 'bg-slate-300 cursor-not-allowed'
-                                        : 'bg-blue-600 hover:bg-blue-700'
+                                        ? 'bg-slate-50 border-slate-200 text-slate-400 cursor-not-allowed'
+                                        : 'bg-white border-blue-600 text-blue-600 hover:bg-blue-50'
                                     }
                                 `}
                             >
                                 {controller.isAddingToCart ? 'Đang thêm...' : (
                                     <>
-                                        <span className="material-icons-outlined">shopping_cart</span>
-                                        THÊM VÀO GIỎ HÀNG
+                                        <span className="material-icons-outlined">add_shopping_cart</span>
+                                        THÊM VÀO GIỎ
                                     </>
                                 )}
+                            </button>
+                            <button
+                                onClick={controller.handleBuyNow}
+                                disabled={controller.isAddingToCart || controller.displayStock === 0}
+                                className={`
+                                    flex-1 h-12 rounded-md font-bold text-[15px] text-white
+                                    flex items-center justify-center gap-2 transition-colors
+                                    ${(controller.isAddingToCart || controller.displayStock === 0)
+                                        ? 'bg-slate-300 cursor-not-allowed'
+                                        : 'bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-600/30 hover:shadow-blue-600/40'
+                                    }
+                                `}
+                            >
+                                <>MUA NGAY</>
                             </button>
                             <button 
                                 onClick={controller.handleToggleFavorite}

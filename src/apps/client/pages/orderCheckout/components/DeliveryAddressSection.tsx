@@ -1,13 +1,15 @@
 import React from 'react';
-import type { DeliveryInfoModel } from '../../../features/profile/models/address.model';
+import type { DeliveryInfoModel } from '../../../features/address/models/address.model';
+import { Link } from 'react-router-dom';
 
 interface DeliveryAddressSectionProps {
     deliveryInfo: DeliveryInfoModel | null;
     isLoading: boolean;
     formatDate: (isoString?: string) => string;
+    onChangeAddress: () => void;
 }
 
-export const DeliveryAddressSection: React.FC<DeliveryAddressSectionProps> = ({ deliveryInfo, isLoading, formatDate }) => {
+export const DeliveryAddressSection: React.FC<DeliveryAddressSectionProps> = ({ deliveryInfo, isLoading, formatDate, onChangeAddress }) => {
     if (isLoading) {
         return (
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 animate-pulse">
@@ -28,7 +30,7 @@ export const DeliveryAddressSection: React.FC<DeliveryAddressSectionProps> = ({ 
                     Địa chỉ nhận hàng
                 </h2>
                 {address && (
-                    <button className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
+                    <button onClick={onChangeAddress} className="cursor-pointer text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
                         Thay đổi
                     </button>
                 )}
@@ -37,10 +39,10 @@ export const DeliveryAddressSection: React.FC<DeliveryAddressSectionProps> = ({ 
             <div className="">
                 {!address ? (
                     <div className="text-center py-4">
-                        <p className="text-slate-500 mb-4">Bạn chưa có địa chỉ giao hàng mặc định.</p>
-                        <button className="px-5 py-2.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-xl font-medium transition-colors">
-                            Thêm địa chỉ mới
-                        </button>
+                        <p className="text-slate-500 mb-4">Bạn chưa có địa chỉ giao hàng.</p>
+                        <Link to='/profile/address/new' className="px-5 py-2.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-xl font-medium transition-colors">
+                            Tạo địa chỉ mặc định
+                        </Link>
                     </div>
                 ) : (
                     <div className="flex flex-col md:flex-row gap-6 justify-between">

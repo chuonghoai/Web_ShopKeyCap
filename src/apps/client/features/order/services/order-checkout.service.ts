@@ -2,7 +2,7 @@ import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import { USE_MOCK } from "../../../../../core/config/useMock.config";
 import type { CheckoutRequest } from "../dto/checkout.request";
 import type { CheckoutResponse } from "../dto/checkout.response";
-import type { PrepareCheckoutRequest } from "../dto/prepareCheckout.request";
+import type { PrepareCheckoutRequestWrapper } from "../dto/prepareCheckout.request";
 import type { CheckoutResult } from "../models/checkoutResult.dto";
 import type { PrepareCheckoutModel } from "../models/prepareCheckout.model";
 import type { CheckoutRepo } from "../repositories/checkout.repo";
@@ -18,7 +18,7 @@ export class OrderCheckoutService {
     /**
      * Prepare checkout
      */
-    async prepareOrder(request: PrepareCheckoutRequest[]): Promise<ApiResponse<PrepareCheckoutModel>> {
+    async prepareOrder(request: PrepareCheckoutRequestWrapper): Promise<ApiResponse<PrepareCheckoutModel>> {
         return this.checkoutRepo.prepareOrder(request);
     }
 

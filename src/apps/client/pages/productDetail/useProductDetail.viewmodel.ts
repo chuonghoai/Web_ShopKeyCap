@@ -140,6 +140,30 @@ export const useProductDetailViewModel = () => {
         }
     };
 
+    const handleBuyNow = () => {
+        if (!product) return;
+
+        const isFullySelected = product.options.every(
+            opt => selectedAttributes[opt.name] !== undefined
+        );
+        if (!isFullySelected) {
+            toast("Vui lòng chọn đầy đủ phân loại sản phẩm", "warning");
+            return;
+        }
+
+        if (!currentVariant || currentVariant.stockQuantity < 1) {
+            toast("Sản phẩm này hiện đang hết hàng", "error");
+            return;
+        }
+
+        navigate("/checkout", {
+            state: {
+                items: [{ variantId: currentVariant.id, quantity }],
+                cartItemIds: []
+            }
+        });
+    };
+
     const handleNavigateFilter = (filterKey: string, filterValue: string) => {
         navigate(`/products?${filterKey}=${filterValue}`);
     };
@@ -182,6 +206,7 @@ export const useProductDetailViewModel = () => {
         handleOptionSelect,
         handleQuantityChange,
         handleAddToCart,
+        handleBuyNow,
         handleNavigateFilter,
 
         handleToggleFavorite,

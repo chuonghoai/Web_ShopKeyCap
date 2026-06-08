@@ -54,7 +54,7 @@ const CartPage = () => {
 
                     <button
                         onClick={() => viewModel.refetch()}
-                        className="p-2.5 rounded-xl bg-white text-slate-400 hover:text-blue-600 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 transition-all shadow-sm"
+                        className="p-2.5 rounded-xl cursor-pointer bg-white text-slate-400 hover:text-blue-600 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 transition-all shadow-sm"
                         title="Tải lại"
                     >
                         <span className="material-icons-outlined text-[20px]">refresh</span>
@@ -100,7 +100,7 @@ const CartPage = () => {
 
                                 <button
                                     onClick={viewModel.handleCheckout}
-                                    className="w-full py-3.5 mt-6 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 text-[16px] group"
+                                    className="w-full py-3.5 mt-6 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 text-[16px] group"
                                 >
                                     Tiến hành thanh toán
                                     <span className="material-icons-outlined text-[20px] group-hover:translate-x-1 transition-transform">
@@ -118,7 +118,6 @@ const CartPage = () => {
                         <CartDeliveryInfo
                             deliveryInfo={viewModel.deliveryInfo ?? null}
                             isLoading={viewModel.loadingDelivery}
-                            onAddAddress={viewModel.handleAddAddress}
                         />
                     </div>
                 </div>

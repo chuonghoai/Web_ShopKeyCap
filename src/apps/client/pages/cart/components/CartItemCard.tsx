@@ -72,7 +72,7 @@ export const CartItemCard = memo(({ item, onUpdateQuantity, onDelete, formatPric
 
                     <button
                         onClick={() => onDelete(targetId)}
-                        className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0"
+                        className="w-8 h-8 cursor-pointer flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0"
                         title="Xóa sản phẩm"
                     >
                         <span className="material-icons-outlined text-[20px]">
@@ -99,7 +99,7 @@ export const CartItemCard = memo(({ item, onUpdateQuantity, onDelete, formatPric
                         <button
                             onClick={controller.handleDecrease}
                             disabled={controller.isDecreaseDisabled}
-                            className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-slate-500 hover:bg-slate-50 hover:text-slate-800 rounded-md transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                            className="w-7 h-7 sm:w-8 sm:h-8 cursor-pointer flex items-center justify-center text-slate-500 hover:bg-slate-50 hover:text-slate-800 rounded-md transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                         >
                             <span className="material-icons-outlined text-[16px]">remove</span>
                         </button>
@@ -116,7 +116,7 @@ export const CartItemCard = memo(({ item, onUpdateQuantity, onDelete, formatPric
                         <button
                             onClick={controller.handleIncrease}
                             disabled={controller.isIncreaseDisabled}
-                            className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-slate-500 hover:bg-slate-50 hover:text-slate-800 rounded-md transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                            className="w-7 h-7 sm:w-8 sm:h-8 cursor-pointer flex items-center justify-center text-slate-500 hover:bg-slate-50 hover:text-slate-800 rounded-md transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                         >
                             <span className="material-icons-outlined text-[16px]">add</span>
                         </button>

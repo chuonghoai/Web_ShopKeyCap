@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useToastStore } from "../../../../core/store/useToastStore";
 import { useCartQuery } from "../../features/cart/hooks/queries/useCart.query";
-import { useDeliveryInfoQuery } from "../../features/profile/hooks/queries/useDeliveryInfo.query";
+import { useDeliveryInfoQuery } from "../../features/address/hooks/queries/useDeliveryInfo.query";
 import { useRelatedProductsQuery } from "../../features/products/hooks/queries/useRelatedProducts.query";
 import { useUpdateCartItemMutation } from "../../features/cart/hooks/mutations/useUpdateCartItem.mutation";
 import { useDeleteCartItemMutation } from "../../features/cart/hooks/mutations/useDeleteCartItem.mutation";
-
 
 export const useCartViewModel = () => {
     const navigate = useNavigate();
@@ -17,7 +16,6 @@ export const useCartViewModel = () => {
 
     const uniqueProductIds = Array.from(new Set(cartData?.items.map((item: any) => item.product.id) || [])) as string[];
     const { data: relatedProducts, isLoading: loadingRelated } = useRelatedProductsQuery(uniqueProductIds);
-
 
     // Mutations
     const updateMutation = useUpdateCartItemMutation();
@@ -67,10 +65,6 @@ export const useCartViewModel = () => {
         }).format(price);
     };
 
-    const handleAddAddress = () => {
-        alert("Tính năng đang phát triển");
-    };
-
     return {
         items: cartData?.items || [],
         totalPrice: cartData?.summary.total || 0,
@@ -85,7 +79,6 @@ export const useCartViewModel = () => {
         handleUpdateQuantity,
         handleDeleteItem,
         handleCheckout,
-        handleAddAddress,
         formatPrice,
         refetch,
     };

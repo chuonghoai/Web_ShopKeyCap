@@ -26,7 +26,7 @@ export const PaymentMethodSection: React.FC<PaymentMethodSectionProps> = ({ sele
                 </div>
                 <button 
                     onClick={onOpenModal}
-                    className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors uppercase"
+                    className="cursor-pointer text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors uppercase"
                 >
                     Thay đổi
                 </button>

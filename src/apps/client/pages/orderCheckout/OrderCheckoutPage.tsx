@@ -8,6 +8,7 @@ import { CheckoutActionSection } from './components/CheckoutActionSection';
 import { VoucherSection } from './components/VoucherSection';
 import { PaymentMethodModal } from './components/PaymentMethodModal';
 import { VoucherModal } from './components/VoucherModal';
+import { AddressSelectionModal } from './components/AddressSelectionModal';
 import { Link } from 'react-router-dom';
 
 const OrderCheckoutPage: React.FC = () => {
@@ -37,6 +38,7 @@ const OrderCheckoutPage: React.FC = () => {
                         deliveryInfo={controller.deliveryInfo ?? null}
                         isLoading={controller.isLoading}
                         formatDate={controller.formatDate}
+                        onChangeAddress={() => controller.setIsAddressModalOpen(true)}
                     />
 
                     <div className="h-px bg-slate-200 w-full"></div>
@@ -89,6 +91,13 @@ const OrderCheckoutPage: React.FC = () => {
             <VoucherModal
                 isOpen={controller.isVoucherModalOpen}
                 onClose={() => controller.setIsVoucherModalOpen(false)}
+            />
+
+            <AddressSelectionModal
+                open={controller.isAddressModalOpen}
+                selectedAddressId={controller.selectedAddressId}
+                onClose={() => controller.setIsAddressModalOpen(false)}
+                onSelect={controller.handleSelectAddress}
             />
         </div>
     );

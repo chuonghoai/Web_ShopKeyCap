@@ -1,13 +1,12 @@
 import { memo } from "react";
-import type { DeliveryInfoModel } from "../../../features/profile/models/address.model";
+import type { DeliveryInfoModel } from "../../../features/address/models/address.model";
 
 interface CartDeliveryInfoProps {
     deliveryInfo: DeliveryInfoModel | null;
     isLoading: boolean;
-    onAddAddress: () => void;
 }
 
-export const CartDeliveryInfo = memo(({ deliveryInfo, isLoading, onAddAddress }: CartDeliveryInfoProps) => {
+export const CartDeliveryInfo = memo(({ deliveryInfo, isLoading }: CartDeliveryInfoProps) => {
     if (isLoading) {
         return (
             <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden mb-6 animate-pulse">
@@ -42,14 +41,6 @@ export const CartDeliveryInfo = memo(({ deliveryInfo, isLoading, onAddAddress }:
                     <span className="material-icons-outlined text-blue-600 text-[20px]">local_shipping</span>
                     Thông tin giao hàng
                 </h2>
-                {address && (
-                    <button
-                        onClick={onAddAddress}
-                        className="text-[13px] font-medium text-blue-600 hover:text-blue-700 transition-colors"
-                    >
-                        Thay đổi
-                    </button>
-                )}
             </div>
 
             <div className="p-5">
@@ -85,13 +76,8 @@ export const CartDeliveryInfo = memo(({ deliveryInfo, isLoading, onAddAddress }:
                         <div className="w-12 h-12 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-3">
                             <span className="material-icons-outlined text-amber-500">location_off</span>
                         </div>
-                        <p className="text-[14px] text-slate-600 mb-4">Bạn chưa có địa chỉ giao hàng, bổ sung ngay</p>
-                        <button
-                            onClick={onAddAddress}
-                            className="px-4 py-2 bg-blue-600 text-white text-[14px] font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
-                        >
-                            Thêm địa chỉ
-                        </button>
+                        <p className="text-[14px] text-slate-600 mb-2">Bạn chưa có địa chỉ giao hàng mặc định.</p>
+                        <p className="text-[13px] text-slate-500">Vui lòng cập nhật thông tin này ở bước thanh toán.</p>
                     </div>
                 )}
             </div>
