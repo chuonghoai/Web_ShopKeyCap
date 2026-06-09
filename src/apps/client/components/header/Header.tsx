@@ -114,7 +114,7 @@ function Header() {
                                         />
                                     </div>
 
-                                    <Link to="/profile" className="flex items-center gap-2 px-4 py-2.5 text-[15px] text-slate-600 hover:bg-slate-50 hover:text-[#2563eb] transition-colors">
+                                    <Link to="/user/profile" className="flex items-center gap-2 px-4 py-2.5 text-[15px] text-slate-600 hover:bg-slate-50 hover:text-[#2563eb] transition-colors">
                                         <span className="material-icons-outlined text-[20px]">manage_accounts</span>
                                         Hồ sơ cá nhân
                                     </Link>

@@ -1,4 +1,4 @@
-import { Outlet, type RouteObject } from "react-router-dom";
+import { Outlet, Navigate, type RouteObject } from "react-router-dom";
 import AuthGuard from "../../../core/auth/auth.guard";
 import { ROLE } from "../../../core/constants/role.constant";
 import ClientLayout from "../layout/clientLayout";
@@ -9,9 +9,8 @@ import CartPage from "../pages/cart/cartPage";
 import OrderCheckoutPage from "../pages/orderCheckout/OrderCheckoutPage";
 import OrderResultPage from "../pages/orderResult/OrderResultPage";
 
-const ProfilePage = () => {
-    return <h1>Thông tin cá nhân (Cần đăng nhập)</h1>;
-};
+import UserLayout from "../pages/user/UserLayout";
+import ProfilePage from "../pages/user/profile/ProfilePage";
 
 export const clientRoutes: RouteObject[] = [
     {
@@ -43,7 +42,14 @@ export const clientRoutes: RouteObject[] = [
                     </AuthGuard>
                 ),
                 children: [
-                    { path: "/profile", element: <ProfilePage /> },
+                    {
+                        path: "/user",
+                        element: <UserLayout />,
+                        children: [
+                            { index: true, element: <Navigate to="profile" replace /> },
+                            { path: "profile", element: <ProfilePage /> },
+                        ]
+                    },
                     { path: "/cart", element: <CartPage /> },
                     { path: "/checkout", element: <OrderCheckoutPage /> },
                     { path: "/order/checkout/result", element: <OrderResultPage /> },
