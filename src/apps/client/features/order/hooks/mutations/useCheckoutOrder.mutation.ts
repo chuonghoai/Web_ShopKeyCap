@@ -10,7 +10,6 @@ export const useCheckoutOrderMutation = () => {
             if (!res.success) {
                 throw new Error(res.message || "Đặt hàng thất bại");
             }
-            // res.data có thể nullable tuỳ vào implement, ta non-null assertion hoặc fallback nếu cần
             if (!res.data) {
                 throw new Error("Không nhận được kết quả đơn hàng từ máy chủ");
             }

@@ -80,9 +80,13 @@ export const useOrderCheckoutController = () => {
         };
 
         checkoutMutation.mutate(request, {
-            onSuccess: () => {
+            onSuccess: (data) => {
                 addToast('Đặt hàng thành công', 'success');
-                // TODO: Redirect to order success/result page, for now redirect to home or order history
+                if (data.paymentRequired && data.payUrl) {
+                    window.location.href = data.payUrl;
+                } else {
+                    navigate(`/order/checkout/result?orderId=${data.orderId}`);
+                }
             },
             onError: (err: any) => {
                 addToast(err.message || 'Đặt hàng thất bại, vui lòng thử lại', 'error');

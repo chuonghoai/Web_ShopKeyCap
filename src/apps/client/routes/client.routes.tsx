@@ -7,6 +7,7 @@ import ProductsPage from "../pages/products/productsPage";
 import ProductDetailPage from "../pages/productDetail/productDetailPage";
 import CartPage from "../pages/cart/cartPage";
 import OrderCheckoutPage from "../pages/orderCheckout/OrderCheckoutPage";
+import OrderResultPage from "../pages/orderResult/OrderResultPage";
 
 const ProfilePage = () => {
     return <h1>Thông tin cá nhân (Cần đăng nhập)</h1>;
@@ -45,6 +46,7 @@ export const clientRoutes: RouteObject[] = [
                     { path: "/profile", element: <ProfilePage /> },
                     { path: "/cart", element: <CartPage /> },
                     { path: "/checkout", element: <OrderCheckoutPage /> },
+                    { path: "/order/checkout/result", element: <OrderResultPage /> },
                 ]
             }
         ]

@@ -61,25 +61,42 @@ export class CheckoutMockRepo implements CheckoutRepo {
     }
 
     async checkoutOrder(request: CheckoutRequest): Promise<ApiResponse<CheckoutResponse>> {
+        const isCOD = request.paymentMethod === EPaymentMethod.COD;
+        const mockOrderId = isCOD ? "mock-cod-123" : `mock-${request.paymentMethod.toLowerCase()}-456`;
+        
         return Promise.resolve({
             success: true,
             message: "Success",
             data: {
-                paymentRequired: request.paymentMethod !== EPaymentMethod.COD,
-                orderId: "abcs-vnasv-a1nn-124",
-                payUrl: request.paymentMethod !== EPaymentMethod.COD ? "https://example.com/pay" : null
+                paymentRequired: !isCOD,
+                orderId: mockOrderId,
+                payUrl: !isCOD ? "https://example.com/pay" : null
             }
         });
     }
 
     async getOrderResult(orderId: string): Promise<ApiResponse<CheckoutResult>> {
+        let paymentMethod: EPaymentMethod = EPaymentMethod.COD;
+        let paymentStatus: EPaymentStatus = EPaymentStatus.PENDING;
+
+        if (orderId.includes("momo")) {
+            paymentMethod = EPaymentMethod.MOMO;
+            paymentStatus = EPaymentStatus.PAID;
+        } else if (orderId.includes("vnpay")) {
+            paymentMethod = EPaymentMethod.VNPAY;
+            paymentStatus = EPaymentStatus.PAID;
+        } else if (orderId.includes("failed")) {
+            paymentMethod = EPaymentMethod.MOMO;
+            paymentStatus = EPaymentStatus.FAILED;
+        }
+
         return Promise.resolve({
             success: true,
             message: "Success",
             data: {
                 orderId,
-                paymentMethod: EPaymentMethod.COD,
-                paymentStatus: EPaymentStatus.PENDING
+                paymentMethod,
+                paymentStatus
             }
         });
     }
