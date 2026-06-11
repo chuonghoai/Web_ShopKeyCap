@@ -3,7 +3,7 @@ import type { ProfileRepo } from "../repo/profile.repo";
 import { ProfileApiRepo } from "../repo/profileApi.repo";
 import { ProfileMockRepo } from "../repo/profileMock.repo";
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
-import type { Profile } from "../models/profile.model";
+import type { Profile, UpdateProfileDto } from "../models/profile.model";
 
 export class ProfileService {
     private readonly profileRepo: ProfileRepo;
@@ -13,6 +13,10 @@ export class ProfileService {
 
     async getProfile(): Promise<ApiResponse<Profile>> {
         return this.profileRepo.getProfile();
+    }
+
+    async updateProfile(data: UpdateProfileDto): Promise<ApiResponse<Profile>> {
+        return this.profileRepo.updateProfile(data);
     }
 }
 
