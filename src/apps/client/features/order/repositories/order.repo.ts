@@ -5,5 +5,5 @@ import { EOrderStatus } from "../enums/orderStatus.enum";
 export interface OrderRepo {
     getUserOrders(status?: EOrderStatus): Promise<ApiResponse<OrderModel[]>>;
     getOrderDetail(orderId: number): Promise<ApiResponse<OrderModel>>;
-    cancelOrder(orderId: number, reason: string): Promise<ApiResponse<void>>;
+    cancelOrder(orderId: number, reason: string): Promise<ApiResponse<null>>;
 }

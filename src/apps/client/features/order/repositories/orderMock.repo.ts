@@ -155,7 +155,7 @@ export class OrderMockRepo implements OrderRepo {
         };
     }
 
-    async cancelOrder(orderId: number, reason: string): Promise<ApiResponse<void>> {
+    async cancelOrder(orderId: number, reason: string): Promise<ApiResponse<null>> {
         await new Promise(resolve => setTimeout(resolve, 800));
         
         const order = MOCK_ORDERS.find(o => o.id === orderId);
