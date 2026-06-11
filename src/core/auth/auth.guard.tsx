@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
-import { ERole } from "../constants/ERole.constant";
 import { tokenService } from "./token.service";
 import { useUserProfileQuery } from "../../apps/auth/features/hooks/queries/useUserProfile.query";
+import type { ERole } from "../constants/role.constant";
 
 interface Props {
     children: React.ReactNode;
@@ -24,7 +24,7 @@ function AuthGuard({ children, allowedRoles, requireAuth = true }: Props) {
             return <Navigate to="/login" replace />;
         }
 
-        if (!allowedRoles.includes(user.ERole)) {
+        if (!allowedRoles.includes(user.role)) {
             return <Navigate to="/login?reason=unauthorized" replace />;
         }
     }

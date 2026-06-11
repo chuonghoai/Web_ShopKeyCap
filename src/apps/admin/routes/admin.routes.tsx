@@ -1,7 +1,7 @@
 import type { RouteObject } from "react-router-dom";
 import AuthGuard from "../../../core/auth/auth.guard";
-import { ERole } from "../../../core/constants/ERole.constant";
 import AdminLayout from "../layout/adminLayout";
+import { ERole } from "../../../core/constants/role.constant";
 
 const AdminDashboardPage = () => {
     return <h1>Admin Dashboard (Bảo mật)</h1>;

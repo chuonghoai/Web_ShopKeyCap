@@ -1,6 +1,5 @@
 import { Outlet, Navigate, type RouteObject } from "react-router-dom";
 import AuthGuard from "../../../core/auth/auth.guard";
-import { ERole } from "../../../core/constants/ERole.constant";
 import ClientLayout from "../layout/clientLayout";
 import { HomePage } from "../pages/homepage/homepage";
 import ProductsPage from "../pages/products/productsPage";
@@ -13,6 +12,7 @@ import UserLayout from "../pages/user/UserLayout";
 import ProfilePage from "../pages/user/profile/ProfilePage";
 import OrderListPage from "../pages/user/orders/OrderListPage";
 import OrderDetailPage from "../pages/user/orders/OrderDetailPage";
+import { ERole } from "../../../core/constants/role.constant";
 
 export const clientRoutes: RouteObject[] = [
     {

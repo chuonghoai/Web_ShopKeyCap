@@ -13,7 +13,7 @@ export class ProfileMockRepo implements ProfileRepo {
                 email: "customer@example.com",
                 fullName: "Nguyễn Văn Khách",
                 avatar: "https://placehold.co/150x150/e2e8f0/64748b?text=User",
-                ERole: ERole.USER,
+                role: ERole.USER,
                 stats: {
                     completedOrders: 10,
                     totalOrders: 12,
@@ -34,7 +34,7 @@ export class ProfileMockRepo implements ProfileRepo {
                 email: "customer@example.com",
                 fullName: data.fullName,
                 avatar: data.avatar_url || "https://placehold.co/150x150/e2e8f0/64748b?text=User",
-                ERole: ERole.USER,
+                role: ERole.USER,
                 stats: {
                     completedOrders: 10,
                     totalOrders: 12,

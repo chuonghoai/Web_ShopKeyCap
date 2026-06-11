@@ -1,6 +1,6 @@
 
 import type { ApiResponse } from "../../../../core/api/apiResponse";
-import { ERole } from "../../../../core/constants/ERole.constant";
+import { ERole } from "../../../../core/constants/role.constant";
 import { ApiException } from "../../../../core/exceptions/api.exception";
 import type { LoginResponse } from "../dto/login.dto";
 import { OtpPurpose } from "../dto/otp.dto";
@@ -11,10 +11,10 @@ import type { AuthRepo } from "./auth.repo";
 export class AuthMockRepo implements AuthRepo {
     async login(email: string, password: string): Promise<ApiResponse<LoginResponse>> {
         let response: ApiResponse<LoginResponse>;
-        let ERole: ERole = ERole.USER;
+        let role: ERole = ERole.USER;
 
-        if (email === "111@111" && password === "111") ERole = ERole.USER;
-        else if (email === "222@222" && password === "222") ERole = ERole.ADMIN;
+        if (email === "111@111" && password === "111") role = ERole.USER;
+        else if (email === "222@222" && password === "222") role = ERole.ADMIN;
         else {
             throw new ApiException("Email hoặc mật khẩu không chính xác!", 404);
         }
@@ -25,11 +25,11 @@ export class AuthMockRepo implements AuthRepo {
             data: {
                 accessToken: "mock_access_token",
                 user: {
-                    id: "69293c536a4af647a4438347",
+                    id: 1,
                     email: email,
                     fullName: "manggia",
                     avatar: "https://img.icons8.com/color/480/avatar.png",
-                    ERole: ERole,
+                    role: role,
                 },
             },
         };
@@ -44,11 +44,11 @@ export class AuthMockRepo implements AuthRepo {
             data: {
                 accessToken: "mock_access_token",
                 user: {
-                    id: "69293c536a4af647a4438347",
+                    id: 4,
                     email: "manggia@gmail.com",
                     fullName: "manggia",
                     avatar: "https://img.icons8.com/color/480/avatar.png",
-                    ERole: ERole.USER,
+                    role: ERole.USER,
                 },
             },
         }
@@ -77,11 +77,11 @@ export class AuthMockRepo implements AuthRepo {
             data: {
                 accessToken: 'mock_access_token_123',
                 user: {
-                    id: '1',
+                    id: 1,
                     email: request.email,
                     fullName: 'manggia',
                     avatar: 'https://img.icons8.com/color/480/avatar.png',
-                    ERole: ERole.USER,
+                    role: ERole.USER,
                 }
             }
         }

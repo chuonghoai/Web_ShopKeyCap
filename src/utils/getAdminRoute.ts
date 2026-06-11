@@ -1,7 +1,7 @@
-import { ERole } from "../core/constants/ERole.constant";
+import { ERole } from "../core/constants/role.constant";
 
-export const getAdminRoute = (ERole: ERole): string => {
-    if (ERole === ERole.USER) {
+export const getAdminRoute = (role: ERole): string => {
+    if (role === ERole.USER) {
         return "/";
     }
     return "/admin";
