@@ -8,32 +8,11 @@ interface PaymentMethodModalProps {
     onSelectMethod: (method: EPaymentMethod) => void;
 }
 
-export const PAYMENT_METHODS = [
-    {
-        id: EPaymentMethod.COD,
-        title: 'Thanh toán khi nhận hàng (COD)',
-        description: 'Thanh toán bằng tiền mặt khi nhận hàng',
-        icon: 'local_atm'
-    },
-    {
-        id: EPaymentMethod.VNPAY,
-        title: 'Thanh toán qua VNPAY',
-        description: 'Thẻ ATM nội địa / Thẻ quốc tế / VNPAY QR',
-        icon: 'account_balance_wallet'
-    },
-    {
-        id: EPaymentMethod.MOMO,
-        title: 'Thanh toán qua Ví MoMo',
-        description: 'Thanh toán nhanh chóng bằng ví điện tử MoMo',
-        icon: 'qr_code_scanner'
-    },
-    {
-        id: EPaymentMethod.PAYPAL,
-        title: 'Thanh toán qua PayPal',
-        description: 'Thanh toán an toàn với thẻ tín dụng quốc tế',
-        icon: 'payment'
-    }
-];
+import { PAYMENT_METHODS_CONFIG } from '../../../features/order/config/paymentMethod.config';
+
+// Export for compatibility if any other file imports PAYMENT_METHODS from here temporarily
+// They should eventually use PAYMENT_METHODS_CONFIG directly
+export const PAYMENT_METHODS = PAYMENT_METHODS_CONFIG;
 
 export const PaymentMethodModal: React.FC<PaymentMethodModalProps> = ({
     isOpen,
@@ -78,9 +57,13 @@ export const PaymentMethodModal: React.FC<PaymentMethodModalProps> = ({
                                     }`}>
                                         {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-blue-600"></div>}
                                     </div>
-                                    <span className={`material-icons-outlined text-[24px] ${isSelected ? 'text-blue-600' : 'text-slate-500'}`}>
-                                        {method.icon}
-                                    </span>
+                                    {method.iconUrl ? (
+                                        <img src={method.iconUrl} alt={method.title} className="w-6 h-6 object-contain" />
+                                    ) : (
+                                        <span className={`material-icons-outlined text-[24px] ${isSelected ? 'text-blue-600' : 'text-slate-500'}`}>
+                                            {method.fallbackMaterialIcon}
+                                        </span>
+                                    )}
                                     <div className="flex-1 min-w-0">
                                         <div className={`font-medium ${isSelected ? 'text-blue-900' : 'text-slate-700'}`}>
                                             {method.title}

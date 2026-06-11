@@ -3,7 +3,7 @@ import type { UpdateCartRequest } from "../dto/UpdateCartRequest.dto";
 import { tokenService } from "../../../../../core/auth/token.service";
 
 class CartUpdateDebouncer {
-    private pendingUpdates: Map<string, number> = new Map();
+    private pendingUpdates: Map<number, number> = new Map();
     private syncTimeout: ReturnType<typeof setTimeout> | null = null;
     private readonly DELAY_MS = 500;
     private syncCallback?: (count: number) => void;
@@ -24,7 +24,7 @@ class CartUpdateDebouncer {
      * thì mới gọi API để cập nhật giỏ hàng.
      * Trả về Promise resolve với totalPrice mới nhất.
      */
-    public updateCartItem(variantId: string, quantity: number): Promise<number> {
+    public updateCartItem(variantId: number, quantity: number): Promise<number> {
         this.pendingUpdates.set(variantId, quantity);
 
         if (this.syncTimeout) {

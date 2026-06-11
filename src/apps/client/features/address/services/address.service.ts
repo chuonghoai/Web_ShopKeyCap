@@ -12,7 +12,7 @@ export class AddressService {
         this.addressRepo = addressRepo;
     }
 
-    async getShippingInfo(addressId?: string): Promise<ApiResponse<DeliveryInfoModel | null>> {
+    async getShippingInfo(addressId?: number): Promise<ApiResponse<DeliveryInfoModel | null>> {
         return this.addressRepo.getShippingInfo(addressId);
     }
 

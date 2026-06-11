@@ -11,7 +11,7 @@ export class FavoriteService {
         this.favoriteRepo = favoriteRepo ?? new FavoriteApiRepo();
     }
 
-    async toggleFavorite(productId: string): Promise<ApiResponse<{ isFavorite: boolean }>> {
+    async toggleFavorite(productId: number): Promise<ApiResponse<{ isFavorite: boolean }>> {
         return this.favoriteRepo.toggleFavorite(productId);
     }
 }

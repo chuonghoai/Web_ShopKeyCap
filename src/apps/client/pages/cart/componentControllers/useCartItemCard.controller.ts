@@ -4,7 +4,8 @@ import type { CartItemModel } from "../../../features/cart/model/cart.model";
 
 export const useCartItemCardController = (
     item: CartItemModel,
-    onUpdateQuantity: (variantId: string, newQty: number) => void
+    onUpdateQuantity: (variantId: number, newQty: number) => void,
+    onDelete: (variantId: number) => void
 ) => {
     const targetId = item.variant?.id || item.product.id;
     const quantity = item.variant?.quantity || 1;

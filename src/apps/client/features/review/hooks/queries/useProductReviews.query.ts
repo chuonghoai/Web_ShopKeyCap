@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { reviewService } from '../../services/review.service';
 import { reviewKeys } from '../reviewKeys';
 
-export const useProductReviewsQuery = (productId: string, page: number) => {
+export const useProductReviewsQuery = (productId: number, page: number) => {
     return useQuery({
         queryKey: [...reviewKeys.product(productId), page],
         queryFn: async () => {

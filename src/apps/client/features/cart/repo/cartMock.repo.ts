@@ -6,28 +6,28 @@ import type { CartDetailModel, CartItemModel } from "../model/cart.model";
 import type { CartRepo } from "./cart.repo";
 
 // Mock database (variantId -> quantity)
-const mockItems: Map<string, number> = new Map([
-    ["v1", 2],
-    ["v2", 1],
-    ["v3", 1],
+const mockItems: Map<number, number> = new Map([
+    [1, 2],
+    [2, 1],
+    [3, 1],
 ]);
 
 // Single source of truth for mock product data, simulating the database records
-const mockProducts: Record<string, CartItemModel> = {
-    "v1": {
-        id: "c1",
-        product: { id: "p1", name: "Bàn phím cơ Akko Mod007 PC", slug: "akko-mod007", imageUrl: "https://placehold.co/150x150/e2e8f0/64748b?text=Akko" },
-        variant: { id: "v1", attributes: { "Màu sắc": "Trắng", "Switch": "CS Piano" }, price: 1500000, originalPrice: 1800000, percentDiscount: 16, quantity: 2, stockQuantity: 10 }
+const mockProducts: Record<number, CartItemModel> = {
+    1: {
+        id: 1,
+        product: { id: 1, name: "Bàn phím cơ Akko Mod007 PC", slug: "akko-mod007", imageUrl: "https://placehold.co/150x150/e2e8f0/64748b?text=Akko" },
+        variant: { id: 1, attributes: { "Màu sắc": "Trắng", "Switch": "CS Piano" }, price: 1500000, originalPrice: 1800000, percentDiscount: 16, quantity: 2, stockQuantity: 10 }
     },
-    "v2": {
-        id: "c2",
-        product: { id: "p2", name: "Bộ Keycap PBT Cherry Profile", slug: "keycap-pbt", imageUrl: "https://placehold.co/150x150/e2e8f0/64748b?text=Keycap" },
-        variant: { id: "v2", attributes: { "Màu sắc": "Botanical", "Profile": "Cherry" }, price: 500000, originalPrice: 500000, percentDiscount: 0, quantity: 1, stockQuantity: 3 }
+    2: {
+        id: 2,
+        product: { id: 2, name: "Bộ Keycap PBT Cherry Profile", slug: "keycap-pbt", imageUrl: "https://placehold.co/150x150/e2e8f0/64748b?text=Keycap" },
+        variant: { id: 2, attributes: { "Màu sắc": "Botanical", "Profile": "Cherry" }, price: 500000, originalPrice: 500000, percentDiscount: 0, quantity: 1, stockQuantity: 3 }
     },
-    "v3": {
-        id: "c3",
-        product: { id: "p3", name: "Chuột không dây Logitech G Pro X", slug: "logi-gpro", imageUrl: "https://placehold.co/150x150/e2e8f0/64748b?text=Logitech" },
-        variant: { id: "v3", attributes: { "Màu sắc": "Đen" }, price: 2500000, originalPrice: 2900000, percentDiscount: 14, quantity: 1, stockQuantity: 5 }
+    3: {
+        id: 3,
+        product: { id: 3, name: "Chuột không dây Logitech G Pro X", slug: "logi-gpro", imageUrl: "https://placehold.co/150x150/e2e8f0/64748b?text=Logitech" },
+        variant: { id: 3, attributes: { "Màu sắc": "Đen" }, price: 2500000, originalPrice: 2900000, percentDiscount: 14, quantity: 1, stockQuantity: 5 }
     }
 };
 
@@ -94,7 +94,7 @@ export class CartMockRepo implements CartRepo {
         }, "Lấy giỏ hàng thành công");
     }
 
-    async addToCart(variantId: string, quantity: number): Promise<ApiResponse<{ newCartCount: number }>> {
+    async addToCart(variantId: number, quantity: number): Promise<ApiResponse<{ newCartCount: number }>> {
         if (LOGGED_IN) {
             if (quantity <= 0) {
                 return fail<any>("Số lượng phải lớn hơn 0");
@@ -127,7 +127,7 @@ export class CartMockRepo implements CartRepo {
         throw new ApiException("Bạn phải đăng nhập để cập nhật giỏ hàng", 401);
     }
 
-    async deleteCartItem(variantId: string): Promise<ApiResponse<{ newCartCount: number; totalPrice?: number }>> {
+    async deleteCartItem(variantId: number): Promise<ApiResponse<{ newCartCount: number; totalPrice?: number }>> {
         if (LOGGED_IN) {
             if (!mockItems.has(variantId)) {
                 return fail<any>(`Variant ${variantId} không tồn tại trong giỏ hàng`);

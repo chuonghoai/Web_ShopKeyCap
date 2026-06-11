@@ -14,14 +14,14 @@ export const useCartViewModel = () => {
     const { data: cartData, isLoading: loadingCart, refetch } = useCartQuery();
     const { data: deliveryInfo, isLoading: loadingDelivery } = useDeliveryInfoQuery();
 
-    const uniqueProductIds = Array.from(new Set(cartData?.items.map((item: any) => item.product.id) || [])) as string[];
+    const uniqueProductIds = Array.from(new Set(cartData?.items.map((item: any) => item.product.id) || [])) as number[];
     const { data: relatedProducts, isLoading: loadingRelated } = useRelatedProductsQuery(uniqueProductIds);
 
     // Mutations
     const updateMutation = useUpdateCartItemMutation();
     const deleteMutation = useDeleteCartItemMutation();
 
-    const handleUpdateQuantity = async (variantId: string, newQuantity: number) => {
+    const handleUpdateQuantity = async (variantId: number, newQuantity: number) => {
         if (newQuantity > 0) {
             try {
                 await updateMutation.mutateAsync({ variantId, quantity: newQuantity });
@@ -31,7 +31,7 @@ export const useCartViewModel = () => {
         }
     };
 
-    const handleDeleteItem = async (variantId: string) => {
+    const handleDeleteItem = async (variantId: number) => {
         try {
             await deleteMutation.mutateAsync(variantId);
             toast("Đã xóa sản phẩm khỏi giỏ hàng", "success");

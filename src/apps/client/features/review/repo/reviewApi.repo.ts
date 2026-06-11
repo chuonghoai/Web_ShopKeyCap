@@ -9,7 +9,7 @@ export class ReviewApiRepo implements ReviewRepo {
      * @param - productId, page, pageSize
      * @returns Review[] with pagination
      */
-    async getReviewByProductId(productId: string, page: number, pageSize: number): Promise<ApiResponse<Review[]>> {
+    async getReviewByProductId(productId: number, page: number, pageSize: number): Promise<ApiResponse<Review[]>> {
         return apiClient.get("/reviews", {
             params: {
                 productId, page, pageSize

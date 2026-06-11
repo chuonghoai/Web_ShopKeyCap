@@ -1,6 +1,6 @@
 
 import type { ApiResponse } from "../../../../core/api/apiResponse";
-import { ROLE } from "../../../../core/constants/role.constant";
+import { ERole } from "../../../../core/constants/ERole.constant";
 import { ApiException } from "../../../../core/exceptions/api.exception";
 import type { LoginResponse } from "../dto/login.dto";
 import { OtpPurpose } from "../dto/otp.dto";
@@ -11,10 +11,10 @@ import type { AuthRepo } from "./auth.repo";
 export class AuthMockRepo implements AuthRepo {
     async login(email: string, password: string): Promise<ApiResponse<LoginResponse>> {
         let response: ApiResponse<LoginResponse>;
-        let role: ROLE = ROLE.USER;
+        let ERole: ERole = ERole.USER;
 
-        if (email === "111@111" && password === "111") role = ROLE.USER;
-        else if (email === "222@222" && password === "222") role = ROLE.ADMIN;
+        if (email === "111@111" && password === "111") ERole = ERole.USER;
+        else if (email === "222@222" && password === "222") ERole = ERole.ADMIN;
         else {
             throw new ApiException("Email hoặc mật khẩu không chính xác!", 404);
         }
@@ -29,7 +29,7 @@ export class AuthMockRepo implements AuthRepo {
                     email: email,
                     fullName: "manggia",
                     avatar: "https://img.icons8.com/color/480/avatar.png",
-                    role: role,
+                    ERole: ERole,
                 },
             },
         };
@@ -48,7 +48,7 @@ export class AuthMockRepo implements AuthRepo {
                     email: "manggia@gmail.com",
                     fullName: "manggia",
                     avatar: "https://img.icons8.com/color/480/avatar.png",
-                    role: ROLE.USER,
+                    ERole: ERole.USER,
                 },
             },
         }
@@ -81,7 +81,7 @@ export class AuthMockRepo implements AuthRepo {
                     email: request.email,
                     fullName: 'manggia',
                     avatar: 'https://img.icons8.com/color/480/avatar.png',
-                    role: ROLE.USER,
+                    ERole: ERole.USER,
                 }
             }
         }

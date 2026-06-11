@@ -5,12 +5,12 @@ import type { EPaymentMethod } from "../enums/paymentMethod.enum";
  * Backend tự check giá trong database
  */
 export interface CheckoutItemRequest {
-    variantId: string;
+    variantId: number;
     quantity: number;
 }
 
 interface CartItemIds {
-    id: string;
+    id: number;
 }
 
 /**
@@ -26,9 +26,9 @@ interface CartItemIds {
 export interface CheckoutRequest {
     items: CheckoutItemRequest[];
 
-    addressId: string;
+    addressId: number;
 
-    voucherIds?: string[];
+    voucherIds?: number[];
 
     paymentMethod: EPaymentMethod;
 

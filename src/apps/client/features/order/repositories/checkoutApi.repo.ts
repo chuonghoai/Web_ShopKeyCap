@@ -37,7 +37,7 @@ export class CheckoutApiRepo implements CheckoutRepo {
      * @param orderId
      * @returns CheckoutResultDto
      */
-    async getOrderResult(orderId: string): Promise<ApiResponse<CheckoutResult>> {
+    async getOrderResult(orderId: number): Promise<ApiResponse<CheckoutResult>> {
         return apiClient.get<ApiResponse<CheckoutResult>>(`/orders/checkout/${orderId}/payment-status`);
     }
 }

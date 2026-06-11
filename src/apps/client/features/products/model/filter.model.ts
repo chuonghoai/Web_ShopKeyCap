@@ -5,19 +5,19 @@ export interface FilterModel {
 }
 
 export interface Category {
-    id: string;
+    id: number;
     name: string;
     slug: string;
 }
 
 export interface Type {
-    id: string;
+    id: number;
     name: string;
     slug: string;
 }
 
 export interface Brand {
-    id: string;
+    id: number;
     name: string;
     slug: string;
 }

@@ -7,6 +7,6 @@
  */
 export interface CheckoutResponse {
     paymentRequired: boolean,
-    orderId: string,
+    orderId: number,
     payUrl: string | null
 }

@@ -6,7 +6,7 @@ export const useToggleFavoriteMutation = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: async (productId: string) => {
+        mutationFn: async (productId: number) => {
             const res = await favoriteService.toggleFavorite(productId);
             if (!res.success) throw new Error(res.message);
             return res.data;

@@ -60,7 +60,7 @@ export const useProfileController = () => {
      */
     const handleSave = async () => {
         try {
-            let avatarMediaId: string | undefined = undefined;
+            let avatarMediaId: number | undefined = undefined;
             let avatar_url: string | undefined = undefined;
 
             if (avatarFile) {

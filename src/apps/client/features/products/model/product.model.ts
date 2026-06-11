@@ -1,11 +1,12 @@
 export interface ProductItem {
-    id: string;
+    id: number;
     name: string;
     /**
      * imageUrl: Ảnh đại diện chính của sản phẩm
      */
     imageUrl: string;
     typeName: string;
+    categoryId: number;
 
     /**
      * minPrice: Giá thấp nhất trong tất cả các variants của sản phẩm.

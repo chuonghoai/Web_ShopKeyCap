@@ -3,7 +3,7 @@ import { orderCheckoutService } from '../../services/order-checkout.service';
 import type { PrepareCheckoutRequest } from '../../dto/prepareCheckout.request';
 import { orderKeys } from '../orderKeys';
 
-export const usePrepareOrderQuery = (requests: PrepareCheckoutRequest[], addressId?: string) => {
+export const usePrepareOrderQuery = (requests: PrepareCheckoutRequest[], addressId?: number) => {
     return useQuery({
         queryKey: orderKeys.prepareCheckout(requests, addressId),
         queryFn: async () => {

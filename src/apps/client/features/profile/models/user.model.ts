@@ -1,9 +1,9 @@
-import type { ROLE } from "../../../../../core/constants/role.constant";
+import type { ERole } from "../../../../../core/constants/ERole.constant";
 
 export interface User {
-    id: string;
+    id: number;
     email: string;
     fullName: string;
     avatar: string;
-    role: ROLE;
+    ERole: ERole;
 }

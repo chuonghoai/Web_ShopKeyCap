@@ -23,7 +23,7 @@ export interface ProductVariant {
     /**
      * Id của biến thể này
      */
-    id: string;
+    id: number;
 
     /**
      * Mã lưu kho (Stock Keeping Unit).

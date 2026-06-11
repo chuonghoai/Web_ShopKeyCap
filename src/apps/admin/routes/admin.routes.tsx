@@ -1,6 +1,6 @@
 import type { RouteObject } from "react-router-dom";
 import AuthGuard from "../../../core/auth/auth.guard";
-import { ROLE } from "../../../core/constants/role.constant";
+import { ERole } from "../../../core/constants/ERole.constant";
 import AdminLayout from "../layout/adminLayout";
 
 const AdminDashboardPage = () => {
@@ -10,7 +10,7 @@ const AdminDashboardPage = () => {
 export const adminRoutes: RouteObject[] = [
     {
         element: (
-            <AuthGuard requireAuth={true} allowedRoles={[ROLE.ADMIN, ROLE.STAFF]}>
+            <AuthGuard requireAuth={true} allowedRoles={[ERole.ADMIN, ERole.STAFF]}>
                 <AdminLayout />
             </AuthGuard>
         ),

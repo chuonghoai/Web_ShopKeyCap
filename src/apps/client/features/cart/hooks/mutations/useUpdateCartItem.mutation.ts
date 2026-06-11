@@ -7,7 +7,7 @@ export const useUpdateCartItemMutation = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: async ({ variantId, quantity }: { variantId: string; quantity: number }) => {
+        mutationFn: async ({ variantId, quantity }: { variantId: number; quantity: number }) => {
             const newTotalPrice = await cartSyncManager.updateCartItem(variantId, quantity);
             return { variantId, quantity, newTotalPrice };
         },

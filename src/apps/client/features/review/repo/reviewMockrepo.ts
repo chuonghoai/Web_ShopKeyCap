@@ -5,7 +5,9 @@ import type { ReviewRepo } from "./review.repo";
 export class ReviewMockRepo implements ReviewRepo {
     private mockReviews: Review[] = [
         {
-            id: "1",
+            id: 1,
+            productId: 1,
+            userId: 1,
             user: {
                 fullName: "Nguyễn Văn A",
                 avatar: "https://png.pngtree.com/png-clipart/20230407/original/pngtree-cute-school-anime-chibi-character-png-image_9035249.png"
@@ -16,7 +18,9 @@ export class ReviewMockRepo implements ReviewRepo {
             imageUrls: ["https://static.vecteezy.com/system/resources/thumbnails/023/009/485/small_2x/abstract-animal-owl-portrait-with-colorful-double-exposure-paint-with-generative-ai-free-photo.jpeg"]
         },
         {
-            id: "2",
+            id: 2,
+            productId: 1,
+            userId: 2,
             user: {
                 fullName: "Nguyễn Văn B",
                 avatar: "https://png.pngtree.com/png-clipart/20230407/original/pngtree-cute-school-anime-chibi-character-png-image_9035249.png"
@@ -27,7 +31,9 @@ export class ReviewMockRepo implements ReviewRepo {
             imageUrls: ["https://static.vecteezy.com/system/resources/thumbnails/023/009/485/small_2x/abstract-animal-owl-portrait-with-colorful-double-exposure-paint-with-generative-ai-free-photo.jpeg"]
         },
         {
-            id: "3",
+            id: 3,
+            productId: 1,
+            userId: 3,
             user: {
                 fullName: "Nguyễn Văn C",
                 avatar: "https://png.pngtree.com/png-clipart/20230407/original/pngtree-cute-school-anime-chibi-character-png-image_9035249.png"
@@ -39,12 +45,12 @@ export class ReviewMockRepo implements ReviewRepo {
         }
     ]
 
-    async getReviewByProductId(productId: string, page: number, pageSize: number): Promise<ApiResponse<Review[]>> {
+    async getReviewByProductId(productId: number, page: number, pageSize: number): Promise<ApiResponse<Review[]>> {
         const mockReview50 = Array.from({ length: pageSize }, (_, index) => {
             const originalItem = this.mockReviews[index % this.mockReviews.length];
             return {
                 ...originalItem,
-                id: (index + 1).toString(),
+                id: (index + 1),
             };
         });
 

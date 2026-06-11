@@ -6,7 +6,7 @@ import { ApiException } from "../../../../../core/exceptions/api.exception";
 const TOGGLE_FAVORITE_SUCCESS = false;
 
 export class FavoriteMockRepo implements FavoriteRepo {
-    async toggleFavorite(productId: string): Promise<ApiResponse<{ isFavorite: boolean }>> {
+    async toggleFavorite(productId: number): Promise<ApiResponse<{ isFavorite: boolean }>> {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 if (!TOGGLE_FAVORITE_SUCCESS) {

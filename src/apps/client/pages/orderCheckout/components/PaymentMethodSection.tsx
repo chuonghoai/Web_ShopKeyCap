@@ -1,6 +1,6 @@
 import React from 'react';
 import { EPaymentMethod } from '../../../features/order/enums/paymentMethod.enum';
-import { PAYMENT_METHODS } from './PaymentMethodModal';
+import { getPaymentMethodConfig } from '../../../features/order/config/paymentMethod.config';
 
 interface PaymentMethodSectionProps {
     selectedMethod: EPaymentMethod;
@@ -8,7 +8,7 @@ interface PaymentMethodSectionProps {
 }
 
 export const PaymentMethodSection: React.FC<PaymentMethodSectionProps> = ({ selectedMethod, onOpenModal }) => {
-    const selectedOption = PAYMENT_METHODS.find(m => m.id === selectedMethod) || PAYMENT_METHODS[0];
+    const selectedOption = getPaymentMethodConfig(selectedMethod);
 
     return (
         <div className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -19,9 +19,13 @@ export const PaymentMethodSection: React.FC<PaymentMethodSectionProps> = ({ sele
             
             <div className="flex items-center gap-4">
                 <div className="text-[15px] text-slate-700 font-medium flex items-center gap-2">
-                    <span className="material-icons-outlined text-[20px] text-blue-600">
-                        {selectedOption.icon}
-                    </span>
+                    {selectedOption.iconUrl ? (
+                        <img src={selectedOption.iconUrl} alt={selectedOption.title} className="w-5 h-5 object-contain" />
+                    ) : (
+                        <span className="material-icons-outlined text-[20px] text-blue-600">
+                            {selectedOption.fallbackMaterialIcon}
+                        </span>
+                    )}
                     {selectedOption.title}
                 </div>
                 <button 

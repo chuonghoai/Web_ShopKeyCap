@@ -1,7 +1,7 @@
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
+import { ERole } from "../../../../../core/constants/role.constant";
 import type { Profile, UpdateProfileDto } from "../models/profile.model";
 import type { ProfileRepo } from "./profile.repo";
-import { ROLE } from "../../../../../core/constants/role.constant";
 
 export class ProfileMockRepo implements ProfileRepo {
     async getProfile(): Promise<ApiResponse<Profile>> {
@@ -9,11 +9,11 @@ export class ProfileMockRepo implements ProfileRepo {
             success: true,
             message: "Success",
             data: {
-                id: "mock-123",
+                id: 123,
                 email: "customer@example.com",
                 fullName: "Nguyễn Văn Khách",
                 avatar: "https://placehold.co/150x150/e2e8f0/64748b?text=User",
-                role: ROLE.USER,
+                ERole: ERole.USER,
                 stats: {
                     completedOrders: 10,
                     totalOrders: 12,
@@ -30,11 +30,11 @@ export class ProfileMockRepo implements ProfileRepo {
             success: true,
             message: "Cập nhật thành công",
             data: {
-                id: "mock-123",
+                id: 123,
                 email: "customer@example.com",
                 fullName: data.fullName,
                 avatar: data.avatar_url || "https://placehold.co/150x150/e2e8f0/64748b?text=User",
-                role: ROLE.USER,
+                ERole: ERole.USER,
                 stats: {
                     completedOrders: 10,
                     totalOrders: 12,

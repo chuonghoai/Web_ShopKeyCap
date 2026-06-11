@@ -10,5 +10,5 @@ export interface CheckoutRepo {
 
     checkoutOrder(request: CheckoutRequest): Promise<ApiResponse<CheckoutResponse>>;
 
-    getOrderResult(orderId: string): Promise<ApiResponse<CheckoutResult>>;
+    getOrderResult(orderId: number): Promise<ApiResponse<CheckoutResult>>;
 }

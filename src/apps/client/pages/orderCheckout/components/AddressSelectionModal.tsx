@@ -4,7 +4,7 @@ import { useAddressesQuery } from '../../../features/address/hooks/queries/useAd
 
 interface AddressSelectionModalProps {
     open: boolean;
-    selectedAddressId?: string;
+    selectedAddressId?: number;
     onClose: () => void;
     onSelect: (address: Address) => void;
 }

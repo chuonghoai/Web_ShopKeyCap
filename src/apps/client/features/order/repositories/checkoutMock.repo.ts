@@ -19,7 +19,7 @@ export class CheckoutMockRepo implements CheckoutRepo {
                 items: [
                     {
                         product: {
-                            id: "1",
+                            id: 1,
 
                             name: "Bàn phím cơ Akko Mod007 PC",
                             imageUrl: "https://placehold.co/150x150/e2e8f0/64748b?text=Akko",
@@ -35,7 +35,7 @@ export class CheckoutMockRepo implements CheckoutRepo {
                     },
                     {
                         product: {
-                            id: "2",
+                            id: 2,
 
                             name: "Bộ Keycap PBT Cherry Profile",
                             imageUrl: "https://placehold.co/150x150/e2e8f0/64748b?text=Keycap",
@@ -62,7 +62,7 @@ export class CheckoutMockRepo implements CheckoutRepo {
 
     async checkoutOrder(request: CheckoutRequest): Promise<ApiResponse<CheckoutResponse>> {
         const isCOD = request.paymentMethod === EPaymentMethod.COD;
-        const mockOrderId = isCOD ? "mock-cod-123" : `mock-${request.paymentMethod.toLowerCase()}-456`;
+        const mockOrderId = isCOD ? 12345 : 67890;
         
         return Promise.resolve({
             success: true,
@@ -75,17 +75,14 @@ export class CheckoutMockRepo implements CheckoutRepo {
         });
     }
 
-    async getOrderResult(orderId: string): Promise<ApiResponse<CheckoutResult>> {
+    async getOrderResult(orderId: number): Promise<ApiResponse<CheckoutResult>> {
         let paymentMethod: EPaymentMethod = EPaymentMethod.COD;
         let paymentStatus: EPaymentStatus = EPaymentStatus.PENDING;
 
-        if (orderId.includes("momo")) {
+        if (orderId === 67890) {
             paymentMethod = EPaymentMethod.MOMO;
             paymentStatus = EPaymentStatus.PAID;
-        } else if (orderId.includes("vnpay")) {
-            paymentMethod = EPaymentMethod.VNPAY;
-            paymentStatus = EPaymentStatus.PAID;
-        } else if (orderId.includes("failed")) {
+        } else if (orderId === 99999) {
             paymentMethod = EPaymentMethod.MOMO;
             paymentStatus = EPaymentStatus.FAILED;
         }

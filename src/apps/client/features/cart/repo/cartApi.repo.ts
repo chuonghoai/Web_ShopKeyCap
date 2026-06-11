@@ -33,7 +33,7 @@ export class CartApiRepo implements CartRepo {
      *  - Thêm sản phẩm vào giỏ hàng theo variantId
      *  - Nếu variant đã tồn tại, cộng dồn số lượng (không tạo mới)
      */
-    async addToCart(variantId: string, quantity: number): Promise<ApiResponse<{ newCartCount: number }>> {
+    async addToCart(variantId: number, quantity: number): Promise<ApiResponse<{ newCartCount: number }>> {
         return apiClient.post<ApiResponse<{ newCartCount: number }>>("/cart/items", {
             variantId, quantity
         });
@@ -57,7 +57,7 @@ export class CartApiRepo implements CartRepo {
      * 
      * Mô tả: Xóa variant khỏi giỏ hàng
      */
-    deleteCartItem(variantId: string): Promise<ApiResponse<{ newCartCount: number; totalPrice?: number }>> {
+    deleteCartItem(variantId: number): Promise<ApiResponse<{ newCartCount: number; totalPrice?: number }>> {
         return apiClient.delete<ApiResponse<{ newCartCount: number; totalPrice?: number }>>(`/cart/items/${variantId}`);
     }
 }

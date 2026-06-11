@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { orderCheckoutService } from '../../services/order-checkout.service';
 import { orderKeys } from '../orderKeys';
 
-export const useOrderResultQuery = (orderId: string) => {
+export const useOrderResultQuery = (orderId: number) => {
     return useQuery({
         queryKey: orderKeys.result(orderId),
         queryFn: async () => {

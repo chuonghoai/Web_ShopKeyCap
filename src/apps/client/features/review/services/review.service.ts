@@ -14,7 +14,7 @@ export class ReviewService {
         this.reviewRepo = reviewRepo ?? new ReviewApiRepo();
     }
 
-    async getReviewByProductId(productId: string, currentPage: number): Promise<ApiResponse<Review[]>> {
+    async getReviewByProductId(productId: number, currentPage: number): Promise<ApiResponse<Review[]>> {
         return this.reviewRepo.getReviewByProductId(productId, currentPage, PAGE_SIZE);
     }
 }

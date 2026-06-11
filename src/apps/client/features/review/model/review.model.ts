@@ -1,7 +1,9 @@
 import type { User } from "../../profile/models/user.model";
 
 export interface Review {
-    id: string;
+    id: number;
+    productId: number;
+    userId: number;
     user: {
         fullName: User['fullName'];
         avatar: User['avatar'];

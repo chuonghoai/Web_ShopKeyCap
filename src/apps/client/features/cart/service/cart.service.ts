@@ -30,7 +30,7 @@ export class CartService {
     /**
      * Add to cart by variantId
      */
-    async addToCart(variantId: string, quantity?: number): Promise<ApiResponse<{ newCartCount: number }>> {
+    async addToCart(variantId: number, quantity?: number): Promise<ApiResponse<{ newCartCount: number }>> {
         const qty = quantity || 1;
         return this.cartRepo.addToCart(variantId, qty);
     }
@@ -45,7 +45,7 @@ export class CartService {
     /**
      * Delete item from cart by variantId
      */
-    async deleteCartItem(variantId: string): Promise<ApiResponse<{ newCartCount: number; totalPrice?: number }>> {
+    async deleteCartItem(variantId: number): Promise<ApiResponse<{ newCartCount: number; totalPrice?: number }>> {
         return this.cartRepo.deleteCartItem(variantId);
     }
 }

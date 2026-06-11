@@ -1,7 +1,9 @@
+import { EPaymentMethod } from '../enums/paymentMethod.enum';
+
 export interface PaymentProviderResolver {
     providerName: string;
     canResolve(searchParams: URLSearchParams): boolean;
-    resolveOrderId(searchParams: URLSearchParams): string | null;
+    resolveOrderId(searchParams: URLSearchParams): number | null;
 }
 
 export class PaymentRedirectResolverRegistry {
@@ -11,25 +13,26 @@ export class PaymentRedirectResolverRegistry {
         this.resolvers.push(resolver);
     }
 
-    static resolveOrderId(searchParams: URLSearchParams): string | null {
+    static resolveOrderId(searchParams: URLSearchParams): number | null {
         for (const resolver of this.resolvers) {
             if (resolver.canResolve(searchParams)) {
                 return resolver.resolveOrderId(searchParams);
             }
         }
 
-        return searchParams.get('orderId');
+        const val = searchParams.get('orderId');
+        return val && !isNaN(Number(val)) ? Number(val) : null;
     }
 }
 
 PaymentRedirectResolverRegistry.register({
-    providerName: 'MOMO',
-    canResolve: (params) => params.get('partnerCode') === 'MOMO' || params.has('requestId'),
-    resolveOrderId: (params) => params.get('orderId')
+    providerName: EPaymentMethod.MOMO,
+    canResolve: (params) => params.get('partnerCode') === EPaymentMethod.MOMO || params.has('requestId'),
+    resolveOrderId: (params) => params.get('orderId') ? Number(params.get('orderId')) : null
 });
 
 PaymentRedirectResolverRegistry.register({
-    providerName: 'VNPAY',
+    providerName: EPaymentMethod.VNPAY,
     canResolve: (params) => params.has('vnp_TxnRef'),
-    resolveOrderId: (params) => params.get('vnp_TxnRef')
+    resolveOrderId: (params) => params.get('vnp_TxnRef') ? Number(params.get('vnp_TxnRef')) : null
 });

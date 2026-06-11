@@ -1,13 +1,13 @@
 export interface CartItemModel {
-    id: string;
+    id: number;
     product: {
-        id: string;
+        id: number;
         name: string;
         slug: string;
         imageUrl: string;
     };
     variant?: {
-        id: string;
+        id: number;
         attributes: Record<string, string>;
 
         price: number;

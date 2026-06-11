@@ -32,7 +32,7 @@ export class OrderCheckoutService {
     /**
      * Check order result
      */
-    async getOrderResult(orderId: string): Promise<ApiResponse<CheckoutResult>> {
+    async getOrderResult(orderId: number): Promise<ApiResponse<CheckoutResult>> {
         return this.checkoutRepo.getOrderResult(orderId);
     }
 }

@@ -3,7 +3,7 @@ import type { ProductItem } from "./product.model";
 import type { ProductOption, ProductVariant } from "./variant.model";
 
 export interface ProductDetail {
-    id: string;
+    id: number;
     name: string;
     slug: string;
 

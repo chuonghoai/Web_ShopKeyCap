@@ -8,7 +8,7 @@ export class FavoriteApiRepo implements FavoriteRepo {
      * @param productId
      * @returns isFavorite
      */
-    async toggleFavorite(productId: string): Promise<ApiResponse<{ isFavorite: boolean }>> {
+    async toggleFavorite(productId: number): Promise<ApiResponse<{ isFavorite: boolean }>> {
         const response = await apiClient.post<ApiResponse<{ isFavorite: boolean }>>(`/favorites/${productId}`);
         return response;
     }

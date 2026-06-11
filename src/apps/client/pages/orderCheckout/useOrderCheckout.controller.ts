@@ -23,7 +23,7 @@ export const useOrderCheckoutController = () => {
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
     const [isVoucherModalOpen, setIsVoucherModalOpen] = useState(false);
     const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
-    const [selectedAddressId, setSelectedAddressId] = useState<string | undefined>();
+    const [selectedAddressId, setSelectedAddressId] = useState<number | undefined>();
 
     // Queries
     const {

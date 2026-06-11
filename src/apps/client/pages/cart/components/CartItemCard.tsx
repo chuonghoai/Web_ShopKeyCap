@@ -4,8 +4,8 @@ import { useCartItemCardController } from "../componentControllers/useCartItemCa
 
 interface CartItemCardProps {
     item: CartItemModel;
-    onUpdateQuantity: (variantId: string, newQty: number) => void;
-    onDelete: (variantId: string) => void;
+    onUpdateQuantity: (variantId: number, newQty: number) => void;
+    onDelete: (variantId: number) => void;
     formatPrice: (price: number) => string;
 }
 

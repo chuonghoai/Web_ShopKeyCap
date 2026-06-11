@@ -13,7 +13,7 @@ export class AddressApiRepo implements AddressRepo {
      *  - nếu có truyền addressId, lấy thông tin và ước lượng thời gian giao đến địa chỉ đó
      *  - nếu ko truyền addessId, lấy địa chỉ mặc định và ước lượng thời gian giao đến địa chỉ mặc định
      */
-    async getShippingInfo(addressId?: string): Promise<ApiResponse<DeliveryInfoModel | null>> {
+    async getShippingInfo(addressId?: number): Promise<ApiResponse<DeliveryInfoModel | null>> {
         const params = addressId ? { addressId } : undefined;
         return apiClient.get<ApiResponse<DeliveryInfoModel | null>>("/address/shipping", { params });
     }

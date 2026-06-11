@@ -5,7 +5,7 @@ import type { AddressRepo } from "./address.repo";
 export class AddressMockRepo implements AddressRepo {
     private addresses: Address[] = [
         {
-            id: "addr_1",
+            id: 1,
             fullName: "Nguyễn Văn A",
             phone: "0987654321",
             province: { code: "SG", name: "Hồ Chí Minh" },
@@ -18,7 +18,7 @@ export class AddressMockRepo implements AddressRepo {
             isDefault: true,
         },
         {
-            id: "addr_2",
+            id: 2,
             fullName: "Nguyễn Văn B",
             phone: "0123456789",
             province: { code: "SG", name: "Hồ Chí Minh" },
@@ -32,7 +32,7 @@ export class AddressMockRepo implements AddressRepo {
         }
     ];
 
-    async getShippingInfo(addressId?: string): Promise<ApiResponse<DeliveryInfoModel | null>> {
+    async getShippingInfo(addressId?: number): Promise<ApiResponse<DeliveryInfoModel | null>> {
         const address = addressId
             ? this.addresses.find(a => a.id === addressId)
             : this.addresses.find(a => a.isDefault);

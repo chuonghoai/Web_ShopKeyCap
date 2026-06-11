@@ -7,7 +7,7 @@ export const useDeleteCartItemMutation = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: async (variantId: string) => {
+        mutationFn: async (variantId: number) => {
             const res = await cartService.deleteCartItem(variantId);
             if (!res.success) throw new Error(res.message);
             return { variantId, newTotalPrice: res.data?.totalPrice, newCartCount: res.data?.newCartCount };

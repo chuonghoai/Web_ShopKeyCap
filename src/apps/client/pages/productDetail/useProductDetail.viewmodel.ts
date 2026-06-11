@@ -25,7 +25,7 @@ export const useProductDetailViewModel = () => {
 
     // Queries
     const { data: product, isLoading, error } = useProductDetailQuery(slug || "");
-    const productId = product?.id || "";
+    const productId = product?.id || 0;
     const { data: reviewData, isLoading: loadingReview, error: errorReviewObj } = useProductReviewsQuery(productId, reviewPage);
 
     // Mutations

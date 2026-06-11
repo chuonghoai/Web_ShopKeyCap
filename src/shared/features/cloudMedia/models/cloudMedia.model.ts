@@ -28,6 +28,6 @@ export interface SaveMediaRequest {
 }
 
 export interface MediaEntity {
-    id: string;
+    id: number;
     url: string;        // Đây chính là secure_url trong table medias
 }

@@ -12,7 +12,7 @@ export const useOrderResultController = () => {
         data: result,
         isLoading,
         error
-    } = useOrderResultQuery(orderId || '');
+    } = useOrderResultQuery(orderId || 0);
 
     return {
         orderId,

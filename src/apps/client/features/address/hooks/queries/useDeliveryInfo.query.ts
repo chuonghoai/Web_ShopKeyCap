@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { addressService } from '../../services/address.service';
 import { addressKeys } from '../addressKeys';
 
-export const useDeliveryInfoQuery = (addressId?: string) => {
+export const useDeliveryInfoQuery = (addressId?: number) => {
     return useQuery({
         queryKey: addressKeys.shipping(addressId),
         queryFn: async () => {
