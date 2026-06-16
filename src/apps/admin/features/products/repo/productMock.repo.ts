@@ -1,0 +1,63 @@
+import type { ApiResponse } from "../../../../../core/api/apiResponse";
+import type { CreateProductRequest } from "../models/create-product.request";
+import type { AdminProductDetail, AdminProductItem } from "../models/product.model";
+import type { UpdateProductRequest } from "../models/update-product.request";
+import type { ProductRepo } from "./product.repo";
+
+const mockProductList: AdminProductItem[] = [
+    { id: 1, name: "Bàn phím cơ custom Akko 3068B Plus", imageUrl: "https://product.hstatic.net/200000889805/product/ooth-5-0-wireless-2-4ghz-hotswap-foam-tieu-am-akko-cs-jelly-pink-5pkuf_5b9c81513a474a26b6fc8b26f99ffe61_master.jpg", typeName: "Bàn phím cơ", categoryId: 1, minPrice: 1500000, slug: "ban-phim-co-custom-akko-3068b-plus", totalStockQuantity: 50, status: "ACTIVE" },
+    { id: 2, name: "Bàn phím kèm chuột tai mèo Mimi Plus", imageUrl: "https://bizweb.dktcdn.net/thumb/1024x1024/100/450/808/products/09d25459-d55c-49b6-946e-b7936f95d107.jpg?v=1675152844267", typeName: "Keycap set", categoryId: 2, minPrice: 3000000, slug: "ban-phim-kem-chuot-tai-meo-mimi-plus", totalStockQuantity: 10, status: "ACTIVE" }
+];
+
+export class ProductMockRepo implements ProductRepo {
+    async getProducts(page: number, limit: number = 10, search?: string): Promise<ApiResponse<AdminProductItem[]>> {
+        let filtered = mockProductList;
+        if (search) {
+            filtered = mockProductList.filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
+        }
+        return {
+            success: true,
+            message: "Success",
+            data: filtered,
+            pagination: {
+                page,
+                pageSize: limit,
+                totalItems: 2,
+                totalPages: 1
+            }
+        };
+    }
+
+    async getProductById(id: number): Promise<ApiResponse<AdminProductDetail>> {
+        const item = mockProductList.find(p => p.id === id) || mockProductList[0];
+        return {
+            success: true,
+            message: "Success",
+            data: {
+                ...item,
+                description: "Mô tả chi tiết sản phẩm...",
+                thumbnailUrl: [item.imageUrl],
+                maxPrice: item.minPrice + 500000,
+                options: [],
+                variants: [],
+                specifications: [{ name: "Switch", value: "Cherry Red" }]
+            }
+        };
+    }
+
+    async createProduct(request: CreateProductRequest): Promise<ApiResponse<AdminProductDetail>> {
+        return {
+            success: true,
+            message: "Created",
+            data: { id: 999, ...request, typeName: "MockType", minPrice: 0, maxPrice: 0, slug: "mock-slug", options: [], variants: [] }
+        };
+    }
+
+    async updateProduct(request: UpdateProductRequest): Promise<ApiResponse<AdminProductDetail>> {
+        return this.getProductById(request.id);
+    }
+
+    async deleteProduct(_id: number): Promise<ApiResponse<boolean>> {
+        return { success: true, message: "Deleted", data: true };
+    }
+}

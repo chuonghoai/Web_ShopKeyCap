@@ -1,10 +1,18 @@
 import type { RouteObject } from "react-router-dom";
 import AuthGuard from "../../../core/auth/auth.guard";
-import AdminLayout from "../layout/adminLayout";
 import { ERole } from "../../../core/constants/role.constant";
+import AdminLayout from "../layout/adminLayout";
+
+import { ProductListPage } from "../pages/products/ProductListPage";
+import { ProductDetailPage } from "../pages/products/ProductDetailPage";
 
 const AdminDashboardPage = () => {
-    return <h1>Admin Dashboard (Bảo mật)</h1>;
+    return (
+        <div className="space-y-4">
+            <h1 className="text-2xl font-bold">Welcome to Admin Dashboard</h1>
+            <p className="text-muted-foreground">Chọn chức năng từ thanh menu bên trái.</p>
+        </div>
+    );
 };
 
 export const adminRoutes: RouteObject[] = [
@@ -15,7 +23,9 @@ export const adminRoutes: RouteObject[] = [
             </AuthGuard>
         ),
         children: [
-            { path: "/admin", element: <AdminDashboardPage /> }
+            { path: "/admin", element: <AdminDashboardPage /> },
+            { path: "/admin/products", element: <ProductListPage /> },
+            { path: "/admin/products/:id", element: <ProductDetailPage /> },
         ]
     }
 ];
