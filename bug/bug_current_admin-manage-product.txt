@@ -1,0 +1,6 @@
+- khi nhập giá bán, giá gốc và % giảm giá ko được cập nhật theo
+- khi nhập giảm giá %, giá bán ko được cập nhật
+- table variant ở dưới, sau khi nhập lại giá bán thì ô giá bán ko biến mất mà vẫn giữ đó -> xấu. Chiều rộng cột khá bé, nếu nhập con số hơn 10tr thì bị che khuất mất
+- vị trí của table variant ko hợp lý, cần đưa sang bên trái, và thông tin summary như giá, tên, tồn kho... cần được đi theo màn hình khi kéo
+- field typeName và categoryId trong product.model.ts chưa được xóa, vẫn còn đang được sử dụng bởi nhiều file
+- chưa có mô tả API rõ ràng của branch này

@@ -6,6 +6,7 @@ import { Controller } from "react-hook-form";
 import { RichTextEditor } from "../../../components/rich-text-editor/RichTextEditor";
 import { ProductOptionEditor } from "./ProductOptionEditor";
 import { SpecificationEditor } from "./SpecificationEditor";
+import { VariantPricingTable } from "./VariantPricingTable";
 
 interface Props {
     form: UseFormReturn<any>;
@@ -126,11 +127,11 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                     {/* Price Block (Simulate Client UI) */}
                     <div className="bg-slate-50 rounded-xl p-6 border border-slate-200 mt-2">
                         <h3 className="text-sm font-bold text-slate-500 mb-3 uppercase tracking-wider">Cấu hình giá trị (Mặc định)</h3>
-                        <div className="flex items-center gap-4">
-                            <div className="flex-1 space-y-2">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div className="space-y-2">
                                 <label className="block text-xs font-bold text-slate-600">Giá bán (VNĐ)</label>
                                 <Controller
-                                    name="minPrice"
+                                    name="price"
                                     control={form.control}
                                     render={({ field }) => (
                                         <input 
@@ -139,26 +140,56 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                                             onChange={(e) => {
                                                 const rawValue = e.target.value.replace(/\./g, '').replace(/,/g, '');
                                                 const num = Number(rawValue);
-                                                if (!isNaN(num)) {
-                                                    field.onChange(num);
-                                                } else if (rawValue === '') {
-                                                    field.onChange(0);
-                                                }
+                                                if (!isNaN(num)) field.onChange(num);
+                                                else if (rawValue === '') field.onChange(0);
                                             }}
                                             disabled={!isEditing}
-                                            className="w-full px-3 py-2 rounded-md border border-slate-300 outline-none focus:border-blue-500 disabled:bg-transparent font-bold text-blue-600 text-lg"
+                                            className="w-full px-3 py-2 text-sm rounded-md border border-slate-300 outline-none focus:border-blue-500 disabled:bg-transparent font-bold text-blue-600"
                                             placeholder="0"
                                         />
                                     )}
                                 />
                             </div>
-                            <div className="flex-1 space-y-2">
+                            <div className="space-y-2">
+                                <label className="block text-xs font-bold text-slate-600">Giá gốc (VNĐ)</label>
+                                <Controller
+                                    name="originalPrice"
+                                    control={form.control}
+                                    render={({ field }) => (
+                                        <input 
+                                            type="text"
+                                            value={field.value ? Number(field.value).toLocaleString('vi-VN') : ''}
+                                            onChange={(e) => {
+                                                const rawValue = e.target.value.replace(/\./g, '').replace(/,/g, '');
+                                                const num = Number(rawValue);
+                                                if (!isNaN(num)) field.onChange(num);
+                                                else if (rawValue === '') field.onChange(0);
+                                            }}
+                                            disabled={!isEditing}
+                                            className="w-full px-3 py-2 text-sm rounded-md border border-slate-300 outline-none focus:border-blue-500 disabled:bg-transparent font-bold text-slate-600 line-through"
+                                            placeholder="0"
+                                        />
+                                    )}
+                                />
+                            </div>
+                            <div className="space-y-2 relative">
+                                <label className="block text-xs font-bold text-slate-600">% Giảm giá</label>
+                                <input 
+                                    type="number"
+                                    {...register('percentDiscount')}
+                                    disabled={!isEditing}
+                                    className="w-full px-3 py-2 pr-6 text-sm rounded-md border border-slate-300 outline-none focus:border-blue-500 disabled:bg-transparent font-bold text-orange-600"
+                                    placeholder="0"
+                                />
+                                <span className="absolute right-3 top-8 text-xs font-bold text-slate-400">%</span>
+                            </div>
+                            <div className="space-y-2">
                                 <label className="block text-xs font-bold text-slate-600">Tồn kho</label>
                                 <input 
                                     type="number"
-                                    {...register('totalStockQuantity')}
+                                    {...register('stockQuantity')}
                                     disabled={!isEditing}
-                                    className="w-full px-3 py-2 rounded-md border border-slate-300 outline-none focus:border-blue-500 disabled:bg-transparent font-medium text-slate-800 text-lg"
+                                    className="w-full px-3 py-2 text-sm rounded-md border border-slate-300 outline-none focus:border-blue-500 disabled:bg-transparent font-medium text-slate-800"
                                     placeholder="0"
                                 />
                             </div>
@@ -169,6 +200,14 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                     <ProductOptionEditor 
                         control={form.control}
                         register={register}
+                        isEditing={isEditing}
+                    />
+
+                    {/* Variant Pricing Overrides */}
+                    <VariantPricingTable 
+                        control={form.control}
+                        register={register}
+                        setValue={setValue}
                         isEditing={isEditing}
                     />
                 </div>
