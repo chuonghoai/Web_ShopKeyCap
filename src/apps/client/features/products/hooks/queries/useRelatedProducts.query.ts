@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { productService } from '../../services/product.service';
 import { productKeys } from '../productKeys';
 
-export const useRelatedProductsQuery = (productIds: string[]) => {
+export const useRelatedProductsQuery = (productIds: number[]) => {
     return useQuery({
         queryKey: productKeys.related(productIds),
         queryFn: async () => {

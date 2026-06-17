@@ -81,7 +81,7 @@ export interface ProductDetail {
     relateTo: ProductItem[];
 }
 
-interface Specifications {
+export interface Specifications {
     name: string;
     value: string;
 }

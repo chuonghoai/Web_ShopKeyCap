@@ -97,7 +97,7 @@ export class ProductApiRepo implements ProductRepo {
      *  - productIds: Danh sách các ID của sản phẩm
      *  - giới hạn chỉ trả về tối đa size sản phẩm
      */
-    async getRelatedProducts(productIds: string[], size: number): Promise<ApiResponse<ProductItem[]>> {
+    async getRelatedProducts(productIds: number[], size: number): Promise<ApiResponse<ProductItem[]>> {
         return apiClient.get<ApiResponse<ProductItem[]>>("/products/related", {
             params: {
                 productIds,

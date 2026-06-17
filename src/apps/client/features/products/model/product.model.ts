@@ -5,8 +5,9 @@ export interface ProductItem {
      * imageUrl: Ảnh đại diện chính của sản phẩm
      */
     imageUrl: string;
-    typeName: string;
-    categoryId: number;
+    category?: { id: number; name: string; slug: string };
+    type?: { id: number; name: string; slug: string };
+    brand?: { id: number; name: string; slug: string };
 
     /**
      * minPrice: Giá thấp nhất trong tất cả các variants của sản phẩm.

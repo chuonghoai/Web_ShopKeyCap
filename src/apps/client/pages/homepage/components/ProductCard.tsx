@@ -2,7 +2,7 @@ import type { ProductItem } from "../../../features/products/model/product.model
 import { useProductCardController } from "../cpnController/productCard.controller";
 
 interface ProductCardProps {
-    data: ProductItem & { typeName?: string };
+    data: ProductItem;
     isNew?: boolean;
 }
 
@@ -77,7 +77,7 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
                             {data.name}
                         </h3>
 
-                        {data.typeName && (
+                        {data.category?.name && (
                             <div className="
                                 mt-2.5
                                 flex items-center gap-2
@@ -88,7 +88,7 @@ export const ProductCard = ({ data, isNew = true }: ProductCardProps) => {
                                 font-medium
                             ">
                                 <span className="flex-1 h-px bg-slate-200" />
-                                {data.typeName.toUpperCase()}
+                                {data.category?.name.toUpperCase()}
                                 <span className="flex-1 h-px bg-slate-200" />
                             </div>
                         )}

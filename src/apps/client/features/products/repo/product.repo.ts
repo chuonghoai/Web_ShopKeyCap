@@ -14,7 +14,7 @@ export interface ProductRepo {
 
     getRecommendedProducts(request: RecommendedProductRequest): Promise<ApiResponse<ProductItem[]>>;
 
-    getRelatedProducts(productIds: string[], size: number): Promise<ApiResponse<ProductItem[]>>;
+    getRelatedProducts(productIds: number[], size: number): Promise<ApiResponse<ProductItem[]>>;
 
     getFilter(): Promise<ApiResponse<FilterModel>>;
 

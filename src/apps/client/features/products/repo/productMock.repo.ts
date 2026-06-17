@@ -8,37 +8,41 @@ import type { ProductRepo } from "./product.repo";
 
 export const MOCK_PRODUCTS: ProductItem[] = [
     {
-        id: "1",
+        id: 1,
         name: "Bàn phím cơ custom Akko 3068B Plus Bàn phím cơ custom Akko 3068B PlusBàn phím cơ custom Akko 3068B PlusBàn phím cơ custom Akko 3068B Plus",
         imageUrl: "https://product.hstatic.net/200000889805/product/ooth-5-0-wireless-2-4ghz-hotswap-foam-tieu-am-akko-cs-jelly-pink-5pkuf_5b9c81513a474a26b6fc8b26f99ffe61_master.jpg",
-        typeName: "Bàn phím",
+        category: { id: 1, name: "Bàn phím", slug: "ban-phim" },
+        type: { id: 1, name: "Cơ", slug: "co" },
         minPrice: 1100000,
         isFavorite: true,
         slug: "ban-phim-co-custom-akko-3068b-plus",
     },
     {
-        id: "2",
+        id: 2,
         name: "Bàn phím kèm chuột tai mèo Mimi Plus",
         imageUrl: "https://bizweb.dktcdn.net/thumb/1024x1024/100/450/808/products/09d25459-d55c-49b6-946e-b7936f95d107.jpg?v=1675152844267",
-        typeName: "Bàn phím",
+        category: { id: 1, name: "Bàn phím", slug: "ban-phim" },
+        type: { id: 1, name: "Cơ", slug: "co" },
         minPrice: 180000,
         isFavorite: false,
         slug: "ban-phim-kem-chuot-tai-meo-mimi-plus",
     },
     {
-        id: "3",
+        id: 3,
+        category: { id: 1, name: "Bàn phím", slug: "ban-phim" },
         name: "Combo lót chuột kèm kê tay Mezy Mouse",
         imageUrl: "https://bizweb.dktcdn.net/100/450/808/products/d726d464-2f14-4b16-be63-cfd528b27bec.jpg?v=1677662229473",
-        typeName: "Bàn phím",
+        type: { id: 1, name: "Cơ", slug: "co" },
         minPrice: 200000,
         isFavorite: true,
         slug: "combo-lot-chuot-kem-ke-tay-mezy-mouse",
     },
     {
-        id: "4",
+        id: 4,
+        category: { id: 1, name: "Bàn phím", slug: "ban-phim" },
         name: "Bàn phím cơ Yunzii C98 siêu cute tiếng êm",
         imageUrl: "https://bizweb.dktcdn.net/thumb/1024x1024/100/436/596/products/7-1775644073454.png?v=1775644115560",
-        typeName: "Bàn phím",
+        type: { id: 1, name: "Cơ", slug: "co" },
         minPrice: 2200000,
         isFavorite: false,
         slug: "ban-phim-co-yunzii-c98-sieu-cute-tieng-em",
@@ -46,21 +50,21 @@ export const MOCK_PRODUCTS: ProductItem[] = [
 ];
 
 export const MOCK_PRODUCT_DETAIL: ProductDetail = {
-    id: "1",
+    id: 1,
     name: "Bàn phím cơ custom Akko 3068B Plus",
     slug: "ban-phim-co-custom-akko-3068b-plus",
     category: {
-        id: "1",
+        id: 1,
         name: "Gaming",
         slug: "gaming",
     },
     type: {
-        id: "1",
+        id: 1,
         name: "Bàn phím",
         slug: "ban-phim",
     },
     brand: {
-        id: "1",
+        id: 1,
         name: "Akko",
         slug: "akko",
     },
@@ -78,7 +82,7 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
     ],
     variants: [
         {
-            id: "v-1",
+            id: 1,
             sku: "AKKO-3068-NHO-DO",
             attributes: { "Kích thước": "Nhỏ", "Màu sắc": "Đỏ" },
             price: 1100000,
@@ -87,7 +91,7 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
             stockQuantity: 15,
         },
         {
-            id: "v-2",
+            id: 2,
             sku: "AKKO-3068-NHO-CAM",
             attributes: { "Kích thước": "Nhỏ", "Màu sắc": "Cam" },
             price: 1100000,
@@ -96,7 +100,7 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
             stockQuantity: 10,
         },
         {
-            id: "v-3",
+            id: 3,
             sku: "AKKO-3068-NHO-VANG",
             attributes: { "Kích thước": "Nhỏ", "Màu sắc": "Vàng" },
             price: 1100000,
@@ -105,7 +109,7 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
             stockQuantity: 8,
         },
         {
-            id: "v-4",
+            id: 4,
             sku: "AKKO-3068-NHO-XANHLA",
             attributes: { "Kích thước": "Nhỏ", "Màu sắc": "Xanh Lá" },
             price: 1100000,
@@ -114,7 +118,7 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
             stockQuantity: 12,
         },
         {
-            id: "v-5",
+            id: 5,
             sku: "AKKO-3068-NHO-XANHDUONG",
             attributes: { "Kích thước": "Nhỏ", "Màu sắc": "Xanh Dương" },
             price: 1100000,
@@ -123,7 +127,7 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
             stockQuantity: 20,
         },
         {
-            id: "v-6",
+            id: 6,
             sku: "AKKO-3068-NHO-TIM",
             attributes: { "Kích thước": "Nhỏ", "Màu sắc": "Tím" },
             price: 1100000,
@@ -132,7 +136,7 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
             stockQuantity: 5,
         },
         {
-            id: "v-7",
+            id: 7,
             sku: "AKKO-3068-VUA-DO",
             attributes: { "Kích thước": "Vừa", "Màu sắc": "Đỏ" },
             price: 1200000,
@@ -141,7 +145,7 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
             stockQuantity: 18,
         },
         {
-            id: "v-8",
+            id: 8,
             sku: "AKKO-3068-VUA-CAM",
             attributes: { "Kích thước": "Vừa", "Màu sắc": "Cam" },
             price: 1200000,
@@ -150,7 +154,7 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
             stockQuantity: 14,
         },
         {
-            id: "v-9",
+            id: 9,
             sku: "AKKO-3068-VUA-VANG",
             attributes: { "Kích thước": "Vừa", "Màu sắc": "Vàng" },
             price: 1200000,
@@ -159,7 +163,7 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
             stockQuantity: 9,
         },
         {
-            id: "v-10",
+            id: 10,
             sku: "AKKO-3068-VUA-XANHLA",
             attributes: { "Kích thước": "Vừa", "Màu sắc": "Xanh Lá" },
             price: 1200000,
@@ -168,7 +172,7 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
             stockQuantity: 22,
         },
         {
-            id: "v-11",
+            id: 11,
             sku: "AKKO-3068-VUA-XANHDUONG",
             attributes: { "Kích thước": "Vừa", "Màu sắc": "Xanh Dương" },
             price: 1200000,
@@ -177,7 +181,7 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
             stockQuantity: 30,
         },
         {
-            id: "v-12",
+            id: 12,
             sku: "AKKO-3068-VUA-TIM",
             attributes: { "Kích thước": "Vừa", "Màu sắc": "Tím" },
             price: 1200000,
@@ -186,7 +190,7 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
             stockQuantity: 7,
         },
         {
-            id: "v-13",
+            id: 13,
             sku: "AKKO-3068-LON-DO",
             attributes: { "Kích thước": "Lớn", "Màu sắc": "Đỏ" },
             price: 1350000,
@@ -195,7 +199,7 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
             stockQuantity: 11,
         },
         {
-            id: "v-14",
+            id: 14,
             sku: "AKKO-3068-LON-XANHDUONG",
             attributes: { "Kích thước": "Lớn", "Màu sắc": "Xanh Dương" },
             price: 1350000,
@@ -204,7 +208,7 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
             stockQuantity: 25,
         },
         {
-            id: "v-15",
+            id: 15,
             sku: "AKKO-3068-LON-TIM",
             attributes: { "Kích thước": "Lớn", "Màu sắc": "Tím" },
             price: 1350000,
@@ -248,10 +252,11 @@ export const MOCK_PRODUCT_DETAIL: ProductDetail = {
     rating: 4.5,
     relateTo: [
         {
-            id: "1",
+            id: 1,
+            category: { id: 2, name: "Switch", slug: "switch" },
             name: "Bàn phím cơ custom Akko 3068B Plus Bàn phím cơ custom Akko 3068B PlusBàn phím cơ custom Akko 3068B PlusBàn phím cơ custom Akko 3068B Plus",
             imageUrl: "https://product.hstatic.net/200000889805/product/ooth-5-0-wireless-2-4ghz-hotswap-foam-tieu-am-akko-cs-jelly-pink-5pkuf_5b9c81513a474a26b6fc8b26f99ffe61_master.jpg",
-            typeName: "Bàn phím",
+            type: { id: 1, name: "Cơ", slug: "co" },
             minPrice: 1100000,
             isFavorite: true,
             slug: "ban-phim-co-custom-akko-3068b-plus",
@@ -266,7 +271,7 @@ export class ProductMockRepo implements ProductRepo {
             const originalItem = MOCK_PRODUCTS[index % MOCK_PRODUCTS.length];
             return {
                 ...originalItem,
-                id: (index + 1).toString(),
+                id: (index + 1),
             };
         });
         let response: ApiResponse<ProductItem[]> = {
@@ -290,7 +295,7 @@ export class ProductMockRepo implements ProductRepo {
     private _expand(limit: number): ProductItem[] {
         return Array.from({ length: limit }, (_, i) => ({
             ...MOCK_PRODUCTS[i % MOCK_PRODUCTS.length],
-            id: (i + 1).toString(),
+            id: (i + 1),
         }));
     }
 
@@ -350,7 +355,7 @@ export class ProductMockRepo implements ProductRepo {
         };
     }
 
-    async getRelatedProducts(_productIds: string[], size: number): Promise<ApiResponse<ProductItem[]>> {
+    async getRelatedProducts(_productIds: number[], size: number): Promise<ApiResponse<ProductItem[]>> {
         return {
             success: true,
             message: "Lấy sản phẩm liên quan thành công",
@@ -361,19 +366,19 @@ export class ProductMockRepo implements ProductRepo {
     async getFilter(): Promise<ApiResponse<FilterModel>> {
         let data: FilterModel = {
             category: [
-                { id: "1", name: "Gaming", slug: "gaming" },
-                { id: "2", name: "Văn phòng", slug: "van-phong" }
+                { id: 1, name: "Gaming", slug: "gaming" },
+                { id: 2, name: "Văn phòng", slug: "van-phong" }
             ],
             type: [
-                { id: "1", name: "Bàn phím", slug: "ban-phim" },
-                { id: "2", name: "Switch", slug: "switch" },
-                { id: "3", name: "Keycap", slug: "keycap" },
-                { id: "4", name: "Phụ kiện", slug: "phu-kien" }
+                { id: 1, name: "Bàn phím", slug: "ban-phim" },
+                { id: 2, name: "Switch", slug: "switch" },
+                { id: 3, name: "Keycap", slug: "keycap" },
+                { id: 4, name: "Phụ kiện", slug: "phu-kien" }
             ],
             brand: [
-                { id: "1", name: "Akko", slug: "akko" },
-                { id: "2", name: "Lofree", slug: "lofree" },
-                { id: "3", name: "Wired", slug: "wired" }
+                { id: 1, name: "Akko", slug: "akko" },
+                { id: 2, name: "Lofree", slug: "lofree" },
+                { id: 3, name: "Wired", slug: "wired" }
             ],
         };
         return {

@@ -38,7 +38,7 @@ export class ProductService {
         return this.productRepo.getProductBySlug(productSlug);
     }
 
-    async getRelatedProducts(productIds: string[]): Promise<ApiResponse<ProductItem[]>> {
+    async getRelatedProducts(productIds: number[]): Promise<ApiResponse<ProductItem[]>> {
         return this.productRepo.getRelatedProducts(productIds, LIMIT_DEFAULT);
     }
 

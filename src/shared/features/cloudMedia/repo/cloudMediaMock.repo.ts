@@ -20,7 +20,7 @@ export class CloudMediaMockRepo implements CloudMediaRepo {
 
     async saveMedias(medias: SaveMediaRequest[]): Promise<ApiResponse<MediaEntity[]>> {
         let responseMedias: MediaEntity[] = medias.map((m, index) => ({
-            id: `media-${Date.now()}-${index}`,
+            id: index,
             url: m.secure_url,
         }))
 
