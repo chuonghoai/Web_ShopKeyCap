@@ -22,7 +22,7 @@ export const AdminProductCard: React.FC<Props> = ({ product, onDelete, isDeletin
                 />
                 <button 
                     onClick={(e) => {
-                        e.preventDefault(); // Ngăn chặn trigger thẻ Link
+                        e.preventDefault(); 
                         onDelete?.();
                     }}
                     disabled={isDeleting}
@@ -34,7 +34,7 @@ export const AdminProductCard: React.FC<Props> = ({ product, onDelete, isDeletin
             </div>
             <div className="p-4">
                 <div className="text-xs font-semibold text-slate-500 mb-1 tracking-wider uppercase">
-                    {product.typeName}
+                    {product.type.name}
                 </div>
                 <h3 className="text-sm font-bold text-slate-800 line-clamp-2 leading-tight mb-2">
                     {product.name}

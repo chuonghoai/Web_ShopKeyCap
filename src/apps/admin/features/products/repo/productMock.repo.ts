@@ -9,8 +9,30 @@ const mockType = { id: 1, name: "Fullsize", slug: "fullsize" };
 const mockBrand = { id: 1, name: "Akko", slug: "akko" };
 
 const mockProductList: AdminProductItem[] = [
-    { id: 1, name: "Bàn phím cơ custom Akko 3068B Plus", imageUrl: "https://product.hstatic.net/200000889805/product/ooth-5-0-wireless-2-4ghz-hotswap-foam-tieu-am-akko-cs-jelly-pink-5pkuf_5b9c81513a474a26b6fc8b26f99ffe61_master.jpg", typeName: "Bàn phím cơ", categoryId: 1, category: mockCategory, type: mockType, brand: mockBrand, rating: 4.5, minPrice: 1500000, slug: "ban-phim-co-custom-akko-3068b-plus", totalStockQuantity: 50, status: "ACTIVE" },
-    { id: 2, name: "Bàn phím kèm chuột tai mèo Mimi Plus", imageUrl: "https://bizweb.dktcdn.net/thumb/1024x1024/100/450/808/products/09d25459-d55c-49b6-946e-b7936f95d107.jpg?v=1675152844267", typeName: "Keycap set", categoryId: 2, category: { id: 2, name: "Keycap", slug: "keycap" }, type: { id: 2, name: "TKL", slug: "tkl" }, brand: { id: 2, name: "Logitech", slug: "logitech" }, rating: 5, minPrice: 3000000, slug: "ban-phim-kem-chuot-tai-meo-mimi-plus", totalStockQuantity: 10, status: "ACTIVE" }
+    { 
+        id: 1, 
+        name: "Bàn phím cơ custom Akko 3068B Plus", 
+        imageUrl: "https://product.hstatic.net/200000889805/product/ooth-5-0-wireless-2-4ghz-hotswap-foam-tieu-am-akko-cs-jelly-pink-5pkuf_5b9c81513a474a26b6fc8b26f99ffe61_master.jpg", 
+        type: {id: 1, name: "Bàn phím cơ", slug: "ban-phim-co"}, 
+        category: {id: 1, name: "Bàn phím cơ", slug: "ban-phim-co"}, 
+        brand: {id: 1, name: "Akko", slug: "akko"}, 
+        rating: 4.5, 
+        minPrice: 1500000, 
+        slug: "ban-phim-co-custom-akko-3068b-plus", 
+        totalStockQuantity: 50 
+    },
+    { 
+        id: 2, 
+        name: "Bàn phím kèm chuột tai mèo Mimi Plus", 
+        imageUrl: "https://bizweb.dktcdn.net/thumb/1024x1024/100/450/808/products/09d25459-d55c-49b6-946e-b7936f95d107.jpg?v=1675152844267", 
+        type: {id: 2, name: "Keycap set", slug: "keycap-set"}, 
+        category: {id: 2, name: "Keycap", slug: "keycap"}, 
+        brand: {id: 2, name: "Logitech", slug: "logitech"}, 
+        rating: 5, 
+        minPrice: 3000000, 
+        slug: "ban-phim-kem-chuot-tai-meo-mimi-plus", 
+        totalStockQuantity: 10 
+    }
 ];
 
 export class ProductMockRepo implements ProductRepo {
@@ -42,9 +64,29 @@ export class ProductMockRepo implements ProductRepo {
                 description: "Mô tả chi tiết sản phẩm...",
                 thumbnailUrl: [item.imageUrl],
                 maxPrice: item.minPrice + 500000,
-                options: [],
-                variants: [],
-                specifications: [{ name: "Switch", value: "Cherry Red" }]
+                options: [
+                    {
+                        name: "Màu sắc",
+                        values: ["Đỏ", "Xanh", "Vàng"],
+                    },
+                    {
+                        name: 'Switch',
+                        values: ['Cherry Red', 'Cherry Blue', 'Cherry Brown'],
+                    }
+                ],
+                variants: [
+                    {
+                        id: 1,
+                        sku: 'AKKO-3068B-RED-BLK',
+                        attributes: { "Màu sắc": "Đỏ", "Switch": "Cherry Red" },
+                        price: 1500000,
+                        originalPrice: 2000000,
+                        percentDiscount: 25,
+                        stockQuantity: 10
+                    }
+                ],
+                specifications: [{ name: "Switch", value: "Cherry Red" }],
+                rating: 4.5
             }
         };
     }
@@ -53,7 +95,9 @@ export class ProductMockRepo implements ProductRepo {
         return {
             success: true,
             message: "Created",
-            data: { id: 999, ...request, category: mockCategory, type: mockType, brand: mockBrand, rating: 0, typeName: "MockType", categoryId: 1, minPrice: request.price ?? 0, maxPrice: request.price ?? 0, slug: request.slug || "mock-slug", options: [], variants: [] }
+            data: { 
+                id: 999, 
+                ...request, category: mockCategory, type: mockType, brand: mockBrand, rating: 0, minPrice: request.price ?? 0, maxPrice: request.price ?? 0, slug: request.slug || "mock-slug", options: [], variants: [] }
         };
     }
 

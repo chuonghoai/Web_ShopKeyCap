@@ -5,6 +5,7 @@ import { useDeliveryInfoQuery } from "../../features/address/hooks/queries/useDe
 import { useRelatedProductsQuery } from "../../features/products/hooks/queries/useRelatedProducts.query";
 import { useUpdateCartItemMutation } from "../../features/cart/hooks/mutations/useUpdateCartItem.mutation";
 import { useDeleteCartItemMutation } from "../../features/cart/hooks/mutations/useDeleteCartItem.mutation";
+import type { CartItemModel } from "../../features/cart/model/cart.model";
 
 export const useCartViewModel = () => {
     const navigate = useNavigate();
@@ -42,12 +43,12 @@ export const useCartViewModel = () => {
 
     const handleCheckout = () => {
         if (!cartData || cartData.items.length === 0) return;
-        
-        const items = cartData.items.map((item: any) => ({
-            variantId: item.product.id,
-            quantity: item.quantity
+
+        const items = cartData.items.map((item: CartItemModel) => ({
+            variantId: item.variant.id,
+            quantity: item.variant.quantity
         }));
-        
+
         const cartItemIds = cartData.items.map((item: any) => item.id);
 
         navigate("/checkout", {
@@ -69,7 +70,7 @@ export const useCartViewModel = () => {
         items: cartData?.items || [],
         totalPrice: cartData?.summary.total || 0,
         isLoading: loadingCart,
-        
+
         deliveryInfo,
         loadingDelivery,
 
