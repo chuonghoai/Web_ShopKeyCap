@@ -19,7 +19,7 @@ export class PaymentRedirectResolverRegistry {
         if (isNaN(num) || num <= 0 || !Number.isInteger(num)) return null;
         return num;
     }
-kw
+
     static resolveOrderId(searchParams: URLSearchParams): number | null {
         const globalOrderId = this.parseOrderIdSafe(searchParams.get('orderId'));
         if (globalOrderId !== null) {
