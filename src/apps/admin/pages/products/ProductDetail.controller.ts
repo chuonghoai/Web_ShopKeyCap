@@ -33,16 +33,21 @@ export const useProductDetailController = () => {
             slug: '',
             description: '',
             imageUrl: '',
+            options: [],
+            variants: [],
+            price: 0,
+            originalPrice: 0,
+            percentDiscount: 0,
+            stockQuantity: 0,
         }
     });
 
     useEffect(() => {
         if (productDetail && !isNew) {
             form.reset({
-                name: productDetail.name || '',
-                slug: productDetail.slug || '',
-                description: productDetail.description || '',
-                imageUrl: productDetail.imageUrl || '',
+                ...productDetail,
+                options: productDetail.options || [],
+                variants: productDetail.variants || [],
             });
         }
     }, [productDetail, form, isNew]);
@@ -61,6 +66,7 @@ export const useProductDetailController = () => {
                 onSuccess: () => {
                     toast("Tạo sản phẩm thành công", "success");
                     navigate('/admin/products');
+                    console.log("Tạo sản phẩm: ", data);
                 },
                 onError: () => {
                     toast("Lỗi khi tạo sản phẩm", "error");

@@ -97,7 +97,7 @@ export class ProductMockRepo implements ProductRepo {
             message: "Created",
             data: { 
                 id: 999, 
-                ...request, category: mockCategory, type: mockType, brand: mockBrand, rating: 0, minPrice: request.price ?? 0, maxPrice: request.price ?? 0, slug: request.slug || "mock-slug", options: [], variants: [] }
+                ...request, category: mockCategory, type: mockType, brand: mockBrand, rating: 0, minPrice: request.price ?? 0, maxPrice: request.price ?? 0, slug: request.slug || "mock-slug", options: request.options || [], variants: request.variants || [] }
         };
     }
 

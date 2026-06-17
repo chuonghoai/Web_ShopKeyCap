@@ -4,3 +4,87 @@
 - vị trí của table variant ko hợp lý, cần đưa sang bên trái, và thông tin summary như giá, tên, tồn kho... cần được đi theo màn hình khi kéo
 - field typeName và categoryId trong product.model.ts chưa được xóa, vẫn còn đang được sử dụng bởi nhiều file
 - chưa có mô tả API rõ ràng của branch này
+
+- giao diện chưa hiện data options, variants, specifications, stockQuantity của từng variant, totalStockQuantity của product, ko hiện list các variant khi xem chi tiết
+- thiếu nút xóa một tổ hợp bất kỳ.
+
+
+
+
+
+
+
+
+
+
+- Bìa: 
+    + "báo cáo cuối kỳ môn..."
+    + Tất cả chữ ở trang bìa chỉnh thành chữ hoa
+    + khỏi cần ghi "tên đề tài"
+    + giãn dòng 1.5
+    + tên môn học và tên đề tài to nhất
+    + có thể ghi tắt vài cái như SVTH, GVHD...
+- Trang lót:
+    + giống y hệt trang bìa
+- Trang nhận xét:
+    + Không cần để mục giảng viên điền điểm
+- Lời cảm ơn:
+    + để nó khác biệt với cái khác, có thể in nghiêng toàn bộ
+    + phía dưới cùng nên có chữ ký của riêng mình
+- Mục lục:
+    + chữ 'mục lục' căn giữa
+- Bảng phân chia công việc:
+    + Nên ghia tiêu đề là "BẢNG LIỆT KÊ KHỐI LƯỢNG CÔNG VIỆC"
+    + Phải để ở trang cuối cùng của báo cáo
+    + có 3 cột: STT, họ tên và công việc (có thể có thêm cột mssv hoặc vai trò)
+- Bảng danh mục thuật ngữ viết tắt (nếu có)
+- Đánh số bảng, ảnh:
+    + Ví dụ trong chương 2 -> bảng 2.1, bảng 2.2,....
+
+- Nội dung:
+    + bắt đầu nội dung, nên ghi tiêu đề 'tên chương' vào header của trang, ví dụ: "Chương 2: CƠ SỞ DỮ LIỆU THỰC TẾ", tương tự như vậy với các chương khác. Tiêu đề này cần gạch dưới (sử dụng table bottom) để phân cách với nội dung bên dưới
+    + Ở số trang, có thể ghi thêm 'Trang ...' hoặc '.../Tổng số trang', kèm thêm gạch trên (table top) để phân cách với nội dung bên trên
+    + Quy định margin: 
+        Trái - 3cm
+        Trên - 3cm
+        Dưới - 3cm
+        Phải - 2cm
+    + spacing: trên 6 dưới 6
+    + có danh sách yêu cầu -> mô hình hóa yêu cầu mới ra các usecases
+    + Nếu có nhiều bộ phận (admin, client), danh sách yêu cầu nên tách ra thành nhiều bảng cho các bộ phận/vai trò
+    + Chương 1: Tổng quan -> nên tách ra 3 phần: PHẦN MỞ ĐẦU, PHẦN NỘI DUNG (CHƯƠNG 1...., CHƯƠNG 2....), PHẦN KẾT LUẬN
+
+    + PHẦN MỞ ĐẦU:
+        1. Giới thiệu
+        2. Lý do
+        3. Mục tiêu
+        4. Phạm vi
+        5. Phương pháp
+    + PHẦN NỘI DUNG:
+        CHƯƠNG 1: Xác định yêu cầu
+            gồm danh sách các chức năng
+        CHƯƠNG 2: Mô hình hóa yêu cầu
+            - danh sách usecases
+            - danh sách actor
+            - usecases diagram
+            - mô tả chi tiết use case
+        CHƯƠNG 3: THIẾT KẾ HỆ THỐNG
+            - class diagrams
+            ....
+            - Thiết kế giao diện: Chụp ảnh giao diện, tô các ô vuông đỏ -> tạo table mô tả, gồm 4 cột: STT, object, mục đích, biến cố / xử lý (đây là hyperlink, ví dụ: click vào thì làm gì đó, text changed thì làm gì...)
+        CHƯƠNG 4: ÁP DỤNG DESIGN PATTERNS
+            - dùng pattern để làm gì, dùng cho lớp nào...
+        CHƯƠNG 5: THIẾT KẾ LUỒNG XỬ Lý
+        CHƯƠNG 6: CÀI ĐẶT VÀ THỬ NGHIỆM
+            chạy chức năng đó, ra kết quả gì -> chụp kết quả lên
+        ...
+
+    + PHẦN KẾT LUẬN: 
+        1. Kết quả đạt được
+            1.1. Về mặt kiến thức
+            1.2. Về mặt kỹ năng
+            1.3. Về mặt sản phẩm
+        2. Ưu khuyết điểm
+            2.1. Ưu điểm
+            2.2. Nhược điểm
+        3. Hướng phát triển
