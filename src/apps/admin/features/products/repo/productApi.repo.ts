@@ -37,7 +37,10 @@ export class ProductApiRepo implements ProductRepo {
      * @body request: CreateProductRequest
      * @returns: AdminProductDetail
      * 
-     * Mô tả: Tạo sản phẩm mới
+     * Mô tả: 
+     *  - Tạo sản phẩm mới
+     *  - backend cần có logic tự tạo mã SKU cho từng biến thể variant
+     *  - Field variants đã có đủ biến thể, backend chỉ cần đọc và lưu vào DB, không cần logic tính tổ hợp biến thể sản phẩm
      */
     createProduct(request: CreateProductRequest): Promise<ApiResponse<AdminProductDetail>> {
         return apiClient.post<ApiResponse<AdminProductDetail>>(ADMIN_PRODUCTS_ENDPOINT, request);
@@ -48,7 +51,7 @@ export class ProductApiRepo implements ProductRepo {
      * @body request: UpdateProductRequest
      * @returns: AdminProductDetail
      * 
-     * Mô tả: Cập nhật sản phẩm
+     * Mô tả: Cập nhật sản phẩm - Tương tự tạo sản phẩm
      */
     updateProduct(request: UpdateProductRequest): Promise<ApiResponse<AdminProductDetail>> {
         return apiClient.put<ApiResponse<AdminProductDetail>>(`${ADMIN_PRODUCTS_ENDPOINT}/${request.id}`, request);
@@ -57,9 +60,11 @@ export class ProductApiRepo implements ProductRepo {
     /**
      * DELETE /admin/products/:id
      * @param id: id của sản phẩm
-     * @returns: boolean
+     * @returns: null
      * 
-     * Mô tả: Xóa sản phẩm
+     * Mô tả:
+     *  - Xóa sản phẩm
+     *  - Xóa này là xóa luôn sản phẩm và các biến thể của nó, không phải chỉ xóa riêng mỗi variant
      */
     deleteProduct(id: number): Promise<ApiResponse<null>> {
         return apiClient.delete<ApiResponse<null>>(`${ADMIN_PRODUCTS_ENDPOINT}/${id}`);
