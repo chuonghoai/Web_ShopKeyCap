@@ -8,5 +8,5 @@ export interface ProductRepo {
     getProductById(id: number): Promise<ApiResponse<AdminProductDetail>>;
     createProduct(request: CreateProductRequest): Promise<ApiResponse<AdminProductDetail>>;
     updateProduct(request: UpdateProductRequest): Promise<ApiResponse<AdminProductDetail>>;
-    deleteProduct(id: number): Promise<ApiResponse<boolean>>;
+    deleteProduct(id: number): Promise<ApiResponse<null>>;
 }

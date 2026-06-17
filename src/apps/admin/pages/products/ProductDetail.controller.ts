@@ -7,6 +7,7 @@ import { useCreateProductMutation } from "../../features/products/hooks/mutation
 import { useToastStore } from "../../../../core/store/useToastStore";
 import { useDocumentTitle } from "../../../../core/hooks/useDocumentTitle";
 import { generateSlug } from "../../../../utils/string.utils";
+import type { ProductVariant } from "../../../client/features/products/model/variant.model";
 
 export const useProductDetailController = () => {
     const toast = useToastStore(state => state.addToast)
@@ -60,21 +61,57 @@ export const useProductDetailController = () => {
     }, [nameValue, isEditing, form]);
 
     const handleSave = form.handleSubmit((data) => {
+        const excludedVariantKeys = (data as any).excludedVariantKeys || [];
+        const variants: ProductVariant[] = data.variants || [];
+        const activeVariants = variants.filter(v => {
+            const key = v.sku || JSON.stringify(v.attributes);
+            return !excludedVariantKeys.includes(key);
+        });
+
+        if (activeVariants.length === 0) {
+            toast("Product phải có ít nhất một Variant đang hoạt động.", "error");
+            return;
+        }
+
+        for (const variant of activeVariants) {
+            if (Number(variant.price) <= 0 || Number(variant.stockQuantity) < 0) {
+                toast(`Biến thể ${Object.values(variant.attributes || {}).join(' - ') || variant.sku} có giá hoặc tồn kho không hợp lệ.`, "error");
+                return;
+            }
+        }
+
+        const prices = activeVariants.map(v => Number(v.price) || 0);
+        const minPrice = Math.min(...prices);
+        const maxPrice = Math.max(...prices);
+        const totalStockQuantity = activeVariants.reduce((sum, v) => sum + (Number(v.stockQuantity) || 0), 0);
+
+        if (minPrice <= 0 || maxPrice < minPrice || totalStockQuantity < 0) {
+            toast("Dữ liệu tổng hợp không hợp lệ.", "error");
+            return;
+        }
+
+        const { price, originalPrice, percentDiscount, stockQuantity, excludedVariantKeys: _ex, ...restData } = data as any;
+        const payload = {
+            ...restData,
+            minPrice,
+            maxPrice,
+            totalStockQuantity,
+            variants: activeVariants
+        };
+
         if (isNew) {
-            createMutation.mutate(data as any, {
+            createMutation.mutate(payload as any, {
                 onSuccess: () => {
                     toast("Tạo sản phẩm thành công", "success");
                     navigate('/admin/products');
-                    console.log("Tạo sản phẩm: ", data);
                 },
                 onError: () => {
                     toast("Lỗi khi tạo sản phẩm", "error");
                 }
             });
         } else {
-            updateMutation.mutate({ id: productId, ...data } as any, {
+            updateMutation.mutate({ id: productId, ...payload } as any, {
                 onSuccess: () => {
-                    console.log(data);
                     toast("Cập nhật thành công", "success");
                     setIsEditing(false);
                 },

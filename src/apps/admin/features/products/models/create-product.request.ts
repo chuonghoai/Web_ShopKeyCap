@@ -15,8 +15,7 @@ export interface CreateProductRequest {
 
     variants: ProductVariant[];
 
-    price: number;
-    originalPrice?: number;
-    percentDiscount?: number;
-    stockQuantity?: number;
+    minPrice: number;
+    maxPrice: number;
+    totalStockQuantity: number;
 }

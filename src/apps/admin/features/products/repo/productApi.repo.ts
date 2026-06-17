@@ -61,7 +61,7 @@ export class ProductApiRepo implements ProductRepo {
      * 
      * Mô tả: Xóa sản phẩm
      */
-    deleteProduct(id: number): Promise<ApiResponse<boolean>> {
-        return apiClient.delete<ApiResponse<boolean>>(`${ADMIN_PRODUCTS_ENDPOINT}/${id}`);
+    deleteProduct(id: number): Promise<ApiResponse<null>> {
+        return apiClient.delete<ApiResponse<null>>(`${ADMIN_PRODUCTS_ENDPOINT}/${id}`);
     }
 }

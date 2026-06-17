@@ -26,7 +26,7 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
     const prices = useMemo(() => variants.map(v => Number(v.price) || 0), [variants]);
     const minPrice = prices.length ? Math.min(...prices) : 0;
     const maxPrice = prices.length ? Math.max(...prices) : 0;
-    const priceRangeStr = minPrice === maxPrice 
+    const priceRangeStr = minPrice === maxPrice
         ? minPrice.toLocaleString('vi-VN') + ' đ'
         : `${minPrice.toLocaleString('vi-VN')} đ - ${maxPrice.toLocaleString('vi-VN')} đ`;
 
@@ -34,13 +34,13 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
         <div className="w-full flex flex-col lg:flex-row gap-8 items-start relative">
             {/* Left Column: Main Content (70%) */}
             <div className="w-full lg:w-[70%] flex flex-col gap-8">
-                
+
                 {/* 1. General Info & Media */}
                 <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-8">
                     {/* Media */}
                     <div className="w-full md:w-[45%] shrink-0 flex flex-col gap-4">
                         <h2 className="text-[16px] font-bold text-slate-900 border-b border-slate-100 pb-3">Hình ảnh</h2>
-                        
+
                         <div className="bg-slate-50 rounded-xl overflow-hidden aspect-square border-2 border-dashed border-slate-300 mb-2 flex items-center justify-center p-4 relative group">
                             {imageUrl ? (
                                 <img src={imageUrl} alt="Preview" className="w-full h-full object-contain mix-blend-multiply" />
@@ -59,8 +59,8 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                                 <div className="absolute inset-0 bg-slate-900/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20">
                                     <label className="cursor-pointer bg-white text-slate-800 px-4 py-2 rounded-lg font-semibold text-sm hover:bg-slate-50 transition-colors shadow-lg">
                                         Thay đổi ảnh
-                                        <input 
-                                            type="file" 
+                                        <input
+                                            type="file"
                                             accept="image/*"
                                             className="hidden"
                                             onChange={(e) => {
@@ -79,7 +79,7 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                                 <div key={index} className="aspect-square bg-slate-50 border border-slate-200 rounded-lg overflow-hidden relative group">
                                     <img src={url} alt={`Gallery ${index}`} className="w-full h-full object-contain mix-blend-multiply" />
                                     {isEditing && (
-                                        <button 
+                                        <button
                                             type="button"
                                             onClick={() => formCtrl.handleRemoveGalleryImage(index, setValue, thumbnailUrl)}
                                             className="absolute top-1 right-1 bg-red-500 text-white w-5 h-5 text-xs rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm"
@@ -93,8 +93,8 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                                 <label className="aspect-square bg-white border-2 border-dashed border-slate-300 rounded-lg flex flex-col items-center justify-center text-slate-400 hover:border-blue-400 hover:text-blue-500 transition-colors cursor-pointer group">
                                     <Plus className="w-5 h-5 mb-0.5 group-hover:scale-110 transition-transform" />
                                     <span className="text-[9px] font-bold uppercase tracking-wide">Thêm</span>
-                                    <input 
-                                        type="file" 
+                                    <input
+                                        type="file"
                                         accept="image/*"
                                         multiple
                                         className="hidden"
@@ -114,7 +114,7 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                         <div className="space-y-4">
                             <div className="space-y-2">
                                 <label className="block text-sm font-bold text-slate-700">Tên sản phẩm *</label>
-                                <input 
+                                <input
                                     {...register('name')}
                                     disabled={!isEditing}
                                     className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all disabled:bg-slate-50 disabled:text-slate-600 font-medium text-slate-900"
@@ -123,7 +123,7 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                             </div>
                             <div className="space-y-2">
                                 <label className="block text-sm font-bold text-slate-700">Đường dẫn (Slug)</label>
-                                <input 
+                                <input
                                     {...register('slug')}
                                     disabled={!isEditing}
                                     className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all bg-slate-50 text-slate-500 text-sm font-mono"
@@ -136,7 +136,7 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
 
                 {/* 2. Options & Variants */}
                 <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-6">
-                    <ProductOptionEditor 
+                    <ProductOptionEditor
                         control={control}
                         register={register}
                         isEditing={isEditing}
@@ -152,14 +152,14 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                                         name="price"
                                         control={control}
                                         render={({ field }) => (
-                                            <input 
+                                            <input
                                                 type="text"
                                                 value={field.value ? Number(field.value).toLocaleString('vi-VN') : ''}
                                                 onChange={(e) => {
                                                     const rawValue = e.target.value.replace(/\./g, '').replace(/,/g, '');
                                                     const num = Number(rawValue) || 0;
                                                     field.onChange(num);
-                                                    
+
                                                     const orig = watch('originalPrice') || 0;
                                                     if (orig > 0 && num <= orig) {
                                                         const p = Math.round(((orig - num) / orig) * 100);
@@ -178,14 +178,14 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                                         name="originalPrice"
                                         control={control}
                                         render={({ field }) => (
-                                            <input 
+                                            <input
                                                 type="text"
                                                 value={field.value ? Number(field.value).toLocaleString('vi-VN') : ''}
                                                 onChange={(e) => {
                                                     const rawValue = e.target.value.replace(/\./g, '').replace(/,/g, '');
                                                     const num = Number(rawValue) || 0;
                                                     field.onChange(num);
-                                                    
+
                                                     const currentPrice = watch('price') || 0;
                                                     if (num > 0 && currentPrice <= num) {
                                                         const p = Math.round(((num - currentPrice) / num) * 100);
@@ -200,13 +200,13 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                                 </div>
                                 <div className="space-y-1.5 relative">
                                     <label className="block text-xs font-bold text-slate-600">% Giảm giá</label>
-                                    <input 
+                                    <input
                                         type="number"
                                         value={watch('percentDiscount') || 0}
                                         onChange={(e) => {
                                             const val = Number(e.target.value) || 0;
                                             setValue('percentDiscount', val, { shouldDirty: true });
-                                            
+
                                             const orig = watch('originalPrice') || 0;
                                             if (orig > 0) {
                                                 const newPrice = Math.round(orig * (1 - val / 100));
@@ -220,7 +220,7 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                                 </div>
                                 <div className="space-y-1.5">
                                     <label className="block text-xs font-bold text-slate-600">Tồn kho</label>
-                                    <input 
+                                    <input
                                         type="number"
                                         {...register('stockQuantity')}
                                         disabled={!isEditing}
@@ -231,7 +231,7 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                         </div>
                     )}
 
-                    <VariantPricingTable 
+                    <VariantPricingTable
                         control={control}
                         register={register}
                         setValue={setValue}
@@ -241,7 +241,7 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
 
                 {/* 3. Specs */}
                 <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-6">
-                    <SpecificationEditor 
+                    <SpecificationEditor
                         control={control}
                         register={register}
                         isEditing={isEditing}
@@ -255,9 +255,9 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                         name="description"
                         control={control}
                         render={({ field }) => (
-                            <RichTextEditor 
-                                value={field.value || ''} 
-                                onChange={field.onChange} 
+                            <RichTextEditor
+                                value={field.value || ''}
+                                onChange={field.onChange}
                                 disabled={!isEditing}
                             />
                         )}
@@ -271,13 +271,13 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
             <div className="w-full lg:w-[30%] lg:sticky lg:top-24 flex flex-col gap-4">
                 <div className="bg-slate-900 rounded-xl p-5 shadow-lg text-white">
                     <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-700 pb-2">Tóm tắt sản phẩm</h3>
-                    
+
                     <div className="space-y-4">
                         <div>
                             <span className="block text-xs text-slate-400 mb-1">Tên sản phẩm</span>
                             <p className="text-base font-bold text-white line-clamp-2">{name || 'Chưa có tên'}</p>
                         </div>
-                        
+
                         <div className="grid grid-cols-2 gap-4">
                             <div className="bg-slate-800 rounded-lg p-3">
                                 <span className="block text-[10px] text-slate-400 uppercase tracking-wider mb-1">Phân loại</span>

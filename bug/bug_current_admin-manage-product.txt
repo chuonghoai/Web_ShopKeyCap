@@ -1,5 +1,5 @@
-- Bị mất chức năng tự động tạo tổ hợp giữa các option khi tạo tùy chọn option mới
-
+- Không cần field price, originalPrice và percentDiscount trong create-product.request.ts, sửa lại thành 2 field minPrice và maxPrice. 2 Field này được tính toán dựa trên giá của các variants.
+- sửa field stockQuantity thành totalStockQuantity, bằng tổng số stockQuantity của các variant
 
 
 

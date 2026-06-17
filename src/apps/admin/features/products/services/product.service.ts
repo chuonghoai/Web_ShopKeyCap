@@ -8,8 +8,8 @@ import { ProductMockRepo } from "../repo/productMock.repo";
 export class ProductService {
     private readonly repo: ProductRepo;
 
-    constructor() {
-        this.repo = USE_MOCK ? new ProductMockRepo() : new ProductApiRepo();
+    constructor(productRepo: ProductRepo) {
+        this.repo = productRepo;
     }
 
     async getProducts(page: number, limit?: number, search?: string) {
@@ -21,11 +21,17 @@ export class ProductService {
     }
 
     async createProduct(request: CreateProductRequest) {
-        return this.repo.createProduct(request);
+        console.log('Data request: ', request);
+        const res = await this.repo.createProduct(request);
+        console.log('Data response: ', res);
+        return res;
     }
 
     async updateProduct(request: UpdateProductRequest) {
-        return this.repo.updateProduct(request);
+        console.log('Data request: ', request);
+        const res = this.repo.updateProduct(request);
+        console.log('Data response: ', res);
+        return res;
     }
 
     async deleteProduct(id: number) {
@@ -33,4 +39,4 @@ export class ProductService {
     }
 }
 
-export const productService = new ProductService();
+export const productService = new ProductService(USE_MOCK ? new ProductMockRepo() : new ProductApiRepo());

@@ -19,7 +19,7 @@ const mockProductList: AdminProductItem[] = [
         rating: 4.5,
         minPrice: 1500000,
         slug: "ban-phim-co-custom-akko-3068b-plus",
-        totalStockQuantity: 50
+        totalStockQuantity: 10
     },
     {
         id: 2,
@@ -97,7 +97,7 @@ export class ProductMockRepo implements ProductRepo {
             message: "Created",
             data: {
                 id: 999,
-                ...request, category: mockCategory, type: mockType, brand: mockBrand, rating: 0, minPrice: request.price ?? 0, maxPrice: request.price ?? 0, slug: request.slug || "mock-slug", options: request.options || [], variants: request.variants || []
+                ...request, category: mockCategory, type: mockType, brand: mockBrand, rating: 0, minPrice: request.minPrice ?? 0, maxPrice: request.maxPrice ?? 0, slug: request.slug || "mock-slug", options: request.options || [], variants: request.variants || []
             }
         };
     }
@@ -106,7 +106,7 @@ export class ProductMockRepo implements ProductRepo {
         return this.getProductById(request.id);
     }
 
-    async deleteProduct(_id: number): Promise<ApiResponse<boolean>> {
-        return { success: true, message: "Deleted", data: true };
+    async deleteProduct(_id: number): Promise<ApiResponse<null>> {
+        return { success: true, message: "Deleted", data: null };
     }
 }
