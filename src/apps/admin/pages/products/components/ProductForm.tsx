@@ -216,7 +216,7 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                                         disabled={!isEditing}
                                         className="w-full px-3 py-2 pr-6 text-sm rounded-md border border-slate-300 outline-none focus:border-blue-500 disabled:bg-slate-50 font-bold text-orange-600"
                                     />
-                                    <span className="absolute right-3 top-[26px] text-xs font-bold text-slate-400">%</span>
+                                    <span className="absolute right-3 top-6.5 text-xs font-bold text-slate-400">%</span>
                                 </div>
                                 <div className="space-y-1.5">
                                     <label className="block text-xs font-bold text-slate-600">Tồn kho</label>

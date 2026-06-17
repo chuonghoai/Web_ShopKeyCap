@@ -52,7 +52,6 @@ export const useProductDetailController = () => {
         }
     }, [productDetail, form, isNew]);
 
-    // Slug Auto Generation
     const nameValue = form.watch('name');
     useEffect(() => {
         if (isEditing && nameValue) {

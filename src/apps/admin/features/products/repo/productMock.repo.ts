@@ -9,29 +9,29 @@ const mockType = { id: 1, name: "Fullsize", slug: "fullsize" };
 const mockBrand = { id: 1, name: "Akko", slug: "akko" };
 
 const mockProductList: AdminProductItem[] = [
-    { 
-        id: 1, 
-        name: "Bàn phím cơ custom Akko 3068B Plus", 
-        imageUrl: "https://product.hstatic.net/200000889805/product/ooth-5-0-wireless-2-4ghz-hotswap-foam-tieu-am-akko-cs-jelly-pink-5pkuf_5b9c81513a474a26b6fc8b26f99ffe61_master.jpg", 
-        type: {id: 1, name: "Bàn phím cơ", slug: "ban-phim-co"}, 
-        category: {id: 1, name: "Bàn phím cơ", slug: "ban-phim-co"}, 
-        brand: {id: 1, name: "Akko", slug: "akko"}, 
-        rating: 4.5, 
-        minPrice: 1500000, 
-        slug: "ban-phim-co-custom-akko-3068b-plus", 
-        totalStockQuantity: 50 
+    {
+        id: 1,
+        name: "Bàn phím cơ custom Akko 3068B Plus",
+        imageUrl: "https://product.hstatic.net/200000889805/product/ooth-5-0-wireless-2-4ghz-hotswap-foam-tieu-am-akko-cs-jelly-pink-5pkuf_5b9c81513a474a26b6fc8b26f99ffe61_master.jpg",
+        type: { id: 1, name: "Bàn phím cơ", slug: "ban-phim-co" },
+        category: { id: 1, name: "Bàn phím cơ", slug: "ban-phim-co" },
+        brand: { id: 1, name: "Akko", slug: "akko" },
+        rating: 4.5,
+        minPrice: 1500000,
+        slug: "ban-phim-co-custom-akko-3068b-plus",
+        totalStockQuantity: 50
     },
-    { 
-        id: 2, 
-        name: "Bàn phím kèm chuột tai mèo Mimi Plus", 
-        imageUrl: "https://bizweb.dktcdn.net/thumb/1024x1024/100/450/808/products/09d25459-d55c-49b6-946e-b7936f95d107.jpg?v=1675152844267", 
-        type: {id: 2, name: "Keycap set", slug: "keycap-set"}, 
-        category: {id: 2, name: "Keycap", slug: "keycap"}, 
-        brand: {id: 2, name: "Logitech", slug: "logitech"}, 
-        rating: 5, 
-        minPrice: 3000000, 
-        slug: "ban-phim-kem-chuot-tai-meo-mimi-plus", 
-        totalStockQuantity: 10 
+    {
+        id: 2,
+        name: "Bàn phím kèm chuột tai mèo Mimi Plus",
+        imageUrl: "https://bizweb.dktcdn.net/thumb/1024x1024/100/450/808/products/09d25459-d55c-49b6-946e-b7936f95d107.jpg?v=1675152844267",
+        type: { id: 2, name: "Keycap set", slug: "keycap-set" },
+        category: { id: 2, name: "Keycap", slug: "keycap" },
+        brand: { id: 2, name: "Logitech", slug: "logitech" },
+        rating: 5,
+        minPrice: 3000000,
+        slug: "ban-phim-kem-chuot-tai-meo-mimi-plus",
+        totalStockQuantity: 10
     }
 ];
 
@@ -67,11 +67,11 @@ export class ProductMockRepo implements ProductRepo {
                 options: [
                     {
                         name: "Màu sắc",
-                        values: ["Đỏ", "Xanh", "Vàng"],
+                        values: ["Đỏ"],
                     },
                     {
                         name: 'Switch',
-                        values: ['Cherry Red', 'Cherry Blue', 'Cherry Brown'],
+                        values: ['Cherry Red'],
                     }
                 ],
                 variants: [
@@ -95,9 +95,10 @@ export class ProductMockRepo implements ProductRepo {
         return {
             success: true,
             message: "Created",
-            data: { 
-                id: 999, 
-                ...request, category: mockCategory, type: mockType, brand: mockBrand, rating: 0, minPrice: request.price ?? 0, maxPrice: request.price ?? 0, slug: request.slug || "mock-slug", options: request.options || [], variants: request.variants || [] }
+            data: {
+                id: 999,
+                ...request, category: mockCategory, type: mockType, brand: mockBrand, rating: 0, minPrice: request.price ?? 0, maxPrice: request.price ?? 0, slug: request.slug || "mock-slug", options: request.options || [], variants: request.variants || []
+            }
         };
     }
 
