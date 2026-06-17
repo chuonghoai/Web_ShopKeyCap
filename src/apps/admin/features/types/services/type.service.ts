@@ -1,13 +1,18 @@
-import { typeApiRepo } from "../repos/typeApi.repo";
-import { typeMockRepo } from "../repos/typeMock.repo";
-import type { Type } from "../models/type.model";
 import { USE_MOCK } from "../../../../../core/config/useMock.config";
+import type { TypeRepo } from "../repos/type.repo";
+import { TypeApiRepo } from "../repos/typeApi.repo";
+import { TypeMockRepo } from "../repos/typeMock.repo";
 
-export const typeService = {
-    getTypes: async (): Promise<Type[]> => {
-        if (USE_MOCK) {
-            return typeMockRepo.getTypes();
-        }
-        return typeApiRepo.getTypes();
+export class TypeService {
+    private readonly repo: TypeRepo;
+
+    constructor(typeRepo: TypeRepo) {
+        this.repo = typeRepo;
     }
-};
+
+    async getTypes() {
+        return this.repo.getTypes();
+    }
+}
+
+export const typeService = new TypeService(USE_MOCK ? new TypeMockRepo() : new TypeApiRepo());

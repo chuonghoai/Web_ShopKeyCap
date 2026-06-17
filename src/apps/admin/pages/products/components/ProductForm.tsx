@@ -7,6 +7,7 @@ import { RichTextEditor } from "../../../components/rich-text-editor/RichTextEdi
 import { ProductOptionEditor } from "./ProductOptionEditor";
 import { SpecificationEditor } from "./SpecificationEditor";
 import { VariantPricingTable } from "./VariantPricingTable";
+import { ProductClassificationSection } from "./ProductClassificationSection";
 import type { ProductVariant } from "../../../../client/features/products/model/variant.model";
 
 interface Props {
@@ -129,10 +130,11 @@ export const ProductForm: React.FC<Props> = ({ form, isEditing }) => {
                                     className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all bg-slate-50 text-slate-500 text-sm font-mono"
                                 />
                             </div>
-                            {/* categoryId and typeId inputs should be here but we'll leave them as they might be handled elsewhere or added later, wait, they were missing? No, they might be in Product Detail. Let's not remove them if they existed, but they didn't exist in the previous ProductForm.tsx either! */}
                         </div>
                     </div>
                 </div>
+
+                <ProductClassificationSection control={control} isEditing={isEditing} />
 
                 {/* 2. Options & Variants */}
                 <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-6">

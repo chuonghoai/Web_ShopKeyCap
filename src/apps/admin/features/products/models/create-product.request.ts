@@ -3,9 +3,11 @@ import type { Specifications } from "../../../../client/features/products/model/
 export interface CreateProductRequest {
     name: string;
     slug?: string;
+
     categoryId: number;
     typeId: number;
     brandId: number;
+    
     description: string;
     imageUrl: string;
     thumbnailUrl: string[];

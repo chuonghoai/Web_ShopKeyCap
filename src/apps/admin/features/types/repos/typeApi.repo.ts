@@ -1,10 +1,10 @@
 import { apiClient } from "../../../../../core/api/apiClient";
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import type { Type } from "../models/type.model";
+import type { TypeRepo } from "./type.repo";
 
-export const typeApiRepo = {
-    getTypes: async (): Promise<Type[]> => {
-        const response = await apiClient.get<ApiResponse<Type[]>>("/admin/types");
-        return response.data;
+export class TypeApiRepo implements TypeRepo {
+    async getTypes(): Promise<ApiResponse<Type[]>> {
+        return apiClient.get<ApiResponse<Type[]>>("/admin/types");
     }
-};
+}

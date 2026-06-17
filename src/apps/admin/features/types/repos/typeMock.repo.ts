@@ -1,16 +1,20 @@
+import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import type { Type } from "../models/type.model";
+import type { TypeRepo } from "./type.repo";
 
 const mockTypes: Type[] = [
-    { id: 1, name: "Fullsize", slug: "fullsize" },
-    { id: 2, name: "TKL", slug: "tkl" },
-    { id: 3, name: "75%", slug: "75" },
-    { id: 4, name: "60%", slug: "60" }
+    { id: 1, name: "Gaming", slug: "gaming" },
+    { id: 2, name: "Văn phòng", slug: "van-phong" },
 ];
 
-export const typeMockRepo = {
-    getTypes: async (): Promise<Type[]> => {
+export class TypeMockRepo implements TypeRepo {
+    async getTypes(): Promise<ApiResponse<Type[]>> {
         return new Promise(resolve => {
-            setTimeout(() => resolve(mockTypes), 500);
+            setTimeout(() => resolve({
+                success: true,
+                message: "Success",
+                data: mockTypes,
+            }), 500);
         });
     }
-};
+}

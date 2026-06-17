@@ -1,10 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { typeService } from "../../services/type.service";
-
-export const typeKeys = {
-    all: ['types'] as const,
-    lists: () => [...typeKeys.all, 'list'] as const,
-};
+import { typeKeys } from "../type.keys";
 
 export const useTypesQuery = () => {
     return useQuery({

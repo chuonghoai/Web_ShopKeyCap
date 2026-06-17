@@ -34,12 +34,13 @@ export const useProductDetailController = () => {
             slug: '',
             description: '',
             imageUrl: '',
-            options: [],
-            variants: [],
-            price: 0,
-            originalPrice: 0,
-            percentDiscount: 0,
-            stockQuantity: 0,
+            thumbnailUrl: [] as string[],
+            options: [] as any[],
+            variants: [] as any[],
+            specifications: [] as any[],
+            brandId: 0,
+            categoryId: 0,
+            typeId: 0,
         }
     });
 
@@ -49,6 +50,10 @@ export const useProductDetailController = () => {
                 ...productDetail,
                 options: productDetail.options || [],
                 variants: productDetail.variants || [],
+                specifications: productDetail.specifications || [],
+                brandId: productDetail.brand?.id ?? 0,
+                categoryId: productDetail.category?.id ?? 0,
+                typeId: productDetail.type?.id ?? 0,
             });
         }
     }, [productDetail, form, isNew]);
@@ -90,13 +95,35 @@ export const useProductDetailController = () => {
             return;
         }
 
-        const { price, originalPrice, percentDiscount, stockQuantity, excludedVariantKeys: _ex, ...restData } = data as any;
+        const brandId = Number(data.brandId) || 0;
+        const categoryId = Number(data.categoryId) || 0;
+        const typeId = Number(data.typeId) || 0;
+
+        if (!brandId || !categoryId || !typeId) {
+            toast("Vui lòng chọn đầy đủ Thương hiệu, Danh mục và Loại sản phẩm.", "error");
+            return;
+        }
+
         const payload = {
-            ...restData,
+            name: data.name,
+            slug: data.slug,
+
+            categoryId,
+            brandId,
+            typeId,
+
+            description: data.description,
+            imageUrl: data.imageUrl,
+            thumbnailUrl: data.thumbnailUrl || [],
+            specifications: data.specifications || [],
+
+            options: data.options || [],
+
+            variants: activeVariants,
+
             minPrice,
             maxPrice,
             totalStockQuantity,
-            variants: activeVariants
         };
 
         if (isNew) {

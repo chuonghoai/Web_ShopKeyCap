@@ -1,4 +1,6 @@
+import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import type { Category } from "../models/category.model";
+import type { CategoryRepo } from "./category.repo";
 
 const mockCategories: Category[] = [
     { id: 1, name: "Bàn phím cơ", slug: "ban-phim-co" },
@@ -7,10 +9,14 @@ const mockCategories: Category[] = [
     { id: 4, name: "Phụ kiện", slug: "phu-kien" }
 ];
 
-export const categoryMockRepo = {
-    getCategories: async (): Promise<Category[]> => {
+export class CategoryMockRepo implements CategoryRepo {
+    async getCategories(): Promise<ApiResponse<Category[]>> {
         return new Promise(resolve => {
-            setTimeout(() => resolve(mockCategories), 500);
+            setTimeout(() => resolve({
+                success: true,
+                message: "Success",
+                data: mockCategories,
+            }), 500);
         });
     }
-};
+}
