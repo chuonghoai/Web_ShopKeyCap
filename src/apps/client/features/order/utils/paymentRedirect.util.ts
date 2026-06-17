@@ -13,26 +13,53 @@ export class PaymentRedirectResolverRegistry {
         this.resolvers.push(resolver);
     }
 
+    static parseOrderIdSafe(val: string | null): number | null {
+        if (!val) return null;
+        const num = Number(val);
+        if (isNaN(num) || num <= 0 || !Number.isInteger(num)) return null;
+        return num;
+    }
+kw
     static resolveOrderId(searchParams: URLSearchParams): number | null {
+        const globalOrderId = this.parseOrderIdSafe(searchParams.get('orderId'));
+        if (globalOrderId !== null) {
+            return globalOrderId;
+        }
+
         for (const resolver of this.resolvers) {
             if (resolver.canResolve(searchParams)) {
                 return resolver.resolveOrderId(searchParams);
             }
         }
 
-        const val = searchParams.get('orderId');
-        return val && !isNaN(Number(val)) ? Number(val) : null;
+        return null;
     }
 }
 
 PaymentRedirectResolverRegistry.register({
     providerName: EPaymentMethod.MOMO,
     canResolve: (params) => params.get('partnerCode') === EPaymentMethod.MOMO || params.has('requestId'),
-    resolveOrderId: (params) => params.get('orderId') ? Number(params.get('orderId')) : null
+    resolveOrderId: (params) => {
+        const orderIdParam = params.get('orderId');
+        if (!orderIdParam) return null;
+        const parts = orderIdParam.split('_');
+        return parts.length >= 2 ? PaymentRedirectResolverRegistry.parseOrderIdSafe(parts[1]) : null;
+    }
 });
 
 PaymentRedirectResolverRegistry.register({
     providerName: EPaymentMethod.VNPAY,
     canResolve: (params) => params.has('vnp_TxnRef'),
-    resolveOrderId: (params) => params.get('vnp_TxnRef') ? Number(params.get('vnp_TxnRef')) : null
+    resolveOrderId: (params) => {
+        const txnRef = params.get('vnp_TxnRef');
+        if (!txnRef) return null;
+        const parts = txnRef.split('_');
+        return parts.length >= 2 ? PaymentRedirectResolverRegistry.parseOrderIdSafe(parts[1]) : null;
+    }
+});
+
+PaymentRedirectResolverRegistry.register({
+    providerName: EPaymentMethod.PAYPAL,
+    canResolve: (params) => params.has('token') && params.has('PayerID'),
+    resolveOrderId: () => null
 });

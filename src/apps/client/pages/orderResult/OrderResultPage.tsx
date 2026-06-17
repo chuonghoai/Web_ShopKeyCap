@@ -146,7 +146,7 @@ const OrderResultPage: React.FC = () => {
                         Tiếp tục mua hàng
                     </Link>
                     <Link
-                        to='/user/orders/tracking'
+                        to={`/user/orders/${controller.orderId}`}
                         className="px-8 py-3 bg-white text-slate-700 font-medium rounded-xl border border-slate-300 hover:bg-slate-50 transition-colors"
                     >
                         Đơn hàng của bạn
