@@ -8,4 +8,4 @@
  *
  * Thay đổi giá trị USE_MOCK để chuyển đổi chế độ toàn bộ project.
  */
-export const USE_MOCK: boolean = false;
+export const USE_MOCK: boolean = true;
