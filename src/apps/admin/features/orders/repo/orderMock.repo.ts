@@ -7,16 +7,40 @@ import { EOrderStatus } from "../../../../client/features/order/enums/orderStatu
 import { EPaymentMethod } from "../../../../client/features/order/enums/paymentMethod.enum";
 
 export class OrderMockRepo implements OrderRepo {
-  async getOrders(page: number, limit: number = 20, _keyword?: string): Promise<ApiResponse<OrderAdminModel[]>> {
+  async getOrders(page: number, limit: number = 20, _keyword?: string, status?: EOrderStatus): Promise<ApiResponse<OrderAdminModel[]>> {
+    let filteredOrders = [...mockOrdersAdmin];
+
+    if (status) {
+      filteredOrders = filteredOrders.filter(o => o.status === status);
+    } else {
+      filteredOrders = filteredOrders.filter(o =>
+        o.status === EOrderStatus.PENDING ||
+        o.status === EOrderStatus.PREPARING ||
+        o.status === EOrderStatus.SHIPPING
+      );
+
+      const statusWeight: Record<string, number> = {
+        [EOrderStatus.PENDING]: 1,
+        [EOrderStatus.PREPARING]: 2,
+        [EOrderStatus.SHIPPING]: 3
+      };
+
+      filteredOrders.sort((a, b) => {
+        const weightA = statusWeight[a.status as string] || 99;
+        const weightB = statusWeight[b.status as string] || 99;
+        return weightA - weightB;
+      });
+    }
+
     return Promise.resolve({
       success: true,
       message: "Success",
-      data: mockOrdersAdmin,
+      data: filteredOrders,
       pagination: {
         page,
         pageSize: limit,
-        totalItems: 4,
-        totalPages: 100,
+        totalItems: filteredOrders.length,
+        totalPages: Math.ceil(filteredOrders.length / limit) || 1,
       }
     });
   }
@@ -33,6 +57,16 @@ export class OrderMockRepo implements OrderRepo {
     const order = mockOrdersAdmin.find(order => order.id === request.id);
     if (order) {
       order.status = request.status;
+
+      order.statusHistory.push({
+        id: 999,
+        orderId: request.id,
+        fromStatus: order.status,
+        toStatus: request.status,
+        note: "cập nhật something",
+        createdAt: new Date().toISOString(),
+        createdBy: "Admin",
+      })
     }
     return Promise.resolve({
       success: true,
@@ -68,7 +102,7 @@ export const mockOrdersAdmin: OrderAdminModel[] = [
     id: 1,
     totalAmount: 65000,
     shippingFee: 0,
-    status: EOrderStatus.PENDING,
+    status: EOrderStatus.SUCCESS,
     paymentMethod: EPaymentMethod.MOMO,
     createdAt: '2026-06-18T08:30:00Z',
     address: 'Trường Đại học Sư phạm Kỹ thuật TP.HCM',
@@ -216,7 +250,7 @@ export const mockOrdersAdmin: OrderAdminModel[] = [
     id: 4,
     totalAmount: 110000,
     shippingFee: 15000,
-    status: EOrderStatus.PENDING,
+    status: EOrderStatus.CANCELLED,
     paymentMethod: EPaymentMethod.PAYPAL,
     createdAt: '2026-06-18T20:10:00Z',
     address: 'Quận 9, TP.HCM',
@@ -230,6 +264,60 @@ export const mockOrdersAdmin: OrderAdminModel[] = [
         createdAt: '2026-06-18T20:10:00Z',
         createdBy: null,
       },
+      {
+        id: 106,
+        orderId: 4,
+        fromStatus: EOrderStatus.PENDING,
+        toStatus: EOrderStatus.CANCELLED,
+        note: 'Hủy đơn hàng',
+        createdAt: '2026-06-18T20:10:00Z',
+        createdBy: null,
+      },
+    ],
+    items: [
+      {
+        id: 1005,
+        productId: 205,
+        productName: 'Cơm chiên xá xíu kiểu Hồng Kông',
+        productImage: 'https://example.com/com-chien.jpg',
+        quantity: 1,
+        price: 70000,
+        attributes: [
+          {
+            name: 'Ghi chú',
+            value: 'Nhiều tương ớt',
+          },
+        ],
+      },
+      {
+        id: 1006,
+        productId: 206,
+        productName: 'Snack FamilyMart',
+        productImage: 'https://example.com/snack.jpg',
+        quantity: 2,
+        price: 20000,
+        attributes: [],
+      },
+    ],
+  },
+  {
+    id: 5,
+    totalAmount: 110000,
+    shippingFee: 15000,
+    status: EOrderStatus.PENDING,
+    paymentMethod: EPaymentMethod.PAYPAL,
+    createdAt: '2026-06-18T20:10:00Z',
+    address: 'Quận 9, TP.HCM',
+    statusHistory: [
+      {
+        id: 105,
+        orderId: 4,
+        fromStatus: null,
+        toStatus: EOrderStatus.PENDING,
+        note: 'Chờ nhà hàng xác nhận',
+        createdAt: '2026-06-18T20:10:00Z',
+        createdBy: null,
+      }
     ],
     items: [
       {

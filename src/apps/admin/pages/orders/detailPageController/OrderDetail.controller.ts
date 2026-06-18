@@ -13,7 +13,7 @@ export const useOrderDetailController = () => {
     const orderId = Number(id);
     const navigate = useNavigate();
     const toast = useToastStore((state: any) => state.addToast);
-    
+
     const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
     const isInvalidId = isNaN(orderId) || orderId <= 0;
@@ -21,7 +21,7 @@ export const useOrderDetailController = () => {
     const { data: orderRes, isLoading, error } = useOrderDetailQuery(orderId);
     const order = orderRes?.data;
     useDocumentTitle(order?.id?.toString() + "-" + (order?.items[0]?.productName || ""));
-    
+
     const updateStatusMutation = useUpdateOrderStatusMutation();
 
     const handleUpdateStatus = () => {
@@ -46,8 +46,9 @@ export const useOrderDetailController = () => {
         if (!order) return;
         try {
             generateInvoicePDF(order);
-        } catch (error) {
-            toast("Không thể tạo hóa đơn", "error");
+        } catch (error: any) {
+            toast(error?.message || error?.data?.message || "Không thể tạo hóa đơn", "error");
+            console.log(error)
         }
     };
 

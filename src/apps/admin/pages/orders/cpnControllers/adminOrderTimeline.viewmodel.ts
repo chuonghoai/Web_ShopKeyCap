@@ -19,6 +19,7 @@ export const useAdminOrderTimelineViewModel = (history: OrderStatusHistoryModel[
     });
 
     return {
+        sortedHistory,
         timelineItems
     };
 };

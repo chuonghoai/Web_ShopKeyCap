@@ -37,51 +37,14 @@ export const OrderDetailPage: React.FC = () => {
 
     return (
         <div className="w-full pb-20">
-            {/* Header Actions */}
-            <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <button 
+            <div className="mb-6 flex items-center justify-between">
+                <button
                     onClick={() => navigate('/admin/orders')}
                     className="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors w-fit"
                 >
                     <ChevronLeft className="w-5 h-5" />
                     <span className="font-medium">Quay lại danh sách</span>
                 </button>
-                
-                <div className="flex flex-wrap items-center gap-3">
-                    {order.status === EOrderStatus.PENDING && (
-                        <button
-                            onClick={() => setIsCancelModalOpen(true)}
-                            className="px-4 py-2 bg-white border border-red-200 text-red-600 hover:bg-red-50 rounded-lg font-medium text-sm transition-colors"
-                        >
-                            Hủy đơn hàng
-                        </button>
-                    )}
-
-                    {order.status === EOrderStatus.SUCCESS && (
-                        <button
-                            onClick={handlePrintInvoice}
-                            className="px-4 py-2 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-sm transition-colors flex items-center gap-2"
-                        >
-                            <span className="material-icons-outlined text-[18px]">print</span>
-                            In hóa đơn
-                        </button>
-                    )}
-
-                    {nextStatus && (
-                        <button
-                            onClick={handleUpdateStatus}
-                            disabled={isUpdatingStatus}
-                            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium text-sm transition-colors disabled:opacity-50 flex items-center gap-2 shadow-sm shadow-blue-600/20"
-                        >
-                            {isUpdatingStatus ? (
-                                <span className="material-icons-outlined animate-spin text-[18px]">autorenew</span>
-                            ) : (
-                                <span className="material-icons-outlined text-[18px]">arrow_forward</span>
-                            )}
-                            Chuyển sang: {nextStatusLabel}
-                        </button>
-                    )}
-                </div>
             </div>
 
             <div className="mb-8">
@@ -95,15 +58,20 @@ export const OrderDetailPage: React.FC = () => {
                 <p className="text-slate-500 text-sm">Quản lý trạng thái và thông tin chi tiết</p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="mb-6">
+                <AdminOrderTimeline history={order.statusHistory} />
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                 <div className="lg:col-span-2 flex flex-col gap-6">
-                    {/* Danh sách sản phẩm */}
+                    <AdminDeliveryInfoCard address={order.address} />
+
                     <div className="bg-white rounded-2xl border border-slate-200 p-6">
                         <h3 className="text-base font-bold text-slate-900 mb-5 flex items-center gap-2">
                             <span className="material-icons-outlined text-slate-400">inventory_2</span>
                             Sản phẩm ({order.items.length})
                         </h3>
-                        
+
                         <div className="flex flex-col gap-4">
                             {order.items.map((item) => (
                                 <div key={item.id} className="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
@@ -124,42 +92,59 @@ export const OrderDetailPage: React.FC = () => {
                             ))}
                         </div>
                     </div>
-
-                    <AdminDeliveryInfoCard address={order.address} />
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <AdminOrderSummaryCard 
-                        subTotal={order.totalAmount - order.shippingFee} 
-                        shippingFee={order.shippingFee} 
-                        totalAmount={order.totalAmount} 
+                    <AdminOrderSummaryCard
+                        subTotal={order.totalAmount - order.shippingFee}
+                        shippingFee={order.shippingFee}
+                        totalAmount={order.totalAmount}
+                        paymentConfig={paymentConfig}
                     />
 
-                    {/* Payment Method */}
-                    <div className="bg-white rounded-2xl border border-slate-200 p-6">
-                        <h3 className="text-base font-bold text-slate-900 mb-5 flex items-center gap-2">
-                            <span className="material-icons-outlined text-slate-400">payment</span>
-                            Phương thức thanh toán
-                        </h3>
-                        <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100">
-                            <div className="w-10 h-10 bg-white rounded-lg border border-slate-200 flex items-center justify-center shrink-0 text-slate-600">
-                                <span className="material-icons-outlined">{paymentConfig.fallbackMaterialIcon}</span>
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <h4 className="text-slate-900 font-medium text-sm">{paymentConfig.title}</h4>
-                                <p className="text-xs text-slate-500 mt-0.5">{paymentConfig.description}</p>
-                            </div>
-                        </div>
-                    </div>
+                    <div className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col gap-3">
+                        {nextStatus && (
+                            <button
+                                onClick={handleUpdateStatus}
+                                disabled={isUpdatingStatus}
+                                className="w-full justify-center px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium text-sm transition-colors disabled:opacity-50 flex items-center gap-2 shadow-sm shadow-blue-600/20"
+                            >
+                                {isUpdatingStatus ? (
+                                    <span className="material-icons-outlined animate-spin text-[18px]">autorenew</span>
+                                ) : (
+                                    <span className="material-icons-outlined text-[18px]">arrow_forward</span>
+                                )}
+                                {nextStatusLabel}
+                            </button>
+                        )}
 
-                    <AdminOrderTimeline history={order.statusHistory} />
+                        {order.status === EOrderStatus.PENDING && (
+                            <button
+                                onClick={() => setIsCancelModalOpen(true)}
+                                className="w-full justify-center px-6 py-2.5 bg-white border border-red-200 text-red-600 hover:bg-red-50 rounded-xl font-medium text-sm transition-colors flex items-center gap-2"
+                            >
+                                <span className="material-icons-outlined text-[18px]">cancel</span>
+                                Hủy đơn hàng
+                            </button>
+                        )}
+
+                        {order.status === EOrderStatus.SUCCESS && (
+                            <button
+                                onClick={handlePrintInvoice}
+                                className="w-full justify-center px-6 py-2.5 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 rounded-xl font-medium text-sm transition-colors flex items-center gap-2"
+                            >
+                                <span className="material-icons-outlined text-[18px]">print</span>
+                                In hóa đơn
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
 
-            <AdminCancelOrderModal 
-                isOpen={isCancelModalOpen} 
-                onClose={() => setIsCancelModalOpen(false)} 
-                orderId={orderId} 
+            <AdminCancelOrderModal
+                isOpen={isCancelModalOpen}
+                onClose={() => setIsCancelModalOpen(false)}
+                orderId={orderId}
             />
         </div>
     );
