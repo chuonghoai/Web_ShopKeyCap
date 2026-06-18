@@ -42,7 +42,7 @@ export class OrderApiRepo implements OrderRepo {
      * Mô tả:
      *  - Cập nhật trạng thái đơn hàng id, với status mới là request.status
      */
-    updateOrderStatus(request: UpdateOrderStatusRequest): Promise<ApiResponse<OrderAdminModel>> {
+    async updateOrderStatus(request: UpdateOrderStatusRequest): Promise<ApiResponse<OrderAdminModel>> {
         return apiClient.patch<ApiResponse<OrderAdminModel>>(`${ADMIN_ORDERS_ENDPOINT}/${request.id}/status`, { status: request.status });
     }
 
@@ -57,7 +57,7 @@ export class OrderApiRepo implements OrderRepo {
      *  - Hủy đơn hàng id với lý do request.reason
      *  - Chỉ hủy được đơn hàng ở trạng thái PENDING
      */
-    cancelOrder(request: CancelOrderRequest): Promise<ApiResponse<OrderAdminModel>> {
+    async cancelOrder(request: CancelOrderRequest): Promise<ApiResponse<OrderAdminModel>> {
         return apiClient.patch<ApiResponse<OrderAdminModel>>(`${ADMIN_ORDERS_ENDPOINT}/${request.id}/cancel`, { reason: request.reason });
     }
 }
