@@ -4,6 +4,7 @@ import { OrderApiRepo } from "../repo/orderApi.repo";
 import { OrderMockRepo } from "../repo/orderMock.repo";
 import type { UpdateOrderStatusRequest } from "../models/update-order-status.request";
 import type { CancelOrderRequest } from "../models/cancel-order.request";
+import type { EOrderStatus } from "../../../../client/features/order/enums/orderStatus.enum";
 
 export class OrderService {
     private readonly repo: OrderRepo;
@@ -12,8 +13,8 @@ export class OrderService {
         this.repo = orderRepo;
     }
 
-    async getOrders(page: number, limit?: number, keyword?: string) {
-        return this.repo.getOrders(page, limit, keyword);
+    async getOrders(page: number, limit?: number, keyword?: string, status?: EOrderStatus) {
+        return this.repo.getOrders(page, limit, keyword, status);
     }
 
     async getOrderDetail(id: number) {
