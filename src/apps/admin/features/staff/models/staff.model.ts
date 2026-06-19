@@ -1,6 +1,6 @@
 import type { ERole } from "../../../../../core/constants/role.constant";
 
-export interface staffModel {
+export interface StaffModel {
     id: number;
     name: number;
     email: string;
