@@ -7,6 +7,7 @@ import { ProductListPage } from "../pages/products/ProductListPage";
 import { ProductDetailPage } from "../pages/products/ProductDetailPage";
 import { OrderListPage } from "../pages/orders/OrderListPage";
 import { OrderDetailPage } from "../pages/orders/OrderDetailPage";
+import { StaffManagementPage } from "../pages/staff/StaffManagementPage";
 
 const AdminDashboardPage = () => {
     return (
@@ -30,6 +31,7 @@ export const adminRoutes: RouteObject[] = [
             { path: "/admin/products/:id", element: <ProductDetailPage /> },
             { path: "/admin/orders", element: <OrderListPage /> },
             { path: "/admin/orders/:id", element: <OrderDetailPage /> },
+            { path: "/admin/staffs", element: <StaffManagementPage /> },
         ]
     }
 ];

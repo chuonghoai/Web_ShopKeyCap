@@ -8,7 +8,7 @@ import { ERole } from "../../../../../core/constants/role.constant";
 const mockStaffList: StaffModel[] = [
     {
         id: 1,
-        name: 1,
+        name: "alice",
         email: "admin@example.com",
         phonenumber: "0123456789",
         dob: new Date("1990-01-01"),
@@ -19,7 +19,7 @@ const mockStaffList: StaffModel[] = [
     },
     {
         id: 2,
-        name: 2,
+        name: "bob",
         email: "staff@example.com",
         phonenumber: "0987654321",
         dob: new Date("1995-05-05"),
@@ -65,6 +65,7 @@ export class StaffMockRepo implements StaffRepo {
             data: {
                 id: 999,
                 createAt: Date.now(),
+                role: ERole.STAFF,
                 ...request
             }
         };

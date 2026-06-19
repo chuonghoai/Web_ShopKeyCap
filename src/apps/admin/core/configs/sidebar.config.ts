@@ -17,13 +17,13 @@ export const ADMIN_SIDEBAR_MENU: SidebarMenuItem[] = [
         path: '/admin/products'
     },
     {
-        key: 'users',
-        label: 'Người dùng',
-        path: '/admin/users'
-    },
-    {
         key: 'orders',
         label: 'Đơn hàng',
         path: '/admin/orders'
+    },
+    {
+        key: 'staffs',
+        label: 'Nhân viên',
+        path: '/admin/staffs'
     }
 ];

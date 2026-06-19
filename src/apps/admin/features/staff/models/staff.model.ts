@@ -2,7 +2,7 @@ import type { ERole } from "../../../../../core/constants/role.constant";
 
 export interface StaffModel {
     id: number;
-    name: number;
+    name: string;
     email: string;
     phonenumber: string;
     dob: Date;
