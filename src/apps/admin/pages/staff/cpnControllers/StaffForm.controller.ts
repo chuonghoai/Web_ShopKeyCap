@@ -44,7 +44,7 @@ export const useStaffFormController = ({ mode, initialData, onSubmit }: UseStaff
 
     const handleFormSubmit = form.handleSubmit((data: any) => {
         const payload = {
-            name: Number(data.name),
+            name: data.name,
             email: data.email,
             phonenumber: data.phonenumber,
             dob: new Date(data.dob),

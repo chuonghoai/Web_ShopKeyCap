@@ -34,7 +34,7 @@ export class StaffMockRepo implements StaffRepo {
     async getStaffs(page: number, limit: number = 10, search?: string): Promise<ApiResponse<StaffModel[]>> {
         let filtered = mockStaffList;
         if (search) {
-            filtered = mockStaffList.filter(s => s.email.toLowerCase().includes(search.toLowerCase()) || String(s.name).includes(search));
+            filtered = mockStaffList.filter(s => s.email.toLowerCase().includes(search.toLowerCase()) || s.name.toLowerCase().includes(search.toLowerCase()));
         }
         return {
             success: true,
