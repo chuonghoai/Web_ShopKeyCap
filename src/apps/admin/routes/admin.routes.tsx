@@ -9,14 +9,7 @@ import { OrderListPage } from "../pages/orders/OrderListPage";
 import { OrderDetailPage } from "../pages/orders/OrderDetailPage";
 import { StaffManagementPage } from "../pages/staff/StaffManagementPage";
 
-const AdminDashboardPage = () => {
-    return (
-        <div className="space-y-4">
-            <h1 className="text-2xl font-bold">Welcome to Admin Dashboard</h1>
-            <p className="text-muted-foreground">Chọn chức năng từ thanh menu bên trái.</p>
-        </div>
-    );
-};
+import { DashboardPage } from "../pages/dashboard";
 
 export const adminRoutes: RouteObject[] = [
     {
@@ -26,7 +19,7 @@ export const adminRoutes: RouteObject[] = [
             </AuthGuard>
         ),
         children: [
-            { path: "/admin", element: <AdminDashboardPage /> },
+            { path: "/admin", element: <DashboardPage /> },
             { path: "/admin/products", element: <ProductListPage /> },
             { path: "/admin/products/:id", element: <ProductDetailPage /> },
             { path: "/admin/orders", element: <OrderListPage /> },
