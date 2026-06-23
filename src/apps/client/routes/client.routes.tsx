@@ -14,6 +14,7 @@ import OrderListPage from "../pages/user/orders/OrderListPage";
 import OrderDetailPage from "../pages/user/orders/OrderDetailPage";
 import { OrderReviewsPage } from "../pages/user/orderReviews";
 import { ERole } from "../../../core/constants/role.constant";
+import AddressPage from "../pages/user/address/AddressPage";
 
 export const clientRoutes: RouteObject[] = [
     {
@@ -54,6 +55,7 @@ export const clientRoutes: RouteObject[] = [
                             { path: "orders", element: <OrderListPage /> },
                             { path: "orders/:id", element: <OrderDetailPage /> },
                             { path: "orders/:id/reviews", element: <OrderReviewsPage /> },
+                            { path: "addresses", element: <AddressPage /> },
                         ]
                     },
                     { path: "/cart", element: <CartPage /> },
