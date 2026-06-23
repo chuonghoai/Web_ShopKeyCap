@@ -25,6 +25,7 @@ export interface OrderItemModel {
     quantity: number;
     price: number;
     attributes: OrderItemAttribute[];
+    reviewed: boolean;
 }
 
 export interface OrderModel {

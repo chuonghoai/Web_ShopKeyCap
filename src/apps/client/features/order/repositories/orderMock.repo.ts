@@ -42,7 +42,8 @@ const MOCK_ORDERS: OrderModel[] = [
                 productImage: "https://placehold.co/150x150/e2e8f0/64748b?text=Akko",
                 quantity: 2,
                 price: 100000,
-                attributes: [{ name: "Màu sắc", value: "Botanical" }, { name: "Profile", value: "Cherry" }]
+                attributes: [{ name: "Màu sắc", value: "Botanical" }, { name: "Profile", value: "Cherry" }],
+                reviewed: false
             },
             {
                 id: 2,
@@ -51,7 +52,8 @@ const MOCK_ORDERS: OrderModel[] = [
                 productImage: "https://placehold.co/150x150/e2e8f0/64748b?text=Keycap",
                 quantity: 1,
                 price: 90000,
-                attributes: [{ name: "Màu sắc", value: "Đen" }]
+                attributes: [{ name: "Màu sắc", value: "Đen" }],
+                reviewed: false
             }
         ]
     },
@@ -110,7 +112,8 @@ const MOCK_ORDERS: OrderModel[] = [
                 productImage: "https://placehold.co/150x150/e2e8f0/64748b?text=Leopold",
                 quantity: 1,
                 price: 1500000,
-                attributes: [{ name: "Switch", value: "Brown" }]
+                attributes: [{ name: "Switch", value: "Brown" }],
+                reviewed: true
             }
         ]
     }

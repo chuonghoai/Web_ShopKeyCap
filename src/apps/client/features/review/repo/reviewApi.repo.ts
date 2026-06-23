@@ -1,6 +1,7 @@
 import { apiClient } from "../../../../../core/api/apiClient";
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import type { Review } from "../model/review.model";
+import type { CreateReviewRequest } from "../model/create-review.request";
 import type { ReviewRepo } from "./review.repo";
 
 export class ReviewApiRepo implements ReviewRepo {
@@ -15,5 +16,14 @@ export class ReviewApiRepo implements ReviewRepo {
                 productId, page, pageSize
             }
         });
+    }
+
+    /**
+     * POST /reviews
+     * @param request CreateReviewRequest
+     * @returns Success response
+     */
+    async createReview(request: CreateReviewRequest): Promise<ApiResponse<null>> {
+        return apiClient.post("/reviews", request);
     }
 }

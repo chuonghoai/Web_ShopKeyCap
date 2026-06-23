@@ -1,5 +1,6 @@
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import type { Review } from "../model/review.model";
+import type { CreateReviewRequest } from "../model/create-review.request";
 import type { ReviewRepo } from "./review.repo";
 
 export class ReviewMockRepo implements ReviewRepo {
@@ -66,5 +67,13 @@ export class ReviewMockRepo implements ReviewRepo {
             }
         }
         return response;
+    }
+
+    async createReview(request: CreateReviewRequest): Promise<ApiResponse<null>> {
+        return {
+            success: true,
+            message: `Tạo đánh giá cho đơn hàng ${request.orderId} thành công`,
+            data: null
+        }
     }
 }
