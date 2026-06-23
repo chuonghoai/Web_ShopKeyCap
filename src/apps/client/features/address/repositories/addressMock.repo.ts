@@ -1,5 +1,13 @@
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
-import type { Address, DeliveryInfoModel } from "../models/address.model";
+import type { 
+    Address, 
+    DeliveryInfoModel, 
+    CreateAddressRequestModel, 
+    UpdateAddressRequestModel, 
+    ProvinceModel, 
+    DistrictModel, 
+    WardModel 
+} from "../models/address.model";
 import type { AddressRepo } from "./address.repo";
 
 export class AddressMockRepo implements AddressRepo {
@@ -70,6 +78,119 @@ export class AddressMockRepo implements AddressRepo {
             success: true,
             message: "Lấy danh sách địa chỉ thành công",
             data: this.addresses
+        };
+    }
+
+    async createAddress(request: CreateAddressRequestModel): Promise<ApiResponse<Address>> {
+        if (request.isDefault) {
+            this.addresses.forEach(a => a.isDefault = false);
+        }
+
+        const newAddress: Address = {
+            id: Math.max(...this.addresses.map(a => a.id), 0) + 1,
+            fullName: request.recipientName,
+            phone: request.phone,
+            province: { code: request.provinceCode, name: request.provinceName },
+            district: { code: request.districtCode, name: request.districtName },
+            ward: { code: request.wardCode, name: request.wardName },
+            street: request.street || "",
+            fullAddress: request.fullAddress || "",
+            latitude: request.latitude,
+            longitude: request.longitude,
+            isDefault: request.isDefault || false,
+        };
+
+        this.addresses.push(newAddress);
+
+        return {
+            success: true,
+            message: "Thêm địa chỉ thành công",
+            data: newAddress
+        };
+    }
+
+    async updateAddress(id: number, request: UpdateAddressRequestModel): Promise<ApiResponse<Address>> {
+        const index = this.addresses.findIndex(a => a.id === id);
+        if (index === -1) {
+            return { success: false, message: "Không tìm thấy địa chỉ", data: null as any };
+        }
+
+        if (request.isDefault) {
+            this.addresses.forEach(a => a.isDefault = false);
+        }
+
+        const updatedAddress: Address = {
+            ...this.addresses[index],
+            fullName: request.recipientName,
+            phone: request.phone,
+            province: { code: request.provinceCode, name: request.provinceName },
+            district: { code: request.districtCode, name: request.districtName },
+            ward: { code: request.wardCode, name: request.wardName },
+            street: request.street || "",
+            fullAddress: request.fullAddress || "",
+            latitude: request.latitude,
+            longitude: request.longitude,
+            isDefault: request.isDefault || false,
+        };
+
+        this.addresses[index] = updatedAddress;
+
+        return {
+            success: true,
+            message: "Cập nhật địa chỉ thành công",
+            data: updatedAddress
+        };
+    }
+
+    async deleteAddress(id: number): Promise<ApiResponse<null>> {
+        this.addresses = this.addresses.filter(a => a.id !== id);
+        return {
+            success: true,
+            message: "Xóa địa chỉ thành công",
+            data: null
+        };
+    }
+
+    async setDefaultAddress(id: number): Promise<ApiResponse<null>> {
+        this.addresses.forEach(a => a.isDefault = a.id === id);
+        return {
+            success: true,
+            message: "Đặt địa chỉ mặc định thành công",
+            data: null
+        };
+    }
+
+    async getProvinces(): Promise<ProvinceModel[]> {
+        return [
+            { id: 1, name: "Hồ Chí Minh" },
+            { id: 2, name: "Hà Nội" }
+        ];
+    }
+
+    async getDistricts(provinceId: number): Promise<DistrictModel[]> {
+        if (provinceId === 1) {
+            return [
+                { id: 1, name: "Quận 1" },
+                { id: 2, name: "Quận 2" }
+            ];
+        }
+        return [];
+    }
+
+    async getWards(districtId: number): Promise<WardModel[]> {
+        if (districtId === 1) {
+            return [
+                { id: "1", name: "Phường Bến Nghé" },
+                { id: "2", name: "Phường Phạm Ngũ Lão" }
+            ];
+        }
+        return [];
+    }
+
+    async getLocationFromAddress(address: string): Promise<{ latitude: number; longitude: number }> {
+        return {
+            latitude: 10.762622,
+            longitude: 106.660172
         };
     }
 }
