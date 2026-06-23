@@ -9,6 +9,7 @@ import { useOrderDetailController } from './detailPageController/orderDetailPage
 import { useOrderDetailViewModel } from './detailPageController/orderDetailPage.viewmodel';
 import { formatCurrency } from '../../../../../utils/currency.util';
 import { formatDateTime } from '../../../../../utils/date.util';
+import { EOrderStatus } from '../../../features/order/enums/orderStatus.enum';
 
 const OrderDetailPage: React.FC = () => {
     const { 
@@ -113,8 +114,22 @@ const OrderDetailPage: React.FC = () => {
                                                 {item.attributes.map(a => `${a.name}: ${a.value}`).join(' • ')}
                                             </div>
                                             <div className="mt-auto flex items-center justify-between">
-                                                <span className="text-sm font-medium text-slate-700">SL: {item.quantity}</span>
-                                                <span className="text-base font-bold text-slate-900">{formatCurrency(item.price)}</span>
+                                                <div className="flex flex-col gap-1">
+                                                    <span className="text-sm font-medium text-slate-700">SL: {item.quantity}</span>
+                                                    <span className="text-base font-bold text-slate-900">{formatCurrency(item.price)}</span>
+                                                </div>
+                                                {order.status === EOrderStatus.SUCCESS && (
+                                                    <Link 
+                                                        to={`/user/orders/${order.id}/reviews?productId=${item.productId}`}
+                                                        className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors border ${
+                                                            item.reviewed 
+                                                            ? 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50' 
+                                                            : 'bg-blue-600 border-transparent text-white hover:bg-blue-700'
+                                                        }`}
+                                                    >
+                                                        {item.reviewed ? 'Xem đánh giá' : 'Đánh giá'}
+                                                    </Link>
+                                                )}
                                             </div>
                                         </div>
                                     </div>

@@ -12,6 +12,7 @@ import UserLayout from "../pages/user/UserLayout";
 import ProfilePage from "../pages/user/profile/ProfilePage";
 import OrderListPage from "../pages/user/orders/OrderListPage";
 import OrderDetailPage from "../pages/user/orders/OrderDetailPage";
+import { OrderReviewsPage } from "../pages/user/orderReviews";
 import { ERole } from "../../../core/constants/role.constant";
 
 export const clientRoutes: RouteObject[] = [
@@ -52,6 +53,7 @@ export const clientRoutes: RouteObject[] = [
                             { path: "profile", element: <ProfilePage /> },
                             { path: "orders", element: <OrderListPage /> },
                             { path: "orders/:id", element: <OrderDetailPage /> },
+                            { path: "orders/:id/reviews", element: <OrderReviewsPage /> },
                         ]
                     },
                     { path: "/cart", element: <CartPage /> },
