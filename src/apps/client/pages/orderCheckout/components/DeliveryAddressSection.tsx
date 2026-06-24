@@ -40,7 +40,7 @@ export const DeliveryAddressSection: React.FC<DeliveryAddressSectionProps> = ({ 
                 {!address ? (
                     <div className="text-center py-4">
                         <p className="text-slate-500 mb-4">Bạn chưa có địa chỉ giao hàng.</p>
-                        <Link to='/profile/address/new' className="px-5 py-2.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-xl font-medium transition-colors">
+                        <Link to='/user/addresses' className="px-5 py-2.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-xl font-medium transition-colors">
                             Tạo địa chỉ mặc định
                         </Link>
                     </div>
