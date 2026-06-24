@@ -17,7 +17,7 @@ export const AdminSidebar: React.FC = () => {
             {/* Menu List */}
             <nav className="flex-1 p-4 overflow-y-auto">
                 <ul className="space-y-2">
-                    {ADMIN_SIDEBAR_MENU.map((item) => (
+                    {ADMIN_SIDEBAR_MENU.filter(item => !item.roles || (user?.role && item.roles.includes(user.role))).map((item) => (
                         <li key={item.key}>
                             <button
                                 onClick={() => handleNavigate(item.path)}

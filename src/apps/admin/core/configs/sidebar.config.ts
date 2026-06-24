@@ -1,8 +1,11 @@
+import { ERole } from "../../../../core/constants/role.constant";
+
 export interface SidebarMenuItem {
     key: string;
     label: string;
     path: string;
     icon?: string;
+    roles?: ERole[];
 }
 
 export const ADMIN_SIDEBAR_MENU: SidebarMenuItem[] = [
@@ -24,6 +27,7 @@ export const ADMIN_SIDEBAR_MENU: SidebarMenuItem[] = [
     {
         key: 'staffs',
         label: 'Nhân viên',
-        path: '/admin/staffs'
-    }
+        path: '/admin/staffs',
+        roles: [ERole.ADMIN]
+    },
 ];
