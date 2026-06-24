@@ -171,7 +171,12 @@ export const useProductsController = () => {
      * Handle reset bộ lọc và kiểm tra có bộ lọc nào đang được chọn ko
      */
     const handleResetFilter = () => {
-        setSearchParams({});
+        const keyword = searchParams.get("keyword");
+        if (keyword) {
+            setSearchParams({ keyword });
+        } else {
+            setSearchParams({});
+        }
     }
     const hasActiveFilter = Boolean(
         currentCategory !== "" ||

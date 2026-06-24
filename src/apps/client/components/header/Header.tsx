@@ -23,7 +23,10 @@ function Header() {
                 </Link>
 
                 {/* Form search */}
-                <form className="flex-1 max-w-xl relative flex items-center">
+                <form 
+                    className="flex-1 max-w-xl relative flex items-center"
+                    onSubmit={controller.handleSearchSubmit}
+                >
                     <span className="absolute left-3.5 text-slate-400 material-icons-outlined text-[20px] pointer-events-none">
                         search
                     </span>
@@ -31,6 +34,8 @@ function Header() {
                     <input
                         type="text"
                         placeholder="Tìm kiếm"
+                        value={controller.keyword}
+                        onChange={controller.handleSearchChange}
                         className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-100 border border-transparent text-slate-700 text-[16px] placeholder-slate-400 focus:bg-white focus:border-[#2563eb] focus:ring-1 focus:ring-[#2563eb] transition-all outline-none"
                     />
                 </form>
