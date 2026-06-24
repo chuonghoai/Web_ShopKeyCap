@@ -1,8 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
 import { orderCheckoutService } from '../../services/order-checkout.service';
 import { orderKeys } from '../orderKeys';
+import type { CheckoutResult } from '../../models/checkoutResult.dto';
 
-export const useOrderResultQuery = (orderId: number) => {
+export const useOrderResultQuery = (
+    orderId: number, 
+    options?: Omit<UseQueryOptions<CheckoutResult, Error>, 'queryKey' | 'queryFn'>
+) => {
     return useQuery({
         queryKey: orderKeys.result(orderId),
         queryFn: async () => {
@@ -11,5 +15,6 @@ export const useOrderResultQuery = (orderId: number) => {
             return res.data;
         },
         enabled: !!orderId,
+        ...options,
     });
 };

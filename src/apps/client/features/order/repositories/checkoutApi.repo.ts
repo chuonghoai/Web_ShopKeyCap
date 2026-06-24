@@ -2,6 +2,7 @@ import { apiClient } from "../../../../../core/api/apiClient";
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
 import type { CheckoutRequest } from "../dto/checkout.request";
 import type { CheckoutResponse } from "../dto/checkout.response";
+import type { CapturePayPalResponse } from "../dto/capturePayPal.response";
 import type { PrepareCheckoutRequestWrapper } from "../dto/prepareCheckout.request";
 import type { CheckoutResult } from "../models/checkoutResult.dto";
 import type { PrepareCheckoutModel } from "../models/prepareCheckout.model";
@@ -39,5 +40,14 @@ export class CheckoutApiRepo implements CheckoutRepo {
      */
     async getOrderResult(orderId: number): Promise<ApiResponse<CheckoutResult>> {
         return apiClient.get<ApiResponse<CheckoutResult>>(`/orders/checkout/${orderId}/payment-status`);
+    }
+
+    /**
+     * POST /api/payment/paypal/capture
+     * @param token 
+     * @returns CapturePayPalResponse
+     */
+    async capturePayPalPayment(token: string): Promise<CapturePayPalResponse> {
+        return apiClient.post<CapturePayPalResponse>(`/api/payment/paypal/capture?token=${token}`);
     }
 }

@@ -5,6 +5,7 @@ import type { CheckoutResponse } from "../dto/checkout.response";
 import type { PrepareCheckoutRequestWrapper } from "../dto/prepareCheckout.request";
 import type { CheckoutResult } from "../models/checkoutResult.dto";
 import type { PrepareCheckoutModel } from "../models/prepareCheckout.model";
+import type { CapturePayPalResponse } from "../dto/capturePayPal.response";
 import type { CheckoutRepo } from "../repositories/checkout.repo";
 import { CheckoutApiRepo } from "../repositories/checkoutApi.repo";
 import { CheckoutMockRepo } from "../repositories/checkoutMock.repo";
@@ -34,6 +35,13 @@ export class OrderCheckoutService {
      */
     async getOrderResult(orderId: number): Promise<ApiResponse<CheckoutResult>> {
         return this.checkoutRepo.getOrderResult(orderId);
+    }
+
+    /**
+     * Capture PayPal payment
+     */
+    async capturePayPalPayment(token: string): Promise<CapturePayPalResponse> {
+        return this.checkoutRepo.capturePayPalPayment(token);
     }
 }
 

@@ -44,6 +44,15 @@ const OrderResultPage: React.FC = () => {
         );
     }
 
+    if (controller.isCapturing) {
+        return (
+            <div className="min-h-[60vh] flex flex-col items-center justify-center bg-slate-50">
+                <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                <p className="mt-4 text-slate-500">Đang xử lý thanh toán PayPal...</p>
+            </div>
+        );
+    }
+
     if (controller.error || !controller.result) {
         return (
             <div className="min-h-[60vh] flex flex-col items-center justify-center bg-slate-50 px-4">

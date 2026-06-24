@@ -1,5 +1,4 @@
-// import type { CheckoutRequestDto, CheckoutResponseDto } from "../dto/checkoutRequest.dto";
-// import type { CheckoutResultDto } from "../models/checkoutResult.dto";
+import type { CapturePayPalResponse } from "../dto/capturePayPal.response";
 import type { PrepareCheckoutRequestWrapper } from "../dto/prepareCheckout.request";
 import type { CheckoutRepo } from "./checkout.repo";
 import type { ApiResponse } from "../../../../../core/api/apiResponse";
@@ -96,5 +95,12 @@ export class CheckoutMockRepo implements CheckoutRepo {
                 paymentStatus
             }
         });
+    }
+
+    async capturePayPalPayment(_token: string): Promise<CapturePayPalResponse> {
+        return {
+            status: "success",
+            message: "Thanh toán PayPal thành công (Mock)"
+        };
     }
 }
