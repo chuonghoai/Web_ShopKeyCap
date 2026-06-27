@@ -3,6 +3,8 @@ import type { UpdateCartRequest } from "../dto/UpdateCartRequest.dto";
 import { tokenService } from "../../../../../core/auth/token.service";
 
 class CartUpdateDebouncer {
+    private static instance: CartUpdateDebouncer;
+
     private pendingUpdates: Map<number, number> = new Map();
     private syncTimeout: ReturnType<typeof setTimeout> | null = null;
     private readonly DELAY_MS = 500;
@@ -13,8 +15,15 @@ class CartUpdateDebouncer {
         reject: (reason?: any) => void;
     }> = [];
 
-    constructor() {
+    private constructor() {
         this.registerUnloadHandler();
+    }
+
+    public static getInstance(): CartUpdateDebouncer {
+        if (!CartUpdateDebouncer.instance) {
+            CartUpdateDebouncer.instance = new CartUpdateDebouncer();
+        }
+        return CartUpdateDebouncer.instance;
     }
 
     /**
@@ -102,4 +111,4 @@ class CartUpdateDebouncer {
     }
 }
 
-export const cartSyncManager = new CartUpdateDebouncer();
+export const cartSyncManager = CartUpdateDebouncer.getInstance();
